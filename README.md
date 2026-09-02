@@ -6,6 +6,16 @@
 
 ![OTP 首页真实运行截图](docs/OTP说明文档配图/06-真实截图-首页.png)
 
+## 体验小程序
+
+使用微信扫一扫，即可打开「小产品实验室 OTP」。无需注册项目账号。
+
+<p align="center">
+  <img src="docs/assets/otp-miniprogram-code.jpg" alt="小产品实验室 OTP 小程序码" width="220">
+</p>
+
+正式介绍页：[otp.tinylabpro.com](https://otp.tinylabpro.com/)
+
 ## 功能
 
 - 扫码或手动添加 TOTP 验证码
@@ -49,6 +59,17 @@ site/       开源项目主页（GitHub Pages）
 ## 贡献
 
 欢迎提交 Issue 或 Pull Request。请不要提交真实 OTP 密钥、WebDAV 应用密码、个人账号信息或备份文件。
+
+## 请喝咖啡
+
+小产品实验室的工具会持续免费维护。若它对你有帮助，欢迎扫码赞赏；你的支持会用于服务器、测试设备和产品持续打磨。
+
+<p align="center">
+  <img src="docs/assets/support-wechat.png" alt="微信赞赏码" width="180">
+  <img src="docs/assets/support-alipay.png" alt="支付宝赞赏码" width="180">
+</p>
+
+<p align="center">微信赞赏　·　支付宝赞赏</p>
 
 ## 许可证
 
