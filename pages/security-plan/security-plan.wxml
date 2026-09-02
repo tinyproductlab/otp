@@ -1,0 +1,51 @@
+<view class="page safe-bottom {{appThemeClass}}">
+  <view class="hero">
+    <view class="hero__eyebrow">
+      <text class="hero__spark">✦</text>
+      <text>智能安全建议</text>
+      <text class="hero__mode">本地分析</text>
+    </view>
+    <text class="hero__title">安全共生计划</text>
+    <text class="hero__summary">{{progressText}}</text>
+    <view class="hero__progress">
+      <view class="hero__progress-fill" style="width: {{plan.total ? (plan.completed / plan.total * 100) : 0}}%"></view>
+    </view>
+    <text class="hero__caption">已完成 {{plan.completed}} / {{plan.total}} 项</text>
+  </view>
+
+  <view class="privacy-card" bindtap="onTogglePrivacy">
+    <view class="privacy-card__icon">◉</view>
+    <view class="privacy-card__main">
+      <text class="privacy-card__title">你的秘密不会进入建议分析</text>
+      <text class="privacy-card__sub">仅使用数量、风险标签和备份状态</text>
+    </view>
+    <text class="privacy-card__arrow">{{privacyVisible ? '⌃' : '›'}}</text>
+  </view>
+  <view wx:if="{{privacyVisible}}" class="privacy-detail">
+    <text class="privacy-detail__allow">可用：验证码数量、弱密码数量、重复密码数量、距上次备份天数。</text>
+    <text class="privacy-detail__deny">不会读取：密码、TOTP 密钥、二维码、账号、备份口令、WebDAV 凭据。</text>
+  </view>
+
+  <view class="section-head">
+    <text class="section-head__title">建议行动</text>
+    <text class="section-head__sub">按风险优先级排序</text>
+  </view>
+
+  <view class="task-list">
+    <view wx:for="{{plan.tasks}}" wx:key="id" class="task task--{{item.tone}}" bindtap="onTaskTap" data-action="{{item.action}}">
+      <view class="task__number">{{index + 1}}</view>
+      <view class="task__content">
+        <view class="task__topline">
+          <text class="task__priority">{{item.priority}}</text>
+          <text class="task__title">{{item.title}}</text>
+        </view>
+        <text class="task__description">{{item.description}}</text>
+        <view class="task__action"><text>{{item.actionLabel}}</text><text class="task__action-arrow">›</text></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="footer-note">
+    <text>这些建议基于你设备内的安全状态生成；所有备份、删除、修改和复制操作仍需你亲自确认。</text>
+  </view>
+</view>

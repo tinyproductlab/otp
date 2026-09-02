@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <rect width="1600" height="900" fill="#F7F9FC"/>
+  <text x="110" y="115" fill="#17365D" font-size="54" font-weight="700" font-family="PingFang SC, Arial Unicode MS, sans-serif">网络安全运维中的 OTP 使用场景</text>
+  <text x="110" y="170" fill="#667085" font-size="28" font-family="PingFang SC, Arial Unicode MS, sans-serif">设备、服务器、云平台和管理后台都在要求更可靠的二次认证。</text>
+  <rect x="110" y="245" width="910" height="490" rx="32" fill="#FFFFFF" stroke="#D8E1EE" stroke-width="3"/>
+  <rect x="155" y="300" width="260" height="150" rx="22" fill="#E7F0FC"/>
+  <text x="285" y="360" text-anchor="middle" fill="#1D5FA7" font-size="34" font-weight="700" font-family="PingFang SC, Arial Unicode MS, sans-serif">服务器</text>
+  <text x="285" y="405" text-anchor="middle" fill="#526070" font-size="24" font-family="PingFang SC, Arial Unicode MS, sans-serif">SSH · 控制台 · 面板</text>
+  <rect x="455" y="300" width="260" height="150" rx="22" fill="#F0ECFF"/>
+  <text x="585" y="360" text-anchor="middle" fill="#6844B7" font-size="34" font-weight="700" font-family="PingFang SC, Arial Unicode MS, sans-serif">云平台</text>
+  <text x="585" y="405" text-anchor="middle" fill="#526070" font-size="24" font-family="PingFang SC, Arial Unicode MS, sans-serif">账号 · 权限 · 部署</text>
+  <rect x="755" y="300" width="220" height="150" rx="22" fill="#E8F7F2"/>
+  <text x="865" y="360" text-anchor="middle" fill="#177B61" font-size="34" font-weight="700" font-family="PingFang SC, Arial Unicode MS, sans-serif">网络设备</text>
+  <text x="865" y="405" text-anchor="middle" fill="#526070" font-size="24" font-family="PingFang SC, Arial Unicode MS, sans-serif">路由 · 交换 · 防火墙</text>
+  <rect x="255" y="520" width="610" height="145" rx="22" fill="#FFF8E8"/>
+  <text x="560" y="582" text-anchor="middle" fill="#8A6200" font-size="34" font-weight="700" font-family="PingFang SC, Arial Unicode MS, sans-serif">网页登录与管理后台</text>
+  <text x="560" y="630" text-anchor="middle" fill="#6E5A23" font-size="24" font-family="PingFang SC, Arial Unicode MS, sans-serif">除了用户名和密码，越来越多平台要求动态验证码</text>
+  <path d="M1040 465 C1110 465,1130 465,1190 465" fill="none" stroke="#4B82CB" stroke-width="8" stroke-linecap="round"/>
+  <path d="M1178 443 L1222 465 L1178 487" fill="none" stroke="#4B82CB" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="1225" y="235" width="230" height="480" rx="42" fill="#183456"/>
+  <rect x="1242" y="275" width="196" height="390" rx="24" fill="#FFFFFF"/>
+  <circle cx="1340" cy="320" r="31" fill="#E7F0FC"/>
+  <path d="M1340 300 v22 l15 10" fill="none" stroke="#3D82D0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="1340" y="403" text-anchor="middle" fill="#17365D" font-size="35" font-weight="700" font-family="Arial Unicode MS, sans-serif">OTP</text>
+  <text x="1340" y="449" text-anchor="middle" fill="#526070" font-size="22" font-family="PingFang SC, Arial Unicode MS, sans-serif">动态验证码</text>
+  <rect x="1270" y="500" width="140" height="55" rx="18" fill="#EAF3FF"/>
+  <text x="1340" y="536" text-anchor="middle" fill="#2B6CB0" font-size="24" font-weight="700" font-family="PingFang SC, Arial Unicode MS, sans-serif">本地生成</text>
+  <text x="800" y="820" text-anchor="middle" fill="#526070" font-size="30" font-family="PingFang SC, Arial Unicode MS, sans-serif">一个验证码工具，连接的是许多个必须安全登录的工作入口。</text>
+</svg>

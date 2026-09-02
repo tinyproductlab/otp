@@ -1,0 +1,86 @@
+{
+  "compileType": "miniprogram",
+  "libVersion": "3.5.0",
+  "appid": "wx86f2b7ec40cc96dc",
+  "projectname": "小产品实验室 OTP",
+  "description": "本地加密的 TOTP 验证器与密码账本",
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "checkSiteMap": true,
+    "packNpmManually": false,
+    "ignoreUploadUnusedFiles": true,
+    "compileWorklet": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": true,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
+  },
+  "packOptions": {
+    "ignore": [
+      {
+        "value": "_test",
+        "type": "folder"
+      },
+      {
+        "value": "参考资料",
+        "type": "folder"
+      },
+      {
+        "value": "docs",
+        "type": "folder"
+      },
+      {
+        "value": "KEYSCAN-小程序-方案.md",
+        "type": "file"
+      },
+      {
+        "value": "README.md",
+        "type": "file"
+      },
+      {
+        "value": "介绍文案.md",
+        "type": "file"
+      },
+      {
+        "value": "小产品实验室OTP-方案.md",
+        "type": "file"
+      },
+      {
+        "value": "MdNCV2uncQig39e8b901b8030ba2ae2ce3f104e3301c.png",
+        "type": "file"
+      },
+      {
+        "value": "todo.md",
+        "type": "file"
+      },
+      {
+        "value": ".DS_Store",
+        "type": "file"
+      },
+      {
+        "value": "pages/.DS_Store",
+        "type": "file"
+      }
+    ],
+    "include": []
+  },
+  "condition": {},
+  "simulatorPluginLibVersion": {},
+  "editorSetting": {}
+}

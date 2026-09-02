@@ -1,0 +1,31 @@
+<view class="page {{appThemeClass}}">
+  <scroll-view scroll-y class="body">
+    <view class="about-hero">
+      <image class="about-hero__logo" src="/assets/otp-logo.jpg" mode="aspectFill" />
+      <text class="about-hero__title">小产品实验室 OTP</text>
+      <text class="about-hero__version">{{copy.versionPrefix}} {{version}}</text>
+    </view>
+    <view class="cloud-safety-note">
+      <text class="cloud-safety-note__title">{{copy.cloudTitle}}</text>
+      <text class="cloud-safety-note__text">{{copy.cloudText}}</text>
+    </view>
+
+    <text class="section-title">{{copy.introTitle}}</text>
+    <view class="card--flat about-card">
+      <text class="about-card__text">{{copy.introOne}}</text>
+      <text class="about-card__text">{{copy.introTwo}}</text>
+    </view>
+
+    <text class="section-title">{{copy.updatesTitle}}</text>
+    <view class="card--flat about-card">
+      <text class="about-card__version">{{version}}｜{{copy.updateName}}</text>
+      <text class="about-card__text">{{copy.updateOne}}</text>
+      <text class="about-card__text">{{copy.updateTwo}}</text>
+      <text class="about-card__text">{{copy.updateThree}}</text>
+      <text class="about-card__follow">{{copy.follow}}</text>
+      <view class="about-card__copy" bindtap="onCopyOfficialAccount">{{copy.copyOfficial}}</view>
+    </view>
+
+    <view style="height: 80rpx"></view>
+  </scroll-view>
+</view>

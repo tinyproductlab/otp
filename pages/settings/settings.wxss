@@ -1,0 +1,391 @@
+/**
+ * 设置页样式 —— 对齐「线框图-设置页重设计-v1」
+ *
+ * 与首页同一套语言：卡片圆角 24rpx、字号五档、线性 mask 图标、细箭头。
+ * 颜色全部走 colors.wxss 变量，深色模式零硬编码（switch 的 color 属性除外，
+ * 那是组件属性收不了变量，用主色 #4A90D9）。
+ */
+
+.page {
+  height: 100vh;
+  background: var(--settings-page-background);
+}
+
+.scroll {
+  height: 100%;
+  padding: 20rpx 36rpx 40rpx;
+  box-sizing: border-box;
+}
+
+.tail {
+  height: 100rpx;
+}
+
+/* ============ 区块标题（卡片外） ============ */
+
+.sec {
+  display: block;
+  margin: 44rpx 8rpx 20rpx;
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+.sec:first-child {
+  margin-top: 0;
+}
+
+/* ============ 卡片与行 ============ */
+
+.card {
+  background: var(--settings-card-fill);
+  border-radius: 24rpx;
+  box-shadow: 0 4rpx 20rpx rgba(20, 42, 74, 0.05);
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  min-height: 116rpx;
+  padding: 20rpx 28rpx;
+}
+
+.row--clickable:active {
+  background: var(--settings-blue-soft);
+}
+
+.row-main {
+  flex: 1;
+  min-width: 0;
+  padding-right: 24rpx;
+}
+
+.row-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.row-title--sm {
+  font-size: 28rpx;
+}
+
+.row-sub {
+  display: block;
+  margin-top: 6rpx;
+  font-size: 24rpx;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.row-value {
+  margin-left: 12rpx;
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.divider {
+  height: 1rpx;
+  background: var(--card-stroke);
+  margin-left: 28rpx;
+}
+
+/* picker 默认行内,必须撑满整行,否则点击区域变窄 */
+.picker {
+  display: block;
+}
+
+/* 细箭头（与首页同款） */
+.chevron {
+  width: 16rpx;
+  height: 16rpx;
+  border-right: 3rpx solid var(--text-hint);
+  border-bottom: 3rpx solid var(--text-hint);
+  transform: rotate(-45deg);
+  opacity: 0.55;
+  margin-left: 16rpx;
+  flex-shrink: 0;
+}
+
+/* ============ 主题分段选择器 ============ */
+
+.theme-row {
+  display: flex;
+  align-items: center;
+  min-height: 132rpx;
+  padding: 24rpx 28rpx;
+}
+
+.segmented {
+  display: flex;
+  flex-shrink: 0;
+  padding: 6rpx;
+  border-radius: 38rpx;
+  background: var(--password-ledger-search);
+}
+
+.seg {
+  width: 104rpx;
+  height: 64rpx;
+  border-radius: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seg.is-active {
+  background: var(--settings-card-fill);
+  box-shadow: 0 2rpx 8rpx rgba(20, 42, 74, 0.14);
+}
+
+.seg__icon {
+  width: 30rpx;
+  height: 30rpx;
+  background-color: var(--text-hint);
+}
+
+.seg.is-active .seg__icon {
+  background-color: var(--primary);
+}
+
+.glyph {
+  display: block;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+/* 手机：跟随系统 */
+.glyph-phone {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Crect x='6' y='2.5' width='8' height='15' rx='2' stroke='black' stroke-width='1.6'/%3E%3Cpath d='M8.5 15h3' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Crect x='6' y='2.5' width='8' height='15' rx='2' stroke='black' stroke-width='1.6'/%3E%3Cpath d='M8.5 15h3' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* 太阳：浅色 */
+.glyph-sun {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Ccircle cx='10' cy='10' r='4' stroke='black' stroke-width='1.6'/%3E%3Cpath d='M10 2.5v2M10 15.5v2M2.5 10h2M15.5 10h2M4.7 4.7l1.4 1.4M13.9 13.9l1.4 1.4M15.3 4.7l-1.4 1.4M6.1 13.9l-1.4 1.4' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Ccircle cx='10' cy='10' r='4' stroke='black' stroke-width='1.6'/%3E%3Cpath d='M10 2.5v2M10 15.5v2M2.5 10h2M15.5 10h2M4.7 4.7l1.4 1.4M13.9 13.9l1.4 1.4M15.3 4.7l-1.4 1.4M6.1 13.9l-1.4 1.4' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* 月亮：深色 */
+.glyph-moon {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M16.5 12.5A7 7 0 017.5 3.5a7 7 0 109 9z' stroke='black' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M16.5 12.5A7 7 0 017.5 3.5a7 7 0 109 9z' stroke='black' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* ============ 备份密码展开面板 ============ */
+
+.panel {
+  padding: 8rpx 28rpx 32rpx;
+  border-top: 1rpx solid var(--card-stroke);
+}
+
+.panel .field {
+  margin-top: 24rpx;
+}
+
+.panel .field:first-child {
+  margin-top: 24rpx;
+}
+
+.empty-row {
+  display: flex;
+  align-items: center;
+  min-height: 100rpx;
+  margin-top: 8rpx;
+}
+
+.panel-btn {
+  height: 68rpx;
+  min-width: 170rpx;
+  padding: 0 28rpx;
+  border-radius: 34rpx;
+  font-size: 26rpx;
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  gap: 20rpx;
+  justify-content: flex-end;
+  margin-top: 28rpx;
+}
+
+/* ============ 危险区 ============ */
+
+.danger-zone {
+  margin-top: 56rpx;
+}
+
+.danger-btn {
+  height: 96rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24rpx;
+  background: var(--danger-surface);
+  color: var(--danger);
+  font-size: 30rpx;
+  font-weight: 500;
+}
+
+.danger-btn:active {
+  opacity: 0.7;
+}
+
+.danger-note {
+  display: block;
+  margin-top: 20rpx;
+  font-size: 22rpx;
+  line-height: 1.6;
+  color: var(--text-hint);
+  text-align: center;
+}
+
+/* ============ 首次备份密码创建页 ============ */
+
+.backup-create-screen {
+  min-height: 100vh;
+  padding: 88rpx 36rpx 48rpx;
+  background: var(--settings-page-background);
+}
+
+.backup-create-screen__hero {
+  padding: 0 12rpx 38rpx;
+}
+
+.backup-create-screen__eyebrow {
+  display: block;
+  margin-bottom: 16rpx;
+  color: var(--primary);
+  font-size: 24rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+}
+
+.backup-create-screen__title {
+  display: block;
+  color: var(--text-main);
+  font-size: 44rpx;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.backup-create-screen__copy {
+  display: block;
+  margin-top: 18rpx;
+  color: var(--text-secondary);
+  font-size: 27rpx;
+  line-height: 1.65;
+}
+
+.backup-create-screen__card {
+  padding: 18rpx 20rpx 28rpx;
+  border-radius: 28rpx;
+  box-shadow: 0 8rpx 28rpx rgba(20, 42, 74, 0.06);
+}
+
+.backup-create-screen__card .field {
+  margin-top: 12rpx;
+}
+
+.backup-create-screen__card .empty-row {
+  margin: 14rpx 12rpx 0;
+}
+
+.backup-create-screen__card .actions {
+  justify-content: stretch;
+  margin: 26rpx 12rpx 0;
+}
+
+.backup-create-screen__card .panel-btn {
+  flex: 1;
+  min-width: 0;
+  height: 84rpx;
+  font-size: 28rpx;
+}
+
+.backup-create-screen__later {
+  margin-top: 34rpx;
+  color: var(--text-secondary);
+  font-size: 28rpx;
+  line-height: 84rpx;
+  text-align: center;
+}
+
+.backup-create-screen__later:active {
+  opacity: 0.65;
+}
+
+/* ============ 备份密码显示切换 ============ */
+
+.backup-password-input {
+  position: relative;
+}
+
+.backup-password-input__control {
+  padding-right: 96rpx;
+}
+
+.backup-password-input__eye {
+  position: absolute;
+  top: 50%;
+  right: 12rpx;
+  width: 68rpx;
+  height: 68rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+}
+
+.backup-password-input__eye:active {
+  opacity: 0.6;
+}
+
+.backup-password-input__eye-shape {
+  position: relative;
+  width: 32rpx;
+  height: 20rpx;
+  box-sizing: border-box;
+  border: 3rpx solid var(--text-secondary);
+  border-radius: 50% / 65%;
+}
+
+.backup-password-input__eye-shape::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background: var(--text-secondary);
+  transform: translate(-50%, -50%);
+}
+
+/* 斜线表示当前隐藏密码；点击后移除斜线并显示明文。 */
+.backup-password-input__eye:not(.is-visible)::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  width: 40rpx;
+  height: 3rpx;
+  border-radius: 2rpx;
+  background: var(--text-secondary);
+  transform: rotate(-42deg);
+}
+
+.backup-password-input__eye.is-visible .backup-password-input__eye-shape {
+  border-color: var(--primary);
+}
+
+.backup-password-input__eye.is-visible .backup-password-input__eye-shape::after {
+  background-color: var(--primary);
+}

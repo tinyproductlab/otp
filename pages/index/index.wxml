@@ -1,0 +1,227 @@
+<view class="page {{appThemeClass}}">
+
+  <!-- 顶部：品牌 + 更多 -->
+  <view class="topbar">
+    <image class="topbar__logo" src="/assets/otp-logo.jpg" mode="aspectFill" />
+    <view class="topbar__copy">
+      <text class="topbar__name">{{paneTitle}}</text>
+      <text class="topbar__sub">{{paneSub}}</text>
+    </view>
+    <view class="topbar__spacer"></view>
+    <view class="more-action" bindtap="onMore" aria-label="更多">
+      <view class="more-action__dot"></view>
+      <view class="more-action__dot"></view>
+      <view class="more-action__dot"></view>
+    </view>
+  </view>
+
+  <!-- ⋮ 菜单 -->
+  <view wx:if="{{moreMenuVisible}}" class="more-menu-layer" bindtap="onCloseMoreMenu">
+    <view class="more-menu-panel" catchtap="noop">
+      <view class="more-menu-option" bindtap="onLanguage">{{copy.menuLanguage}}</view>
+      <view class="more-menu-option" bindtap="onSettings">{{copy.menuSettings}}</view>
+      <button class="more-menu-option more-menu-option--plain" open-type="feedback" bindtap="onFeedback">{{copy.menuFeedback}}</button>
+      <button class="more-menu-option more-menu-option--plain" open-type="share">{{copy.menuShare}}</button>
+      <view class="more-menu-option" bindtap="onAbout">{{copy.menuAbout}}</view>
+    </view>
+  </view>
+
+  <!-- 上滑添加面板 -->
+  <view wx:if="{{addMenuVisible}}" class="add-menu-layer" bindtap="onCloseAddMenu">
+    <view class="add-menu-panel" catchtap="noop">
+      <view class="add-menu-handle"></view>
+      <text class="add-menu-title">{{copy.addTitle}}</text>
+      <view class="add-menu-option" bindtap="onScan">
+        <view class="add-menu-icon tint-blue"><view class="glyph glyph-scan"></view></view>
+        <text class="add-menu-option__title">{{copy.scan}}</text>
+        <view class="chevron"></view>
+      </view>
+      <view class="add-menu-option" bindtap="onManualOtp">
+        <view class="add-menu-icon tint-purple"><view class="glyph glyph-plus"></view></view>
+        <text class="add-menu-option__title">{{copy.manualInput}}</text>
+        <view class="chevron"></view>
+      </view>
+      <view class="add-menu-option" bindtap="onBatchImport">
+        <view class="add-menu-icon tint-teal"><view class="glyph glyph-batch"></view></view>
+        <text class="add-menu-option__title">{{copy.batchImport}}</text>
+        <view class="chevron"></view>
+      </view>
+      <view class="add-menu-option" bindtap="onExportOtp">
+        <view class="add-menu-icon tint-orange"><view class="glyph glyph-export"></view></view>
+        <text class="add-menu-option__title">{{copy.exportOtp}}</text>
+        <view class="chevron"></view>
+      </view>
+    </view>
+  </view>
+
+  <swiper
+    class="pager"
+    current="{{current}}"
+    bindchange="onPageChange"
+    duration="240"
+    easing-function="easeOutCubic">
+
+    <!-- ========== 实用工具 ========== -->
+    <swiper-item>
+      <scroll-view scroll-y class="pane">
+        <view class="entry" bindtap="onOpenPassword">
+          <view class="entry__icon tint-purple"><view class="glyph glyph-doc"></view></view>
+          <view class="entry__main">
+            <text class="entry__title">{{copy.passwordBook}}</text>
+            <text class="entry__sub">{{stats.passwordCount}} {{copy.passwordBookSub}}</text>
+          </view>
+          <view class="chevron"></view>
+        </view>
+
+        <view class="entry" bindtap="onQrCode">
+          <view class="entry__icon tint-blue"><view class="glyph glyph-qrcode"></view></view>
+          <view class="entry__main">
+            <text class="entry__title">{{copy.qr}}</text>
+            <text class="entry__sub">{{copy.qrSub}}</text>
+          </view>
+          <view class="chevron"></view>
+        </view>
+
+        <view class="entry" bindtap="onGenerator">
+          <view class="entry__icon tint-teal"><view class="glyph glyph-dice"></view></view>
+          <view class="entry__main">
+            <text class="entry__title">{{copy.generator}}</text>
+            <text class="entry__sub">{{copy.generatorSub}}</text>
+          </view>
+          <view class="chevron"></view>
+        </view>
+
+      </scroll-view>
+    </swiper-item>
+
+    <!-- ========== OTP 首页 ========== -->
+    <swiper-item>
+      <scroll-view
+        scroll-y
+        class="pane pane--otp"
+        bindtouchstart="onOtpTouchStart"
+        bindtouchmove="onOtpTouchMove"
+        bindtouchend="onOtpTouchEnd">
+        <view wx:if="{{searchActive}}" class="home-search">
+          <view class="glyph glyph-search home-search__icon"></view>
+          <input
+            class="home-search__input"
+            value="{{keyword}}"
+            placeholder="{{copy.search}}"
+            placeholder-class="text-hint"
+            focus="{{searchActive}}"
+            bindinput="onHomeSearch"
+            confirm-type="search" />
+          <view wx:if="{{keyword}}" class="home-search__clear" bindtap="onClearHomeSearch"></view>
+          <view class="home-search__filter {{filterVisible ? 'is-active' : ''}}" bindtap="onToggleFilter" aria-label="{{copy.filter}}">
+            <view class="glyph glyph-filter home-search__filter-glyph"></view>
+          </view>
+        </view>
+        <view wx:if="{{filterVisible}}" class="home-filter-menu" catchtap="noop">
+          <view class="home-filter-menu__item {{sort === 'time' ? 'is-active' : ''}}" bindtap="onSelectSort" data-sort="time">{{copy.time}}</view>
+          <view class="home-filter-menu__item {{sort === 'name' ? 'is-active' : ''}}" bindtap="onSelectSort" data-sort="name">{{copy.name}}</view>
+          <view class="home-filter-menu__item {{sort === 'manual' ? 'is-active' : ''}}" bindtap="onSelectSort" data-sort="manual">{{copy.manual}}</view>
+        </view>
+
+        <view wx:if="{{sort === 'manual' && tokens.length > 1}}" class="sort-hint">{{copy.drag}}</view>
+
+        <view wx:if="{{tokens.length}}" class="home-token-list">
+          <view
+            wx:for="{{tokens}}"
+            wx:key="id"
+            class="home-token {{item.remaining <= 5 ? 'is-expiring' : ''}} {{dragId === item.id ? 'is-dragging' : ''}}"
+            style="{{dragId === item.id ? 'transform: translateY(' + dragOffset + 'px);' : ''}}"
+            bindlongpress="onTokenLongPress"
+            bindtouchmove="onTokenDragMove"
+            bindtouchend="onTokenDragEnd"
+            bindtouchcancel="onTokenDragEnd"
+            data-id="{{item.id}}">
+            <view class="home-token__identity" catchtap="onTokenEdit" data-id="{{item.id}}">
+              <view class="home-token__brand" style="background: {{item.brandColor}};"><text>{{item.initial}}</text></view>
+              <view class="home-token__names">
+                <text class="home-token__issuer">{{item.issuer || copy.unnamed}}</text>
+                <text class="home-token__account">{{item.accountName || '—'}}</text>
+              </view>
+            </view>
+            <view class="home-token__code-area" catchtap="onTokenCopy" data-id="{{item.id}}">
+              <text class="home-token__code">{{item.display}}</text>
+              <text class="home-token__hint">{{copy.copy}}</text>
+            </view>
+            <view class="home-token__status">
+              <text class="home-token__remaining">{{item.remaining}}{{copy.seconds}}</text>
+              <view class="home-token__progress">
+                <view class="home-token__progress-fill" style="width: {{item.percent}}%"></view>
+              </view>
+            </view>
+          </view>
+          <text class="home-gesture-hint">{{copy.gestureHint}}</text>
+          <view class="home-token-list__tail"></view>
+        </view>
+
+        <view wx:else class="otp-empty">
+          <view class="otp-empty__glyph"><view class="glyph glyph-clock otp-empty__clock"></view></view>
+          <text class="otp-empty__title">还没有保存验证码</text>
+          <text class="otp-empty__hint">{{copy.gestureHint}}</text>
+        </view>
+      </scroll-view>
+    </swiper-item>
+
+    <!-- ========== 数据管理 ========== -->
+    <swiper-item>
+      <scroll-view scroll-y class="pane">
+        <view class="entry" bindtap="onWebdavConfig">
+          <view class="entry__icon tint-blue"><view class="glyph glyph-cloud"></view></view>
+          <view class="entry__main">
+            <text class="entry__title">{{copy.webdav}}</text>
+            <text class="entry__sub">{{copy.webdavSub}}</text>
+          </view>
+          <view class="chevron"></view>
+        </view>
+
+        <view class="entry" bindtap="onCloudBackup">
+          <view class="entry__icon tint-green"><view class="glyph glyph-upload"></view></view>
+          <view class="entry__main">
+            <text class="entry__title">{{copy.cloudBackup}}</text>
+            <text class="entry__sub">WebDAV 1 · {{backupSummary}}</text>
+          </view>
+          <view class="chevron"></view>
+        </view>
+
+        <view class="entry" bindtap="onLocalBackup">
+          <view class="entry__icon tint-orange"><view class="glyph glyph-archive"></view></view>
+          <view class="entry__main">
+            <text class="entry__title">{{copy.localBackup}}</text>
+            <text class="entry__sub">{{copy.localBackupSub}}</text>
+          </view>
+          <view class="chevron"></view>
+        </view>
+
+        <view class="entry" bindtap="onTrash">
+          <view class="entry__icon tint-teal"><view class="glyph glyph-trash"></view></view>
+          <view class="entry__main">
+            <text class="entry__title">{{copy.trash}}</text>
+            <text class="entry__sub">{{stats.trashCount}} {{copy.trashSub}} {{trashRetentionLabel}}</text>
+          </view>
+          <view class="chevron"></view>
+        </view>
+      </scroll-view>
+    </swiper-item>
+  </swiper>
+
+  <!-- 底部三栏 -->
+  <view class="tabbar safe-bottom">
+    <view class="tab {{current === 0 ? 'is-active' : ''}}" bindtap="onTab" data-index="0">
+      <view class="glyph glyph-grid tab__icon"></view>
+      <text class="tab__label">{{copy.toolsTab}}</text>
+    </view>
+    <view class="tab {{current === 1 ? 'is-active' : ''}}" bindtap="onTab" data-index="1">
+      <view class="glyph glyph-shield tab__icon"></view>
+      <text class="tab__label">OTP</text>
+    </view>
+    <view class="tab {{current === 2 ? 'is-active' : ''}}" bindtap="onTab" data-index="2">
+      <view class="glyph glyph-db tab__icon"></view>
+      <text class="tab__label">{{copy.dataTab}}</text>
+    </view>
+  </view>
+
+</view>

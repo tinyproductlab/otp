@@ -1,0 +1,71 @@
+<view class="page {{appThemeClass}}">
+  <scroll-view scroll-y class="body">
+
+    <!-- 实时预览:密钥填对了立刻能看到验证码,填错立刻知道 -->
+    <view class="preview {{previewOk ? '' : 'is-invalid'}}">
+      <text class="preview__code">{{previewCode}}</text>
+      <text class="preview__hint">{{previewHint}}</text>
+    </view>
+
+    <text class="section-title">基本信息</text>
+    <view class="card--flat">
+      <view class="field">
+        <text class="field__label">发行商</text>
+        <input class="field__input" value="{{form.issuer}}" placeholder="如 GitHub、支付宝"
+               placeholder-class="text-hint" bindinput="onInput" data-key="issuer" />
+      </view>
+      <view class="row__divider"></view>
+      <view class="field">
+        <text class="field__label">账号</text>
+        <input class="field__input {{isEdit ? 'field__input--readonly' : ''}}" value="{{form.accountName}}" placeholder="如 dev@example.com"
+               placeholder-class="text-hint" bindinput="onInput" data-key="accountName" disabled="{{isEdit}}" />
+      </view>
+      <view wx:if="{{!isEdit}}" class="row__divider"></view>
+      <view wx:if="{{!isEdit}}" class="field">
+        <text class="field__label">密钥(Base32)</text>
+        <input class="field__input mono" value="{{form.secret}}" placeholder="网站提供的一串字母数字"
+               placeholder-class="text-hint" bindinput="onSecretInput" />
+        <text class="field__note">可以带空格或连字符,会自动清理。区分不了大小写,统一按大写处理。</text>
+      </view>
+    </view>
+
+    <block wx:if="{{!isEdit}}">
+    <text class="section-title">高级</text>
+    <view class="card--flat">
+      <view class="row">
+        <view class="row__main"><text class="row__title">验证码位数</text></view>
+        <view class="segment">
+          <view class="segment__item {{form.digits === 6 ? 'is-active' : ''}}" bindtap="onDigits" data-value="6">6 位</view>
+          <view class="segment__item {{form.digits === 8 ? 'is-active' : ''}}" bindtap="onDigits" data-value="8">8 位</view>
+        </view>
+      </view>
+      <view class="row__divider"></view>
+      <view class="row">
+        <view class="row__main"><text class="row__title">刷新周期</text></view>
+        <view class="segment">
+          <view class="segment__item {{form.period === 30 ? 'is-active' : ''}}" bindtap="onPeriod" data-value="30">30 秒</view>
+          <view class="segment__item {{form.period === 60 ? 'is-active' : ''}}" bindtap="onPeriod" data-value="60">60 秒</view>
+        </view>
+      </view>
+      <view class="row__divider"></view>
+      <view class="row">
+        <view class="row__main">
+          <text class="row__title">算法</text>
+          <text class="row__subtitle">绝大多数网站用 SHA1,不确定就别改</text>
+        </view>
+        <view class="segment">
+          <view class="segment__item {{form.algorithm === 'SHA1' ? 'is-active' : ''}}" bindtap="onAlgorithm" data-value="SHA1">SHA1</view>
+          <view class="segment__item {{form.algorithm === 'SHA256' ? 'is-active' : ''}}" bindtap="onAlgorithm" data-value="SHA256">SHA256</view>
+        </view>
+      </view>
+    </view>
+    </block>
+
+
+    <view style="height: 200rpx"></view>
+  </scroll-view>
+
+  <view class="footer safe-bottom">
+    <view class="btn btn--primary {{canSave ? '' : 'btn--disabled'}}" bindtap="onSave">保存</view>
+  </view>
+</view>

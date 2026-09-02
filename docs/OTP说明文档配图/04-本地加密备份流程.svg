@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <rect width="1600" height="900" fill="#F7F9FC"/>
+  <text x="110" y="115" fill="#17365D" font-size="54" font-weight="700" font-family="PingFang SC, Arial Unicode MS, sans-serif">不登录项目账号，也能完成自己的加密备份</text>
+  <text x="110" y="170" fill="#667085" font-size="28" font-family="PingFang SC, Arial Unicode MS, sans-serif">数据不经过项目方服务器；是否备份、备份到哪里，由用户自己决定。</text>
+  <g font-family="PingFang SC, Arial Unicode MS, sans-serif">
+    <rect x="120" y="310" width="280" height="270" rx="32" fill="#FFFFFF" stroke="#D8E1EE" stroke-width="3"/>
+    <rect x="205" y="350" width="110" height="145" rx="18" fill="#183456"/>
+    <rect x="216" y="371" width="88" height="100" rx="12" fill="#FFFFFF"/>
+    <text x="260" y="540" text-anchor="middle" fill="#17365D" font-size="32" font-weight="700">小程序本机数据</text>
+    <text x="260" y="625" text-anchor="middle" fill="#526070" font-size="23">OTP · 密码账本 · 设置</text>
+    <path d="M430 445 H565" fill="none" stroke="#4B82CB" stroke-width="8" stroke-linecap="round"/>
+    <path d="M553 423 L597 445 L553 467" fill="none" stroke="#4B82CB" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="610" y="310" width="280" height="270" rx="32" fill="#EAF3FF" stroke="#BFD4F0" stroke-width="3"/>
+    <path d="M750 350 l58 25 v58 c0 54-35 90-58 105-23-15-58-51-58-105v-58z" fill="#4B82CB"/>
+    <path d="M750 390 v52 M724 416 h52" stroke="#FFF" stroke-width="8" stroke-linecap="round"/>
+    <text x="750" y="540" text-anchor="middle" fill="#17365D" font-size="32" font-weight="700">本地加密备份</text>
+    <text x="750" y="625" text-anchor="middle" fill="#526070" font-size="23">先加密，再导出或上传</text>
+    <path d="M920 445 H1055" fill="none" stroke="#4B82CB" stroke-width="8" stroke-linecap="round"/>
+    <path d="M1043 423 L1087 445 L1043 467" fill="none" stroke="#4B82CB" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="1100" y="310" width="370" height="270" rx="32" fill="#FFFFFF" stroke="#D8E1EE" stroke-width="3"/>
+    <path d="M1210 440 c0-35 28-63 63-63 25 0 47 14 57 35 10-7 23-12 37-12 33 0 60 27 60 60 0 2 0 4-1 6h-216c0-8 0-17 0-26z" fill="#A9C8F1"/>
+    <text x="1285" y="540" text-anchor="middle" fill="#17365D" font-size="32" font-weight="700">用户自己的备份位置</text>
+    <text x="1285" y="610" text-anchor="middle" fill="#526070" font-size="23">微信文件  或  坚果云 WebDAV</text>
+  </g>
+  <rect x="300" y="710" width="1000" height="80" rx="24" fill="#FFF8E8"/>
+  <text x="800" y="762" text-anchor="middle" fill="#715B1B" font-size="28" font-family="PingFang SC, Arial Unicode MS, sans-serif">需要恢复时：选择备份文件 → 输入自己的备份密码 → 合并恢复到新设备</text>
+</svg>

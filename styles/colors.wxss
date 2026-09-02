@@ -1,0 +1,283 @@
+/* 小产品实验室 OTP 色板
+ * 由安卓 values/colors.xml + values-night/colors.xml 自动转换
+ * 用法: 在 app.wxss 引入,页面里用 var(--primary) 取值
+ */
+
+page {
+  /* 品牌与主色 */
+  --primary                             : #4A90D9;
+  --primary-blue                        : #1A73E8;
+  --primary-dark                        : #1A365D;
+  --accent                              : #2EAF9A;
+  --brand-cyan                          : #4A90D9;
+  --brand-blue                          : #1A365D;
+  --brand-green                         : #2EAF9A;
+  --brand-orange                        : #C9A96E;
+  --brand-pink                          : #C9A96E;
+
+  /* 语义色 */
+  --danger                              : #D93025;
+  --danger-surface                      : #FDEBEA;
+  --success                             : #188038;
+  --warning                             : #B06000;
+  --info                                : #1A73E8;
+
+  /* 文字 */
+  --text-main                           : #334155;
+  --text-secondary                      : #64748B;
+  --text-hint                           : #94A3B8;
+
+  /* 卡片与描边 */
+  --card-background                     : #FFFFFF;
+  --card-stroke                         : #E8EDF2;
+  --surface-light                       : #FFFFFF;
+  --border-soft                         : #DCE6F0;
+  --dialog-surface                      : #FFFFFF;
+  --dialog-on-surface                   : #1F2937;
+
+  /* 页面背景 */
+  --primary-page-background             : #F4F7FC;
+  --settings-page-background            : #F4F7FC;
+  --password-ledger-background          : #F4F7FC;
+  --data-management-background          : #F5F8FC;
+
+  /* 首页卡片 */
+  --home-card-title                     : #17233A;
+  --home-card-subtitle                  : #5E7089;
+  --primary-reference-title             : #142A4A;
+  --primary-reference-blue              : #2563EB;
+  --primary-reference-navy              : #123A7A;
+  --primary-reference-teal              : #16B8A6;
+  --primary-reference-purple            : #7557E8;
+
+  /* 密码分组 */
+  --password-group-default-bg           : #EAF4FF;
+  --password-group-default-border       : #A9D5FF;
+  --password-group-default-tint         : #008DFF;
+  --password-group-custom-bg            : #E8FFFC;
+  --password-group-custom-border        : #8EE8DE;
+  --password-group-custom-tint          : #00AFA5;
+
+  /* 设置页 */
+  --settings-card-fill                  : #FCFDFF;
+  --settings-status-fill                : #F2F6FC;
+  --settings-blue                       : #2F6BFF;
+  --settings-blue-soft                  : #E9F0FF;
+  --settings-green                      : #10B981;
+  --settings-green-soft                 : #E5F8F2;
+  --settings-orange                     : #F59E42;
+  --settings-orange-soft                : #FFF1E2;
+  --settings-purple                     : #8B5CF6;
+  --settings-purple-soft                : #F1EBFF;
+  --settings-teal                       : #0EA5A8;
+  --settings-teal-soft                  : #E3F7F7;
+
+  /* 数据管理 */
+  --data-management-card                : #FFFFFF;
+  --data-management-border              : #D9E4F0;
+  --data-management-title               : #142A4A;
+  --data-management-secondary           : #64748B;
+  --data-management-arrow               : #64748B;
+  --backup-item-card                    : #F3F7FC;
+  --backup-item-border                  : #C9D8EA;
+
+  /* 密码账本 */
+  --password-ledger-card                : #FFFFFF;
+  --password-ledger-search              : #EEF3F9;
+  --password-ledger-border              : #D9E4F0;
+
+  /* 图标底色 */
+  --action-icon-tint                    : #1A73E8;
+  --action-icon-bg                      : #EAF2FF;
+  --icon-edit-fg                        : #1A73E8;
+  --icon-edit-bg                        : #EAF2FF;
+  --icon-copy-fg                        : #1A73E8;
+  --icon-copy-bg                        : #EAF2FF;
+  --icon-delete-fg                      : #1A73E8;
+  --icon-delete-bg                      : #EAF2FF;
+
+  /* 输入框 */
+  --dialog-input-bg                     : #F1F5F9;
+  --dialog-input-stroke                 : #94A3B8;
+  --dialog-ghost-bg                     : #F1F5F9;
+
+}
+
+/* 深色模式 —— 仅列出与亮色不同的项 */
+@media (prefers-color-scheme: dark) {
+  page {
+    /* 品牌与主色 */
+    --primary                             : #8AB4F8;
+    --primary-blue                        : #8AB4F8;
+    --primary-dark                        : #0F172A;
+    --accent                              : #2DD4BF;
+    --brand-cyan                          : #8AB4F8;
+    --brand-blue                          : #A5B4FC;
+    --brand-green                         : #2DD4BF;
+    --brand-orange                        : #FBBF24;
+    --brand-pink                          : #F472B6;
+
+    /* 语义色 */
+    --danger-surface                      : #3B2226;
+    --success                             : #81C995;
+    --warning                             : #FDD663;
+    --info                                : #8AB4F8;
+
+    /* 文字 */
+    --text-main                           : #E2E8F0;
+    --text-secondary                      : #94A3B8;
+    --text-hint                           : #64748B;
+
+    /* 卡片与描边 */
+    --card-background                     : #1E293B;
+    --card-stroke                         : #334155;
+    --surface-light                       : #0F172A;
+    --border-soft                         : #334155;
+    --dialog-surface                      : #1E293B;
+    --dialog-on-surface                   : #E2E8F0;
+
+    /* 页面背景 */
+    --primary-page-background             : #0F172A;
+    --settings-page-background            : #0F172A;
+    --password-ledger-background          : #0F172A;
+    --data-management-background          : #06101F;
+
+    /* 首页卡片 */
+    --home-card-title                     : #F5F9FF;
+    --home-card-subtitle                  : #B7C9E4;
+    --primary-reference-title             : #E2E8F0;
+    --primary-reference-blue              : #8AB4F8;
+    --primary-reference-navy              : #A8C7FA;
+    --primary-reference-teal              : #5EEAD4;
+    --primary-reference-purple            : #C4B5FD;
+
+    /* 密码分组 */
+    --password-group-default-bg           : #102A4A;
+    --password-group-default-border       : #155A91;
+    --password-group-default-tint         : #19A7FF;
+    --password-group-custom-bg            : #073B3D;
+    --password-group-custom-border        : #087D79;
+    --password-group-custom-tint          : #10D9CC;
+
+    /* 设置页 */
+    --settings-card-fill                  : #101B2B;
+    --settings-status-fill                : #162235;
+    --settings-blue                       : #5590FF;
+    --settings-blue-soft                  : #172A4A;
+    --settings-green                      : #39D7A2;
+    --settings-green-soft                 : #15382F;
+    --settings-orange                     : #FFAA55;
+    --settings-orange-soft                : #3A2A1B;
+    --settings-purple                     : #A875FF;
+    --settings-purple-soft                : #2A2043;
+    --settings-teal                       : #2DD4D7;
+    --settings-teal-soft                  : #153639;
+
+    /* 数据管理 */
+    --data-management-card                : #0F1D30;
+    --data-management-border              : #22314A;
+    --data-management-title               : #E2E8F0;
+    --data-management-secondary           : #94A3B8;
+    --data-management-arrow               : #B8C6D9;
+    --backup-item-card                    : #172A47;
+    --backup-item-border                  : #2E4264;
+
+    /* 密码账本 */
+    --password-ledger-card                : #101D30;
+    --password-ledger-search              : #111E31;
+    --password-ledger-border              : #22314A;
+
+    /* 图标底色 */
+    --action-icon-tint                    : #8AB4F8;
+    --action-icon-bg                      : #1D3048;
+    --icon-edit-fg                        : #A8C7FA;
+    --icon-edit-bg                        : #22324A;
+    --icon-copy-fg                        : #8AB4F8;
+    --icon-copy-bg                        : #1D3048;
+    --icon-delete-fg                      : #F2B8B5;
+    --icon-delete-bg                      : #4A2525;
+
+    /* 输入框 */
+    --dialog-input-bg                     : #0B1220;
+    --dialog-input-stroke                 : #64748B;
+    --dialog-ghost-bg                     : #334155;
+
+  }
+}
+
+/* 手动主题覆盖：由页面根容器的 appThemeClass 设置。
+ * 类选择器比 page 和系统 prefers-color-scheme 的元素选择器优先级更高，
+ * 因此“始终浅色 / 始终深色”能够稳定覆盖设备系统主题。 */
+.app-theme-light {
+  --primary: #4A90D9; --primary-blue: #1A73E8; --primary-dark: #1A365D;
+  --accent: #2EAF9A; --brand-cyan: #4A90D9; --brand-blue: #1A365D;
+  --brand-green: #2EAF9A; --brand-orange: #C9A96E; --brand-pink: #C9A96E;
+  --danger: #D93025; --danger-surface: #FDEBEA; --success: #188038;
+  --warning: #B06000; --info: #1A73E8;
+  --text-main: #334155; --text-secondary: #64748B; --text-hint: #94A3B8;
+  --card-background: #FFFFFF; --card-stroke: #E8EDF2; --surface-light: #FFFFFF;
+  --border-soft: #DCE6F0; --dialog-surface: #FFFFFF; --dialog-on-surface: #1F2937;
+  --primary-page-background: #F4F7FC; --settings-page-background: #F4F7FC;
+  --password-ledger-background: #F4F7FC; --data-management-background: #F5F8FC;
+  --home-card-title: #17233A; --home-card-subtitle: #5E7089;
+  --primary-reference-title: #142A4A; --primary-reference-blue: #2563EB;
+  --primary-reference-navy: #123A7A; --primary-reference-teal: #16B8A6;
+  --primary-reference-purple: #7557E8;
+  --password-group-default-bg: #EAF4FF; --password-group-default-border: #A9D5FF;
+  --password-group-default-tint: #008DFF; --password-group-custom-bg: #E8FFFC;
+  --password-group-custom-border: #8EE8DE; --password-group-custom-tint: #00AFA5;
+  --settings-card-fill: #FCFDFF; --settings-status-fill: #F2F6FC;
+  --settings-blue: #2F6BFF; --settings-blue-soft: #E9F0FF;
+  --settings-green: #10B981; --settings-green-soft: #E5F8F2;
+  --settings-orange: #F59E42; --settings-orange-soft: #FFF1E2;
+  --settings-purple: #8B5CF6; --settings-purple-soft: #F1EBFF;
+  --settings-teal: #0EA5A8; --settings-teal-soft: #E3F7F7;
+  --data-management-card: #FFFFFF; --data-management-border: #D9E4F0;
+  --data-management-title: #142A4A; --data-management-secondary: #64748B;
+  --data-management-arrow: #64748B; --backup-item-card: #F3F7FC;
+  --backup-item-border: #C9D8EA;
+  --password-ledger-card: #FFFFFF; --password-ledger-search: #EEF3F9;
+  --password-ledger-border: #D9E4F0;
+  --action-icon-tint: #1A73E8; --action-icon-bg: #EAF2FF;
+  --icon-edit-fg: #1A73E8; --icon-edit-bg: #EAF2FF;
+  --icon-copy-fg: #1A73E8; --icon-copy-bg: #EAF2FF;
+  --icon-delete-fg: #1A73E8; --icon-delete-bg: #EAF2FF;
+  --dialog-input-bg: #F1F5F9; --dialog-input-stroke: #94A3B8; --dialog-ghost-bg: #F1F5F9;
+}
+
+.app-theme-dark {
+  --primary: #8AB4F8; --primary-blue: #8AB4F8; --primary-dark: #0F172A;
+  --accent: #2DD4BF; --brand-cyan: #8AB4F8; --brand-blue: #A5B4FC;
+  --brand-green: #2DD4BF; --brand-orange: #FBBF24; --brand-pink: #F472B6;
+  --danger: #F2B8B5; --danger-surface: #3B2226; --success: #81C995;
+  --warning: #FDD663; --info: #8AB4F8;
+  --text-main: #E2E8F0; --text-secondary: #94A3B8; --text-hint: #64748B;
+  --card-background: #1E293B; --card-stroke: #334155; --surface-light: #0F172A;
+  --border-soft: #334155; --dialog-surface: #1E293B; --dialog-on-surface: #E2E8F0;
+  --primary-page-background: #0F172A; --settings-page-background: #0F172A;
+  --password-ledger-background: #0F172A; --data-management-background: #06101F;
+  --home-card-title: #F5F9FF; --home-card-subtitle: #B7C9E4;
+  --primary-reference-title: #E2E8F0; --primary-reference-blue: #8AB4F8;
+  --primary-reference-navy: #A8C7FA; --primary-reference-teal: #5EEAD4;
+  --primary-reference-purple: #C4B5FD;
+  --password-group-default-bg: #102A4A; --password-group-default-border: #155A91;
+  --password-group-default-tint: #19A7FF; --password-group-custom-bg: #073B3D;
+  --password-group-custom-border: #087D79; --password-group-custom-tint: #10D9CC;
+  --settings-card-fill: #101B2B; --settings-status-fill: #162235;
+  --settings-blue: #5590FF; --settings-blue-soft: #172A4A;
+  --settings-green: #39D7A2; --settings-green-soft: #15382F;
+  --settings-orange: #FFAA55; --settings-orange-soft: #3A2A1B;
+  --settings-purple: #A875FF; --settings-purple-soft: #2A2043;
+  --settings-teal: #2DD4D7; --settings-teal-soft: #153639;
+  --data-management-card: #0F1D30; --data-management-border: #22314A;
+  --data-management-title: #E2E8F0; --data-management-secondary: #94A3B8;
+  --data-management-arrow: #B8C6D9; --backup-item-card: #172A47;
+  --backup-item-border: #2E4264;
+  --password-ledger-card: #101D30; --password-ledger-search: #111E31;
+  --password-ledger-border: #22314A;
+  --action-icon-tint: #8AB4F8; --action-icon-bg: #1D3048;
+  --icon-edit-fg: #A8C7FA; --icon-edit-bg: #22324A;
+  --icon-copy-fg: #8AB4F8; --icon-copy-bg: #1D3048;
+  --icon-delete-fg: #F2B8B5; --icon-delete-bg: #4A2525;
+  --dialog-input-bg: #0B1220; --dialog-input-stroke: #64748B; --dialog-ghost-bg: #334155;
+}

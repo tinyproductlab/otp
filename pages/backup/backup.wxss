@@ -1,0 +1,402 @@
+.page {
+  height: 100vh;
+  background: var(--settings-page-background);
+  position: relative;
+}
+
+.body {
+  height: 100%;
+  padding: 0 28rpx;
+}
+
+/* ---- 平台限制提示 ---- */
+
+.notice {
+  margin-top: 24rpx;
+  padding: 26rpx 28rpx;
+  background: var(--settings-orange-soft);
+  border-radius: 20rpx;
+}
+
+.notice__title {
+  display: block;
+  font-size: 27rpx;
+  font-weight: bold;
+  color: var(--settings-orange);
+}
+
+.notice__text {
+  display: block;
+  font-size: 23rpx;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-top: 10rpx;
+}
+
+/* ---- 表单 ---- */
+
+.directory-card {
+  border: 2rpx solid var(--settings-blue);
+  background: var(--settings-blue-soft);
+}
+
+.directory-card .field__label {
+  color: var(--settings-blue);
+  font-weight: 600;
+}
+
+.field__note {
+  display: block;
+  font-size: 22rpx;
+  color: var(--text-hint);
+  margin-top: 10rpx;
+  line-height: 1.6;
+}
+
+.field__note--warn {
+  color: var(--warning);
+}
+
+.actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 24rpx;
+}
+
+.actions__btn {
+  flex: 1;
+}
+
+/* ---- 远端备份 ---- */
+
+.remote {
+  display: flex;
+  align-items: center;
+  padding: 24rpx;
+}
+
+.remote__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.remote__name {
+  display: block;
+  font-size: 27rpx;
+  color: var(--text-main);
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+}
+
+.remote__meta {
+  display: block;
+  font-size: 21rpx;
+  color: var(--text-hint);
+  margin-top: 6rpx;
+}
+
+.remote__act {
+  font-size: 25rpx;
+  color: var(--settings-blue);
+  padding: 8rpx 12rpx;
+  flex-shrink: 0;
+}
+
+.remote__act--danger {
+  color: var(--danger);
+}
+
+/* ---- 说明 ---- */
+
+.tip {
+  margin-top: 40rpx;
+  padding: 0 12rpx;
+}
+
+.tip__text {
+  display: block;
+  font-size: 21rpx;
+  color: var(--text-hint);
+  line-height: 1.9;
+}
+
+/* ---- 进度遮罩 ---- */
+
+.mask {
+  position: fixed;
+  left: 0; top: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.mask__box {
+  width: 520rpx;
+  padding: 44rpx 40rpx;
+  background: var(--dialog-surface);
+  border-radius: 28rpx;
+  text-align: center;
+}
+
+.mask__title {
+  display: block;
+  font-size: 29rpx;
+  color: var(--dialog-on-surface);
+}
+
+.mask__track {
+  height: 12rpx;
+  border-radius: 6rpx;
+  background: var(--border-soft);
+  overflow: hidden;
+  margin-top: 28rpx;
+}
+
+.mask__fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 6rpx;
+  transition: width 0.15s linear;
+}
+
+.mask__percent {
+  display: block;
+  font-size: 23rpx;
+  color: var(--text-secondary);
+  margin-top: 14rpx;
+}
+
+/* 参考安卓版本：备份页面分组标题与操作图标 */
+.backup-page .section-title {
+  display: flex;
+  align-items: center;
+  min-height: 54rpx;
+  margin-top: 26rpx;
+  padding-left: 14rpx;
+  font-size: 27rpx;
+  font-weight: 600;
+  color: var(--text-main);
+}
+.backup-page .section-title::before {
+  content: "";
+  width: 12rpx;
+  height: 12rpx;
+  margin-right: 12rpx;
+  border-radius: 50%;
+  background: var(--settings-blue);
+}
+.backup-page .section-title--local::before { background: var(--settings-pink); }
+.backup-page .section-title--restore::before { background: var(--settings-green); }
+.backup-row { min-height: 112rpx; }
+.backup-row__icon {
+  width: 58rpx;
+  height: 58rpx;
+  margin-right: 20rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--settings-blue-soft);
+  color: var(--settings-blue);
+}
+.backup-row__icon::before { font-size: 34rpx; font-weight: 600; }
+.backup-row__icon--cloud::before { content: "↑"; }
+.backup-row__icon--file::before { content: "↓"; }
+.backup-row__icon--copy::before { content: "▤"; }
+.backup-row__icon--restore { background: var(--settings-green-soft); color: var(--settings-green); }
+.backup-row__icon--restore::before { content: "↑"; }
+.backup-row .row__main { min-width: 0; }
+
+.backup-warning {
+  margin: 20rpx 0 8rpx;
+  padding: 24rpx 26rpx;
+  border: 2rpx solid #F2B84B;
+  border-radius: 18rpx;
+  background: #FFF8E8;
+}
+.backup-warning__title,
+.backup-warning__text { display: block; }
+.backup-warning__title { color: #A86B00; font-size: 27rpx; font-weight: 600; }
+.backup-warning__text { margin-top: 10rpx; color: #8A6A2F; font-size: 23rpx; line-height: 1.65; }
+.webdav-provider-note { margin: 0 0 16rpx; padding: 20rpx 24rpx; border-radius: 18rpx; background: #EAF5FF; border: 2rpx solid #B8DDF8; }
+.webdav-provider-note__title, .webdav-provider-note__text { display: block; }
+.webdav-provider-note__title { color: #2878B8; font-size: 27rpx; font-weight: 700; }
+.webdav-provider-note__text { margin-top: 8rpx; color: #4F6D86; font-size: 23rpx; line-height: 1.6; }
+.backup-page .section-title--local-backup::before { background: var(--settings-blue); }
+.backup-password-actions { display:flex; justify-content:flex-end; margin-top:14rpx; }.backup-password-actions__btn { min-width:170rpx; padding:0 24rpx; }
+
+/* 数据管理主页：参考安卓四卡片布局 */
+.data-home-title { display:flex; align-items:center; gap:24rpx; margin:38rpx 8rpx 30rpx; color:var(--text-main); }
+.data-home-title__text { font-size:42rpx; font-weight:700; letter-spacing:1rpx; }
+.data-home-mark { position:relative; width:58rpx; height:58rpx; flex:0 0 58rpx; }
+.data-home-mark__roof { position:absolute; left:8rpx; top:5rpx; width:36rpx; height:36rpx; border-left:7rpx solid #E56BA8; border-top:7rpx solid #8A78E8; transform:rotate(45deg); border-radius:7rpx 0 0 0; }
+.data-home-mark__body { position:absolute; left:13rpx; top:25rpx; width:32rpx; height:26rpx; border:6rpx solid #39B9D8; border-top:0; border-radius:0 0 8rpx 8rpx; background:#FFF; }
+.data-card { display:flex; align-items:center; min-height:190rpx; margin:0 0 24rpx; padding:28rpx 26rpx; box-sizing:border-box; border:2rpx solid #D9E0E8; border-radius:34rpx; background:#fff; box-shadow:0 3rpx 10rpx rgba(35,55,80,.08); }
+.data-card__icon { width:112rpx; height:112rpx; flex:0 0 112rpx; display:flex; align-items:center; justify-content:center; margin-right:28rpx; border:2rpx solid #DCE3EA; border-radius:56rpx; background:#F5F9FD; font-size:58rpx; }
+.data-card__icon--cloud { color:#39AFE1; }.data-card__icon--sync { color:#35C8AD; }.data-card__icon--file { color:#9672E8; }.data-card__icon--trash { color:#E9B27E; }
+.data-card__main { flex:1; min-width:0; }.data-card__title,.data-card__status,.data-card__meta { display:block; }.data-card__title { font-size:32rpx; font-weight:700; color:#14263A; }.data-card__status { margin-top:12rpx; font-size:25rpx; color:#7B8794; }.data-card__status.is-ok { color:#248E59; font-weight:600; }.data-card__meta { margin-top:10rpx; font-size:24rpx; line-height:1.45; color:#7B8794; }.backup-subtitle { margin:28rpx 8rpx 8rpx; color:var(--settings-blue); font-size:29rpx; }
+
+/* 安卓参考图：云端与本地备份详情 */
+.android-setting-card, .android-backup-card { margin: 24rpx 24rpx 0; padding: 30rpx; border: 2rpx solid #dce5ee; border-radius: 28rpx; background: #fff; box-shadow: 0 4rpx 16rpx rgba(28,55,85,.06); }
+.android-setting-card { display: flex; align-items: center; justify-content: space-between; min-height: 86rpx; }
+.android-setting-card__title, .android-backup-card__title { font-size: 32rpx; font-weight: 700; color: #182b42; }
+.android-check { width: 46rpx; height: 46rpx; border: 4rpx solid #8d9399; border-radius: 6rpx; color: #fff; font-size: 38rpx; line-height: 42rpx; text-align: center; }
+.android-check.is-checked { border-color: #2caf93; background: #2caf93; }
+.android-backup-card { padding-bottom: 22rpx; }
+.android-backup-card__title { display: block; margin-bottom: 24rpx; }
+.android-backup-item { display: flex; align-items: center; min-height: 92rpx; margin-top: 14rpx; padding: 14rpx 18rpx; border: 2rpx solid #cbd7e3; border-radius: 24rpx; background: #f4f8fc; }
+.android-backup-item__main { flex: 1; min-width: 0; }
+.android-backup-item__name { display: block; overflow: hidden; font-size: 28rpx; font-weight: 700; color: #25364b; text-overflow: ellipsis; white-space: nowrap; }
+.android-backup-item__meta { display: block; margin-top: 6rpx; font-size: 23rpx; color: #667385; }
+.android-backup-item__delete, .android-backup-item__download { width: 58rpx; height: 58rpx; margin-left: 12rpx; border-radius: 50%; text-align: center; line-height: 54rpx; font-size: 46rpx; font-weight: 700; }
+.android-backup-item__delete { color: #fff; background: #ef4b51; }
+.android-backup-item__download { color: #1e2d3e; font-size: 42rpx; }
+.android-empty { padding: 20rpx 0; color: #707b88; font-size: 26rpx; }
+.android-primary-btn { margin: 26rpx 24rpx 0; height: 86rpx; border-radius: 8rpx; background: #4c95d8; color: #fff; font-size: 32rpx; line-height: 86rpx; text-align: center; box-shadow: 0 4rpx 8rpx rgba(54,120,183,.22); }
+.android-history-card { margin-top: 28rpx; }
+.backup-password-card { margin-bottom: 24rpx; }
+.backup-password-note { display: block; margin: 18rpx 24rpx 0; color: #6c7785; font-size: 24rpx; line-height: 1.6; }
+.android-setting-card__main { flex: 1; min-width: 0; }
+.android-setting-card__main .android-backup-item__meta { display: block; margin-top: 8rpx; }
+
+
+/* 已确认线框图：数据管理入口卡片 */
+.data-card--wire { min-height:154rpx; padding:24rpx 22rpx; border-radius:24rpx; }
+.data-card--wire .data-card__icon { width:86rpx; height:86rpx; flex-basis:86rpx; margin-right:22rpx; border-radius:43rpx; font-size:44rpx; }
+.data-card--wire .data-card__title { font-size:29rpx; }
+.data-card--wire .data-card__meta { margin-top:8rpx; font-size:23rpx; }
+.data-card--wire .data-card__arrow { flex:0 0 30rpx; margin-left:14rpx; color:#7A8490; font-size:48rpx; font-weight:300; line-height:1; }
+
+/* 自动备份状态行:成功灰色、失败红色显眼 */
+.autobackup-status {
+  margin-bottom: 20rpx;
+  padding: 16rpx 24rpx;
+  border-radius: 16rpx;
+  font-size: 24rpx;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  background: var(--settings-card-fill);
+}
+
+.autobackup-status.is-failed {
+  color: var(--danger);
+  background: var(--danger-surface);
+}
+
+/* 本地备份恢复向导 */
+.backup-guide {
+  margin: 24rpx 24rpx 0;
+  padding: 24rpx;
+  border: 2rpx solid #dbe5ef;
+  border-radius: 28rpx;
+  background: linear-gradient(135deg, #f2f8ff, #f8f5ff);
+}
+.backup-guide--good { border-color: #bde4d4; background: linear-gradient(135deg, #effbf5, #f4fbff); }
+.backup-guide--warn { border-color: #f2dba7; background: linear-gradient(135deg, #fff9eb, #f7f8ff); }
+.backup-guide--risk { border-color: #f4d1d6; background: linear-gradient(135deg, #fff4f5, #f4f8ff); }
+.backup-guide__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18rpx; }
+.backup-guide__eyebrow, .backup-guide__title, .backup-guide__text { display: block; }
+.backup-guide__eyebrow { color: #4a7bc8; font-size: 19rpx; font-weight: 650; }
+.backup-guide__title { margin-top: 5rpx; color: #243d61; font-size: 32rpx; font-weight: 700; }
+.backup-guide__text { max-width: 500rpx; margin-top: 6rpx; color: #677b96; font-size: 21rpx; line-height: 1.55; }
+.backup-guide__count { display: grid; flex: 0 0 auto; place-items: center; width: 64rpx; height: 64rpx; border-radius: 20rpx; color: #3b6dc4; background: rgba(255,255,255,.8); font-size: 22rpx; font-weight: 700; }
+.backup-guide__progress { height: 8rpx; overflow: hidden; margin: 19rpx 1rpx 14rpx; border-radius: 99rpx; background: #dce5f0; }
+.backup-guide__progress-fill { height: 100%; min-width: 8rpx; border-radius: inherit; background: linear-gradient(90deg, #4d92e4, #31ad8c); }
+.backup-guide__task { display: flex; align-items: center; gap: 13rpx; padding: 15rpx 0; border-top: 1rpx solid rgba(155,174,201,.28); }
+.backup-guide__check { display: grid; flex: 0 0 auto; place-items: center; width: 39rpx; height: 39rpx; border: 2rpx solid #8ba7d6; border-radius: 13rpx; color: #4a76bd; font-size: 19rpx; font-weight: 700; }
+.backup-guide__task.is-done .backup-guide__check { border-color: #2ca883; color: #fff; background: #2ca883; }
+.backup-guide__main { flex: 1; min-width: 0; }
+.backup-guide__task-title, .backup-guide__task-detail { display: block; }
+.backup-guide__task-title { color: #2c405d; font-size: 24rpx; font-weight: 650; }
+.backup-guide__task-detail { margin-top: 3rpx; color: #71839a; font-size: 19rpx; line-height: 1.45; }
+.backup-guide__action { flex: 0 0 auto; color: #3b72cf; font-size: 20rpx; font-weight: 650; }
+.backup-guide__task.is-done .backup-guide__action { color: #319277; }
+
+/* 微信文件导入导出 */
+.wechat-transfer-card {
+  margin: 24rpx 24rpx 0;
+  padding: 30rpx;
+  border: 2rpx solid #cbdcf7;
+  border-radius: 28rpx;
+  background: linear-gradient(135deg, #edf5ff, #f6f2ff);
+}
+.wechat-transfer-card__eyebrow, .wechat-transfer-card__title, .wechat-transfer-card__text { display: block; }
+.wechat-transfer-card__eyebrow { color: #4b70b7; font-size: 21rpx; font-weight: 650; }
+.wechat-transfer-card__title { margin-top: 7rpx; color: #223b61; font-size: 35rpx; font-weight: 700; }
+.wechat-transfer-card__text { margin-top: 10rpx; color: #627794; font-size: 22rpx; line-height: 1.65; }
+.wechat-transfer-card__notice { margin-top: 18rpx; padding: 14rpx 16rpx; border-radius: 14rpx; color: #7b668f; background: rgba(255,255,255,.76); font-size: 20rpx; line-height: 1.5; }
+.wechat-transfer-action { display: flex; align-items: center; justify-content: space-between; gap: 16rpx; margin: 18rpx 24rpx 0; padding: 27rpx 26rpx; border: 2rpx solid #d5e0eb; border-radius: 24rpx; background: #fff; box-shadow: 0 5rpx 14rpx rgba(34,57,91,.05); }
+.wechat-transfer-action--primary { border-color: #6da0ea; background: linear-gradient(90deg, #4d8de1, #5d78d7); }
+.wechat-transfer-action__title, .wechat-transfer-action__text { display: block; }
+.wechat-transfer-action__title { color: #263d5b; font-size: 29rpx; font-weight: 700; }
+.wechat-transfer-action__text { margin-top: 6rpx; color: #718198; font-size: 21rpx; line-height: 1.5; }
+.wechat-transfer-action__arrow { flex: 0 0 auto; color: #4c79be; font-size: 44rpx; line-height: 1; }
+.wechat-transfer-action--primary .wechat-transfer-action__title, .wechat-transfer-action--primary .wechat-transfer-action__text, .wechat-transfer-action--primary .wechat-transfer-action__arrow { color: #fff; }
+.wechat-transfer-tip { display: flex; align-items: flex-start; gap: 12rpx; margin: 18rpx 24rpx 0; padding: 18rpx 20rpx; border-radius: 18rpx; color: #647892; background: #f1f6fb; font-size: 20rpx; line-height: 1.6; }
+.wechat-transfer-tip text:first-child { flex: 0 0 auto; color: #406fb6; font-weight: 700; }
+
+
+/* ===== 深色模式覆盖（自动生成，保留原色相、重定亮度）=====
+   浅色规则完全不动；这里只在 .app-theme-dark 下重新上色。
+   改浅色样式后需要同步这里，否则深色会停在旧配色。 */
+.app-theme-dark .backup-warning { border: 2rpx solid #F1B84C; background: #352F22; }
+.app-theme-dark .backup-warning__title { color: #F0B54C; }
+.app-theme-dark .backup-warning__text { color: #CFAD6D; }
+.app-theme-dark .webdav-provider-note { background: #222C35; border: 2rpx solid #3B4954; }
+.app-theme-dark .webdav-provider-note__title { color: #5FA5DE; }
+.app-theme-dark .webdav-provider-note__text { color: #DEE1E3; }
+.app-theme-dark .data-home-mark__roof { border-left: 7rpx solid #E66AA8; border-top: 7rpx solid #8977E9; }
+.app-theme-dark .data-home-mark__body { border: 6rpx solid #5CC7E0; background: #1E293B; }
+.app-theme-dark .data-card { border: 2rpx solid #3F4750; background: #1E293B; }
+.app-theme-dark .data-card__icon { border: 2rpx solid #3E4750; background: #222B35; }
+.app-theme-dark .data-card__icon--cloud { color: #55BCE7; }
+.app-theme-dark .data-card__icon--sync { color: #65D8C2; }
+.app-theme-dark .data-card__icon--file { color: #9671E9; }
+.app-theme-dark .data-card__icon--trash { color: #EAB27D; }
+.app-theme-dark .data-card__title { color: #DCE0E5; }
+.app-theme-dark .data-card__status { color: #AAADB0; }
+.app-theme-dark .data-card__status.is-ok { color: #63D99E; }
+.app-theme-dark .data-card__meta { color: #AAADB0; }
+.app-theme-dark .android-setting-card, .app-theme-dark .android-backup-card { border: 2rpx solid #3B4754; background: #1E293B; }
+.app-theme-dark .android-setting-card__title, .app-theme-dark .android-backup-card__title { color: #DCE0E5; }
+.app-theme-dark .android-check { border: 4rpx solid #999EA4; }
+.app-theme-dark .android-check.is-checked { border-color: #63D9C0; background: #63D9C0; }
+.app-theme-dark .android-backup-item { border: 2rpx solid #3D4752; background: #222B35; }
+.app-theme-dark .android-backup-item__name { color: #DDE0E4; }
+.app-theme-dark .android-backup-item__meta { color: #AAADB1; }
+.app-theme-dark .android-backup-item__delete { background: #F04C52; }
+.app-theme-dark .android-backup-item__download { color: #DDE0E4; }
+.app-theme-dark .android-empty { color: #ABADB0; }
+.app-theme-dark .android-primary-btn { background: #5FA1DE; }
+.app-theme-dark .backup-password-note { color: #AAADB0; }
+.app-theme-dark .data-card--wire .data-card__arrow { color: #ABADB0; }
+.app-theme-dark .backup-guide { border: 2rpx solid #3B4754; background: linear-gradient(135deg, #222B35, #282235); }
+.app-theme-dark .backup-guide--good { border-color: #3B544A; background: linear-gradient(135deg, #22352B, #222E35); }
+.app-theme-dark .backup-guide--warn { border-color: #544C3B; background: linear-gradient(135deg, #352F22, #222435); }
+.app-theme-dark .backup-guide--risk { border-color: #543B3E; background: linear-gradient(135deg, #352224, #222935); }
+.app-theme-dark .backup-guide__eyebrow { color: #6992D3; }
+.app-theme-dark .backup-guide__title { color: #7196CB; }
+.app-theme-dark .backup-guide__text { color: #A8ADB3; }
+.app-theme-dark .backup-guide__count { color: #6990D3; }
+.app-theme-dark .backup-guide__progress { background: #222A35; }
+.app-theme-dark .backup-guide__progress-fill { background: linear-gradient(90deg, #5598E7, #67D5B8); }
+.app-theme-dark .backup-guide__check { border: 2rpx solid #8AA7D7; color: #7093CC; }
+.app-theme-dark .backup-guide__task.is-done .backup-guide__check { border-color: #64D8B5; background: #64D8B5; }
+.app-theme-dark .backup-guide__task-title { color: #DDE0E4; }
+.app-theme-dark .backup-guide__task-detail { color: #A9ADB2; }
+.app-theme-dark .backup-guide__action { color: #628FDA; }
+.app-theme-dark .backup-guide__task.is-done .backup-guide__action { color: #6DCFB4; }
+.app-theme-dark .wechat-transfer-card { border: 2rpx solid #3B4454; background: linear-gradient(135deg, #222A35, #282235); }
+.app-theme-dark .wechat-transfer-card__eyebrow { color: #7491C8; }
+.app-theme-dark .wechat-transfer-card__title { color: #6F94CE; }
+.app-theme-dark .wechat-transfer-card__text { color: #A8ACB3; }
+.app-theme-dark .wechat-transfer-card__notice { color: #AEA9B2; }
+.app-theme-dark .wechat-transfer-action { border: 2rpx solid #3B4754; background: #1E293B; }
+.app-theme-dark .wechat-transfer-action--primary { border-color: #6CA0EB; background: linear-gradient(90deg, #5895E4, #627DDA); }
+.app-theme-dark .wechat-transfer-action__title { color: #DCE0E5; }
+.app-theme-dark .wechat-transfer-action__text { color: #A9ADB2; }
+.app-theme-dark .wechat-transfer-action__arrow { color: #7094CC; }
+.app-theme-dark .wechat-transfer-tip { color: #A8ADB3; background: #222B35; }
+.app-theme-dark .wechat-transfer-tip text:first-child { color: #6F94CE; }

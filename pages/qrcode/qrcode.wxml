@@ -1,0 +1,61 @@
+<view class="page {{appThemeClass}}">
+  <scroll-view scroll-y class="content">
+    <view class="intro">
+      <text class="intro__title">二维码转换</text>
+      <text class="intro__sub">把文字或链接转换成二维码并保存</text>
+    </view>
+
+    <view class="input-card {{content ? 'input-card--filled' : ''}}">
+      <textarea
+        class="input"
+        value="{{content}}"
+        maxlength="2048"
+        auto-height
+        disable-default-padding
+        placeholder="输入文字或粘贴链接"
+        placeholder-class="text-hint"
+        bindinput="onInput" />
+      <view class="input-card__footer">
+        <text class="input-card__count">{{content.length}} / 2048</text>
+        <view wx:if="{{content}}" class="clear-btn" bindtap="onClear">清空</view>
+      </view>
+    </view>
+
+    <view wx:if="{{!qrPayload}}" class="qr-placeholder" bindtap="onGenerate">
+      <view class="qr-placeholder__box">
+        <text class="qr-placeholder__mark">＋</text>
+        <text class="qr-placeholder__text">点击生成二维码</text>
+      </view>
+    </view>
+
+    <view class="qr-card" wx:if="{{qrPayload}}">
+      <view wx:if="{{qrGrid.length}}" class="qr-grid" aria-label="二维码">
+        <view wx:for="{{qrGrid}}" wx:for-item="line" wx:for-index="rowIndex" wx:key="rowIndex" class="qr-grid__row">
+          <view wx:for="{{line}}" wx:for-item="dark" wx:for-index="colIndex" wx:key="colIndex" class="qr-grid__cell {{dark ? 'is-dark' : ''}}"></view>
+        </view>
+      </view>
+      <canvas canvas-id="qrCanvas" class="qr-canvas" style="width: 480rpx; height: 560rpx;"></canvas>
+      <text class="qr-card__hint">二维码已生成，点击下载并填写图片备注</text>
+      <view class="qr-card__content">{{displayContent}}</view>
+      <view class="qr-card__actions">
+        <view class="btn btn--primary action-btn" bindtap="onDownload">下载</view>
+      </view>
+    </view>
+
+    <view wx:if="{{history.length}}" class="history">
+      <view class="section-title" bindtap="onToggleHistory">
+        <text>最近保存</text>
+        <text class="section-title__sub">{{history.length}} 条</text>
+      </view>
+      <view wx:if="{{historyExpanded}}" wx:for="{{history}}" wx:key="id" class="history-item" bindtap="onUseHistory" data-id="{{item.id}}" bindlongpress="onDeleteHistory">
+        <view class="history-item__icon">QR</view>
+        <view class="history-item__main">
+          <text class="history-item__content">{{item.content}}</text>
+          <text class="history-item__meta">生成保存 · {{item.timeText}}</text>
+        </view>
+        <view class="row__arrow"></view>
+      </view>
+      <view style="height: 120rpx"></view>
+    </view>
+  </scroll-view>
+</view>

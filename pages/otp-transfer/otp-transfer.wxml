@@ -1,0 +1,79 @@
+<view class="page {{appThemeClass}}">
+  <scroll-view scroll-y class="body">
+    <block wx:if="{{mode === 'create' && stage === 'form'}}">
+      <view class="token-summary">
+        <text class="token-summary__label">正在迁移一条验证码</text>
+        <text class="token-summary__title">{{token.issuer}}</text>
+        <text class="token-summary__meta">{{token.accountName}} · {{token.digits}} 位 · {{token.period}} 秒</text>
+      </view>
+
+      <view class="notice notice--warm">
+        <text class="notice__title">至少启用一种保护</text>
+        <text class="notice__text">可设置 6 位以上访问密码、选择有效期，或同时使用两者。密码不会保存，也不会使用你的备份密码。</text>
+      </view>
+
+      <text class="section-title">访问密码（可选）</text>
+      <view class="card--flat">
+        <view class="field field--password">
+          <text class="field__label">访问密码</text>
+          <input class="field__input field__input--password" password="{{!passwordVisible}}" value="{{transferPassword}}" placeholder="至少 6 位；可留空" placeholder-class="text-hint" bindinput="onInput" data-key="transferPassword" />
+          <text class="password-toggle" bindtap="togglePasswordVisible">👁 {{passwordVisible ? '隐藏' : '显示'}}</text>
+        </view>
+      </view>
+
+      <text class="section-title">有效期（可选）</text>
+      <view class="expiry-options">
+        <view wx:for="{{expiryOptions}}" wx:key="value" class="expiry-option {{expiryMinutes === item.value ? 'is-active' : ''}}" bindtap="onSelectExpiry" data-value="{{item.value}}">{{item.label}}</view>
+      </view>
+      <view wx:if="{{!transferPassword && expiryMinutes !== 0}}" class="notice notice--plain"><text class="notice__text">当前仅使用有效期保护：二维码在有效期内无需密码即可导入，请只在可信环境中出示。</text></view>
+      <view wx:if="{{transferPassword}}" class="notice notice--plain"><text class="notice__text">有效期由接收设备本地时间检查，不能替代密码，也不能远程撤销已被截图的二维码。</text></view>
+    </block>
+
+    <block wx:if="{{mode === 'create' && stage === 'qr'}}">
+      <view class="token-summary token-summary--compact">
+        <text class="token-summary__label">迁移二维码</text>
+        <text class="token-summary__title">{{token.issuer}}</text>
+        <text class="token-summary__meta">{{token.accountName}}</text>
+      </view>
+      <view class="qr-card">
+        <view wx:if="{{qrGrid.length}}" class="qr-grid" aria-label="加密迁移二维码">
+          <view wx:for="{{qrGrid}}" wx:for-item="line" wx:for-index="rowIndex" wx:key="rowIndex" class="qr-grid__row">
+            <view wx:for="{{line}}" wx:for-item="dark" wx:for-index="colIndex" wx:key="colIndex" class="qr-grid__cell {{dark ? 'is-dark' : ''}}"></view>
+          </view>
+        </view>
+        <canvas canvas-id="transferQrCanvas" class="qr-canvas" style="width: 560rpx; height: 560rpx;"></canvas>
+      </view>
+      <view class="expiry-status {{expiresAt ? '' : 'is-permanent'}}"><text>{{remainingText}}</text></view>
+      <view class="notice notice--warm"><text class="notice__title">请在可信环境中出示</text><text class="notice__text">接收方需从首页“扫码添加”扫描，并输入你刚设置的访问密码。二维码不保存到普通二维码历史。</text></view>
+    </block>
+
+    <block wx:if="{{mode === 'import' && stage === 'import'}}">
+      <view class="transfer-icon">⇄</view>
+      <view class="import-heading"><text class="import-heading__title">已识别加密迁移二维码</text><text class="import-heading__text">{{importMeta.permanent ? '永不过期' : ('有效至 ' + importMeta.expiryText)}}</text></view>
+      <view class="notice notice--plain"><text class="notice__text">如导出方设置了访问密码，请输入 6 位以上密码；未设置密码时可留空直接导入。密码只在本机当前操作中用于解密，不会上传或保存。</text></view>
+      <view class="field field--standalone"><text class="field__label">访问密码（如有）</text><input class="field__input" password value="{{importPassword}}" placeholder="至少 6 位；未设置可留空" placeholder-class="text-hint" bindinput="onInput" data-key="importPassword" /></view>
+    </block>
+
+    <block wx:if="{{stage === 'expired'}}">
+      <view class="state-icon state-icon--expired">⌛</view>
+      <view class="state-title">迁移二维码已过期</view>
+      <view class="state-text">请让导出方重新从验证码条目长按菜单生成二维码。过期二维码不会进入导入流程。</view>
+      <view class="notice notice--plain"><text class="notice__text">有效期由本机时间检查；如需绝对的远程撤销或一次性使用，需要联网服务。</text></view>
+    </block>
+
+    <block wx:if="{{stage === 'success'}}">
+      <view class="state-icon state-icon--success">✓</view>
+      <view class="state-title">{{successTitle}}</view>
+      <view class="state-text">已安全合并到当前设备。如这条验证码已存在，系统不会创建重复条目。</view>
+    </block>
+
+    <view style="height: 160rpx"></view>
+  </scroll-view>
+
+  <view wx:if="{{mode === 'create' && stage === 'form'}}" class="footer safe-bottom"><view class="btn btn--primary" bindtap="onGenerate">加密并生成二维码</view></view>
+  <view wx:if="{{mode === 'import' && stage === 'import'}}" class="footer safe-bottom"><view class="btn btn--primary" bindtap="onDecryptImport">解密并导入</view></view>
+  <view wx:if="{{stage === 'expired'}}" class="footer safe-bottom"><view class="btn btn--ghost" bindtap="onClose">返回扫码添加</view></view>
+  <view wx:if="{{stage === 'success'}}" class="footer safe-bottom"><view class="btn btn--primary" bindtap="onViewTokens">查看验证码</view></view>
+
+  <view wx:if="{{busy}}" class="mask"><view class="mask__box"><text class="mask__title">{{busyTitle}}</text><view class="mask__track"><view class="mask__fill" style="width: {{busyPercent}}%"></view></view><text class="mask__percent">{{busyPercent}}%</text></view></view>
+</view>

@@ -1,0 +1,300 @@
+.page {
+  height: 100vh;
+  background: var(--settings-page-background);
+}
+
+.body {
+  height: 100%;
+  padding: 0 28rpx;
+}
+
+/* ---- 结果区 ---- */
+
+.result {
+  margin-top: 20rpx;
+  padding: 28rpx 32rpx 22rpx;
+  background: var(--card-background);
+  border-radius: 28rpx;
+}
+
+.result__value {
+  display: block;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: var(--text-main);
+  line-height: 1.5;
+  word-break: break-all;
+  min-height: 52rpx;
+  letter-spacing: 1rpx;
+}
+
+.result__meter {
+  display: flex;
+  align-items: center;
+  margin-top: 18rpx;
+}
+
+.result__track {
+  flex: 1;
+  height: 10rpx;
+  border-radius: 5rpx;
+  background: var(--border-soft);
+  overflow: hidden;
+}
+
+.result__fill {
+  height: 100%;
+  border-radius: 5rpx;
+  transition: width 0.2s ease;
+}
+
+.result__fill--weak { background: var(--danger); }
+.result__fill--fair { background: var(--warning); }
+.result__fill--good { background: var(--settings-blue); }
+.result__fill--strong { background: var(--success); }
+
+.result__label {
+  font-size: 23rpx;
+  margin-left: 16rpx;
+  flex-shrink: 0;
+}
+
+.result__label--weak { color: var(--danger); }
+.result__label--fair { color: var(--warning); }
+.result__label--good { color: var(--settings-blue); }
+.result__label--strong { color: var(--success); }
+
+.result__actions {
+  display: flex;
+  margin-top: 20rpx;
+  gap: 20rpx;
+}
+
+.result__btn {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  background: var(--dialog-ghost-bg);
+  color: var(--text-main);
+}
+
+.result__btn--primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* ---- 历史 ---- */
+
+.history-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 32rpx;
+  padding: 0 8rpx 12rpx;
+}
+
+.hist {
+  display: flex;
+  align-items: center;
+  padding: 22rpx 24rpx;
+}
+
+.hist__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.hist__pw {
+  display: block;
+  font-size: 28rpx;
+  color: var(--text-main);
+}
+
+.hist__meta {
+  display: block;
+  font-size: 21rpx;
+  color: var(--text-hint);
+  margin-top: 6rpx;
+}
+
+.hist__copy {
+  font-size: 25rpx;
+  color: var(--settings-blue);
+  flex-shrink: 0;
+  margin-left: 20rpx;
+}
+
+.hist-empty {
+  padding: 40rpx 24rpx;
+  text-align: center;
+  font-size: 24rpx;
+}
+
+.history-head__actions {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.history-head__toggle {
+  font-size: 24rpx;
+  color: var(--primary);
+}
+
+.hist__pw {
+  letter-spacing: 1rpx;
+}
+
+.hist__copy {
+  padding: 12rpx 18rpx;
+  border-radius: 14rpx;
+  color: var(--primary);
+  background: var(--settings-blue-soft);
+}
+
+
+/* 紧凑版生成结果区 */
+.result__password-row {
+  display: flex;
+  align-items: center;
+}
+
+.result__value {
+  flex: 1;
+  min-width: 0;
+}
+
+.result__icon-actions {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-left: 18rpx;
+}
+
+.result__icon-btn {
+  width: 58rpx;
+  height: 58rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18rpx;
+  background: var(--settings-blue-soft);
+  color: var(--primary);
+  font-size: 36rpx;
+  line-height: 1;
+}
+
+.result__icon-btn:active {
+  opacity: 0.65;
+  transform: scale(0.94);
+}
+
+.result__length-badge {
+  cursor: pointer;
+  width: 54rpx;
+  height: 54rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+  border: 3rpx solid var(--primary);
+  border-radius: 50%;
+  color: var(--primary);
+  font-size: 22rpx;
+  font-weight: bold;
+}
+
+.result__use {
+  margin-top: 18rpx;
+  padding: 14rpx 0;
+  border-radius: 16rpx;
+  text-align: center;
+  color: #fff;
+  background: var(--primary);
+  font-size: 25rpx;
+}
+
+/* 字符选项更紧凑，保留可读性 */
+.body .card--flat .row {
+  min-height: 62rpx;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+}
+
+.body .card--flat .row__title {
+  font-size: 27rpx;
+}
+
+.body .card--flat .row__subtitle {
+  margin-top: 2rpx;
+  font-size: 20rpx;
+}
+
+.body .card--flat switch {
+  transform: scale(0.86);
+}
+
+.body .slider-wrap {
+  padding-top: 12rpx;
+  padding-bottom: 4rpx;
+}
+
+.body .slider-marks {
+  font-size: 20rpx;
+}
+
+
+/* 密码固定显示框：内容在框内换行，不推动下方布局 */
+.result__password-row {
+  height: 120rpx;
+  overflow: hidden;
+  align-items: center;
+}
+
+.result__value {
+  max-height: 112rpx;
+  overflow-y: auto;
+  line-height: 1.28;
+  word-break: break-all;
+  white-space: normal;
+}
+
+.result__meter {
+  gap: 12rpx;
+}
+
+.result__meter .result__track {
+  min-width: 0;
+}
+
+.result__icon-btn--regenerate {
+  flex-shrink: 0;
+  margin-left: 4rpx;
+}
+
+
+.result__length-picker { display:flex; flex:0 0 54rpx; margin-left:16rpx; }
+
+/* 本地密码策略助手 */
+.strategy-card {
+  margin-bottom: 26rpx;
+  padding: 21rpx;
+  border: 1rpx solid #dce6fb;
+  border-radius: 22rpx;
+  background: linear-gradient(135deg, #f3f7ff, #faf8ff);
+}
+.strategy-card__top { display: flex; align-items: center; justify-content: space-between; gap: 12rpx; }
+.strategy-card__label { color: #396bb7; font-size: 21rpx; font-weight: 650; }
+.strategy-card__privacy { padding: 3rpx 8rpx; border: 1rpx solid #cadbf8; border-radius: 8rpx; color: #647da9; font-size: 18rpx; }
+.strategy-tabs { display: flex; white-space: nowrap; margin: 16rpx 0 18rpx; }
+.strategy-tab { display: inline-block; padding: 10rpx 17rpx; margin-right: 11rpx; border: 1rpx solid #d4dfef; border-radius: 99rpx; color: #69809f; background: #fff; font-size: 21rpx; }
+.strategy-tab.is-active { border-color: #477ce0; color: #fff; background: linear-gradient(90deg, #407df1, #665de0); font-weight: 700; }
+.strategy-card__title { display: block; color: #314a70; font-size: 27rpx; font-weight: 700; }
+.strategy-card__reason { display: block; margin-top: 7rpx; color: #657891; font-size: 21rpx; line-height: 1.55; }
+.strategy-card__tip { display: flex; align-items: flex-start; gap: 9rpx; margin-top: 14rpx; padding: 12rpx; border-radius: 13rpx; background: rgba(255,255,255,.72); color: #697a91; font-size: 19rpx; line-height: 1.5; }
+.strategy-card__tip text:first-child { flex: 0 0 auto; color: #7b5dcb; font-weight: 700; }

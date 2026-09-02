@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="760" viewBox="0 0 1600 760">
+  <rect width="1600" height="760" fill="#FFFFFF"/>
+  <text x="100" y="105" fill="#17365D" font-size="52" font-weight="700" font-family="PingFang SC, Arial Unicode MS, sans-serif">换手机时的三步恢复流程</text>
+  <g font-family="PingFang SC, Arial Unicode MS, sans-serif">
+    <circle cx="285" cy="350" r="104" fill="#EAF3FF"/>
+    <text x="285" y="337" text-anchor="middle" fill="#2B6CB0" font-size="56" font-weight="700">1</text>
+    <text x="285" y="405" text-anchor="middle" fill="#17365D" font-size="31" font-weight="700">旧手机备份</text>
+    <text x="285" y="458" text-anchor="middle" fill="#526070" font-size="23">微信文件或 WebDAV</text>
+    <path d="M420 350 H620" fill="none" stroke="#A8B9CE" stroke-width="7" stroke-linecap="round"/>
+    <path d="M610 330 L650 350 L610 370" fill="none" stroke="#A8B9CE" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="800" cy="350" r="104" fill="#F0ECFF"/>
+    <text x="800" y="337" text-anchor="middle" fill="#6844B7" font-size="56" font-weight="700">2</text>
+    <text x="800" y="405" text-anchor="middle" fill="#17365D" font-size="31" font-weight="700">新手机选择导入</text>
+    <text x="800" y="458" text-anchor="middle" fill="#526070" font-size="23">选择已有加密备份</text>
+    <path d="M935 350 H1135" fill="none" stroke="#A8B9CE" stroke-width="7" stroke-linecap="round"/>
+    <path d="M1125 330 L1165 350 L1125 370" fill="none" stroke="#A8B9CE" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="1315" cy="350" r="104" fill="#E8F7F2"/>
+    <text x="1315" y="337" text-anchor="middle" fill="#177B61" font-size="56" font-weight="700">3</text>
+    <text x="1315" y="405" text-anchor="middle" fill="#17365D" font-size="31" font-weight="700">输入备份密码</text>
+    <text x="1315" y="458" text-anchor="middle" fill="#526070" font-size="23">恢复并合并较新记录</text>
+  </g>
+  <text x="800" y="655" text-anchor="middle" fill="#526070" font-size="29" font-family="PingFang SC, Arial Unicode MS, sans-serif">重要账号建议同时保留服务方提供的备用恢复码。</text>
+</svg>

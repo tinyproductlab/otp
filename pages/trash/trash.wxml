@@ -1,0 +1,39 @@
+<view class="page {{appThemeClass}}">
+
+  <view class="header">
+    <text class="header__title">回收站({{items.length}})</text>
+    <text class="header__sub">保留 {{retentionLabel}},到期自动清除</text>
+  </view>
+
+  <view wx:if="{{items.length}}" class="toolbar">
+    <text class="toolbar__btn" bindtap="onToggleAll">{{allSelected ? '取消全选' : '全选'}}</text>
+    <view class="spacer"></view>
+    <text class="toolbar__btn {{selectedCount ? '' : 'is-disabled'}}" bindtap="onRestoreSelected">恢复所选</text>
+    <text class="toolbar__btn toolbar__btn--danger {{selectedCount ? '' : 'is-disabled'}}" bindtap="onDeleteSelected">彻底删除</text>
+  </view>
+
+  <scroll-view scroll-y class="list" wx:if="{{items.length}}">
+    <view wx:for="{{items}}" wx:key="id" class="item" bindtap="onToggle" data-id="{{item.id}}">
+      <view class="item__check {{item.selected ? 'is-checked' : ''}}"></view>
+      <view class="item__main">
+        <view class="item__line">
+          <text class="item__badge item__badge--{{item.kind}}">{{item.kindLabel}}</text>
+          <text class="item__title ellipsis">{{item.title}}</text>
+        </view>
+        <text class="item__meta">删除于 {{item.timeText}} · {{item.expiryText}}</text>
+      </view>
+    </view>
+    <view style="height: 180rpx"></view>
+  </scroll-view>
+
+  <view wx:else class="empty">
+    <text class="empty__title">回收站是空的</text>
+    <text class="empty__detail">删除的密码和验证码会先放到这里</text>
+  </view>
+
+  <view wx:if="{{items.length}}" class="footer safe-bottom">
+    <view class="btn btn--ghost footer__btn" bindtap="onRestoreAll">全部恢复</view>
+    <view class="btn btn--danger footer__btn" bindtap="onEmpty">清空回收站</view>
+  </view>
+
+</view>

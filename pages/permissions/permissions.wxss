@@ -1,0 +1,15 @@
+/* 同 privacy.wxss：原来颜色全写死，深色模式下不生效 */
+.page { height:100vh; background:var(--primary-page-background); }
+.body { height:100%; padding:0 28rpx; box-sizing:border-box; }
+.section-title { display:block; margin:28rpx 12rpx 18rpx; font-size:30rpx; color:var(--text-secondary); }
+.card--flat {
+  background:var(--card-background);
+  border-radius:24rpx;
+  padding:0 28rpx;
+  box-shadow:0 8rpx 24rpx var(--card-shadow, rgba(48,67,101,.06));
+}
+.permission-row { padding:26rpx 0; }
+.permission-title { display:block; color:var(--text-main); font-size:29rpx; font-weight:500; }
+.permission-desc { display:block; margin-top:10rpx; color:var(--text-secondary); font-size:24rpx; line-height:1.6; }
+.permission-divider { height:2rpx; background:var(--card-stroke); }
+.permission-note { display:block; margin:22rpx 10rpx 0; color:var(--text-hint); font-size:23rpx; line-height:1.6; }

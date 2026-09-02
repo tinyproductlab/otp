@@ -1,0 +1,92 @@
+<view class="page {{appThemeClass}}">
+  <scroll-view scroll-y class="body">
+    <block wx:if="{{mode === 'create' && stage === 'form'}}">
+      <view class="token-summary">
+        <text class="token-summary__label">批量迁移</text>
+        <text class="token-summary__title">导出全部 OTP</text>
+        <text class="token-summary__meta">共 {{tokenCount}} 条验证码，会自动拆成多张二维码</text>
+        <text wx:if="{{skippedCount}}" class="token-summary__warn">{{skippedText}}</text>
+      </view>
+
+      <view class="notice notice--warm">
+        <text class="notice__title">至少启用一种保护</text>
+        <text class="notice__text">可设置 6 位以上访问密码、选择有效期，或同时使用两者。密码更适合保护截图；有效期只由接收设备本地时间检查。</text>
+      </view>
+
+      <text class="section-title">访问密码（可选）</text>
+      <view class="card--flat">
+        <view class="field field--password">
+          <text class="field__label">访问密码</text>
+          <input class="field__input field__input--password" password="{{!passwordVisible}}" value="{{transferPassword}}" placeholder="至少 6 位；可留空" placeholder-class="text-hint" bindinput="onInput" data-key="transferPassword" />
+          <text class="password-toggle" bindtap="togglePasswordVisible">👁 {{passwordVisible ? '隐藏' : '显示'}}</text>
+        </view>
+      </view>
+
+      <text class="section-title">有效期（可选）</text>
+      <view class="expiry-options">
+        <view wx:for="{{expiryOptions}}" wx:key="value" class="expiry-option {{expiryMinutes === item.value ? 'is-active' : ''}}" bindtap="onSelectExpiry" data-value="{{item.value}}">{{item.label}}</view>
+      </view>
+      <view wx:if="{{!transferPassword && expiryMinutes !== 0}}" class="notice notice--plain"><text class="notice__text">当前仅使用有效期保护：二维码在有效期内无需密码即可导入，请只在可信环境中出示。</text></view>
+    </block>
+
+    <block wx:if="{{mode === 'create' && stage === 'qr'}}">
+      <view class="token-summary token-summary--compact">
+        <text class="token-summary__label">全部 OTP 迁移二维码</text>
+        <text class="token-summary__title">{{qrPageText}}</text>
+        <text class="token-summary__meta">请让接收方按任意顺序连续扫描，收齐后再导入</text>
+      </view>
+      <view class="qr-card">
+        <view wx:if="{{qrGrid.length}}" class="qr-grid" aria-label="全部 OTP 加密迁移二维码">
+          <view wx:for="{{qrGrid}}" wx:for-item="line" wx:for-index="rowIndex" wx:key="rowIndex" class="qr-grid__row">
+            <view wx:for="{{line}}" wx:for-item="dark" wx:for-index="colIndex" wx:key="colIndex" class="qr-grid__cell {{dark ? 'is-dark' : ''}}"></view>
+          </view>
+        </view>
+        <canvas canvas-id="bundleTransferQrCanvas" class="qr-canvas" style="width: 560rpx; height: 560rpx;"></canvas>
+      </view>
+      <view class="qr-pager"><view class="qr-pager__button {{qrIndex === 0 ? 'is-disabled' : ''}}" bindtap="onPreviousQr">上一张</view><text class="qr-pager__count">{{qrPageText}}</text><view class="qr-pager__button {{qrIndex === qrTotal - 1 ? 'is-disabled' : ''}}" bindtap="onNextQr">下一张</view></view>
+      <view class="expiry-status {{expiresAt ? '' : 'is-permanent'}}"><text>{{remainingText}}</text></view>
+      <view class="notice notice--warm"><text class="notice__title">请在可信环境中出示</text><text class="notice__text">{{passwordProtected ? '接收方收齐全部二维码后，需要输入你设置的访问密码。' : '接收方收齐全部二维码后可直接导入；请勿截图公开传播。'}} 全部二维码都不会写入普通二维码历史。</text></view>
+    </block>
+
+    <block wx:if="{{mode === 'import' && stage === 'collect'}}">
+      <view class="transfer-icon">⇄</view>
+      <view class="import-heading"><text class="import-heading__title">连续扫描全部 OTP</text><text class="import-heading__text">已收集 {{collectedCount}} / {{importTotal || '?'}} 张</text></view>
+      <view class="notice notice--plain"><text class="notice__text">请扫描同一组二维码。可以使用相机或从相册选择；扫码顺序不影响导入。二维码仅在全部收齐后才会解密。</text></view>
+      <view class="collect-progress"><view class="collect-progress__track"><view class="collect-progress__fill" style="width: {{collectionPercent}}%"></view></view><text class="collect-progress__text">{{collectedCount}} / {{importTotal || '待识别'}}</text></view>
+    </block>
+
+    <block wx:if="{{mode === 'import' && stage === 'import'}}">
+      <view class="transfer-icon">⇄</view>
+      <view class="import-heading"><text class="import-heading__title">已收齐 {{importMeta.total}} 张二维码</text><text class="import-heading__text">{{importMeta.permanent ? '未设置有效期' : ('有效至 ' + importMeta.expiryText)}}</text></view>
+      <view class="notice notice--plain"><text class="notice__text">如导出方设置了访问密码，请输入 6 位以上密码；未设置密码时可留空直接导入。密码不会上传或保存。</text></view>
+      <view class="field field--standalone field--password">
+        <text class="field__label">访问密码（如有）</text>
+        <input class="field__input field__input--password" password="{{!importPasswordVisible}}" value="{{importPassword}}" placeholder="至少 6 位；未设置可留空" placeholder-class="text-hint" bindinput="onInput" data-key="importPassword" />
+        <text class="password-toggle" bindtap="toggleImportPasswordVisible">👁 {{importPasswordVisible ? '隐藏' : '显示'}}</text>
+      </view>
+    </block>
+
+    <block wx:if="{{stage === 'expired'}}">
+      <view class="state-icon state-icon--expired">⌛</view>
+      <view class="state-title">迁移二维码已过期</view>
+      <view class="state-text">请让导出方重新生成全部 OTP 迁移二维码。过期二维码不会进入导入流程。</view>
+      <view class="notice notice--plain"><text class="notice__text">有效期由本机时间检查；如需绝对的远程撤销或一次性使用，需要联网服务。</text></view>
+    </block>
+
+    <block wx:if="{{stage === 'success'}}">
+      <view class="state-icon state-icon--success">✓</view>
+      <view class="state-title">{{successTitle}}</view>
+      <view class="state-text">{{successText}}</view>
+    </block>
+
+    <view style="height: 160rpx"></view>
+  </scroll-view>
+
+  <view wx:if="{{mode === 'create' && stage === 'form'}}" class="footer safe-bottom"><view class="btn btn--primary" bindtap="onGenerate">加密并生成全部二维码</view></view>
+  <view wx:if="{{mode === 'import' && stage === 'collect'}}" class="footer safe-bottom footer--split"><view class="btn btn--ghost footer__minor" bindtap="onResetCollection">重新开始</view><view class="btn btn--primary footer__main" bindtap="onScanNext">扫描下一张</view></view>
+  <view wx:if="{{mode === 'import' && stage === 'import'}}" class="footer safe-bottom"><view class="btn btn--primary" bindtap="onDecryptImport">解密并导入全部 OTP</view></view>
+  <view wx:if="{{stage === 'expired'}}" class="footer safe-bottom"><view class="btn btn--ghost" bindtap="onClose">返回扫码添加</view></view>
+  <view wx:if="{{stage === 'success'}}" class="footer safe-bottom"><view class="btn btn--primary" bindtap="onViewTokens">查看验证码</view></view>
+
+  <view wx:if="{{busy}}" class="mask"><view class="mask__box"><text class="mask__title">{{busyTitle}}</text><view class="mask__track"><view class="mask__fill" style="width: {{busyPercent}}%"></view></view><text class="mask__percent">{{busyPercent}}%</text></view></view>
+</view>

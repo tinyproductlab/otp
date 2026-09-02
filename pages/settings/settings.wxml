@@ -1,0 +1,165 @@
+<view class="page {{appThemeClass}}">
+  <view wx:if="{{directBackupPasswordCreate}}" class="backup-create-screen safe-bottom">
+    <view class="backup-create-screen__hero">
+      <text class="backup-create-screen__eyebrow">{{copy.backupProtect}}</text>
+      <text class="backup-create-screen__title">{{copy.createBackup}}</text>
+      <text class="backup-create-screen__copy">{{copy.createBackupHint}}</text>
+    </view>
+
+    <view class="backup-create-screen__card card--flat">
+      <view class="field">
+        <text class="field__label">{{copy.backupPassword}}</text>
+        <view class="backup-password-input">
+          <input class="field__input backup-password-input__control" password="{{!backupPasswordVisible}}" value="{{newBackupPassword}}" maxlength="64" placeholder="{{copy.passwordRules}}" disabled="{{emptyBackupPasswordSelected}}" bindinput="onNewBackupPassword" />
+          <view class="backup-password-input__eye {{backupPasswordVisible ? 'is-visible' : ''}}" bindtap="onToggleBackupPasswordVisibility" aria-label="{{backupPasswordVisible ? '隐藏备份密码' : '显示备份密码'}}">
+            <view class="backup-password-input__eye-shape"></view>
+          </view>
+        </view>
+      </view>
+      <view class="empty-row">
+        <view class="row-main">
+            <text class="row-title row-title--sm">{{copy.useEmptyPassword}}</text>
+            <text class="row-sub">{{copy.useEmptyPasswordHint}}</text>
+        </view>
+        <switch checked="{{emptyBackupPasswordSelected}}" color="#4A90D9" bindchange="onEmptyBackupPassword" />
+      </view>
+      <view class="actions">
+        <view class="btn btn--ghost panel-btn" bindtap="onGenerateBackupPassword">{{copy.generate}}</view>
+        <view class="btn btn--primary panel-btn" bindtap="onSaveBackupPassword">{{copy.createPassword}}</view>
+      </view>
+    </view>
+
+    <view class="backup-create-screen__later" bindtap="onCancelDirectBackupPassword">{{copy.later}}</view>
+  </view>
+
+  <scroll-view wx:else scroll-y class="scroll">
+
+    <text class="sec">{{copy.appearance}}</text>
+    <view class="card">
+      <view class="theme-row">
+        <view class="row-main">
+          <text class="row-title">{{copy.theme}}</text>
+          <text class="row-sub">{{themeNote}}</text>
+        </view>
+        <view class="segmented">
+          <view class="seg {{settings.theme === 'light' ? 'is-active' : ''}}" bindtap="onTheme" data-value="light" aria-label="浅色">
+            <view class="glyph glyph-sun seg__icon"></view>
+          </view>
+          <view class="seg {{settings.theme === 'system' ? 'is-active' : ''}}" bindtap="onTheme" data-value="system" aria-label="跟随系统">
+            <view class="glyph glyph-phone seg__icon"></view>
+          </view>
+          <view class="seg {{settings.theme === 'dark' ? 'is-active' : ''}}" bindtap="onTheme" data-value="dark" aria-label="深色">
+            <view class="glyph glyph-moon seg__icon"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <text class="sec">{{copy.data}}</text>
+    <view class="card">
+      <view id="backup-password-setting" class="row row--clickable" bindtap="onBackupPasswordEntry">
+        <view class="row-main">
+          <text class="row-title">{{backupPasswordConfigured ? copy.changeBackup : copy.backupCreated}}</text>
+          <text class="row-sub">{{backupPasswordConfigured ? copy.backupChangeHint : copy.backupCreateHint}}</text>
+        </view>
+        <text class="row-value">{{backupPasswordConfigured ? copy.configured : copy.notConfigured}}</text>
+        <view class="chevron"></view>
+      </view>
+      <view wx:if="{{backupPasswordExpanded}}" class="panel">
+        <view wx:if="{{backupPasswordConfigured}}" class="field">
+          <text class="field__label">{{copy.currentBackup}}</text>
+          <input class="field__input" password value="{{oldBackupPassword}}" placeholder="{{copy.currentBackupPlaceholder}}" bindinput="onOldBackupPassword" />
+        </view>
+        <view class="field">
+          <text class="field__label">{{backupPasswordConfigured ? copy.newBackup : copy.backupPassword}}</text>
+          <view wx:if="{{!backupPasswordConfigured}}" class="backup-password-input">
+            <input class="field__input backup-password-input__control" password="{{!backupPasswordVisible}}" value="{{newBackupPassword}}" maxlength="64" placeholder="{{copy.passwordRules}}" disabled="{{emptyBackupPasswordSelected}}" bindinput="onNewBackupPassword" />
+            <view class="backup-password-input__eye {{backupPasswordVisible ? 'is-visible' : ''}}" bindtap="onToggleBackupPasswordVisibility" aria-label="{{backupPasswordVisible ? '隐藏备份密码' : '显示备份密码'}}">
+              <view class="backup-password-input__eye-shape"></view>
+            </view>
+          </view>
+          <input wx:else class="field__input" password value="{{newBackupPassword}}" maxlength="64" placeholder="{{copy.passwordRules}}" disabled="{{emptyBackupPasswordSelected}}" bindinput="onNewBackupPassword" />
+        </view>
+        <view wx:if="{{backupPasswordConfigured}}" class="field">
+          <text class="field__label">{{copy.confirmNewBackup}}</text>
+          <input class="field__input" password value="{{confirmBackupPassword}}" maxlength="64" placeholder="{{copy.confirmNewBackupPlaceholder}}" disabled="{{emptyBackupPasswordSelected}}" bindinput="onConfirmBackupPassword" />
+        </view>
+        <view class="empty-row">
+          <view class="row-main">
+            <text class="row-title row-title--sm">{{backupPasswordConfigured ? copy.emptyAfterChange : copy.useEmptyPassword}}</text>
+            <text class="row-sub">{{backupPasswordConfigured ? copy.emptyAfterChangeHint : copy.useEmptyPasswordHint}}</text>
+          </view>
+          <switch checked="{{emptyBackupPasswordSelected}}" color="#4A90D9" bindchange="onEmptyBackupPassword" />
+        </view>
+        <view class="actions">
+          <view class="btn btn--ghost panel-btn" bindtap="onGenerateBackupPassword">{{backupPasswordConfigured ? copy.generateNew : copy.generate}}</view>
+          <view class="btn btn--primary panel-btn" bindtap="onSaveBackupPassword">{{backupPasswordConfigured ? copy.confirmChange : copy.createPassword}}</view>
+        </view>
+      </view>
+      <view class="divider"></view>
+      <picker class="picker" mode="selector" range="{{retentionLabels}}" value="{{retentionIndex}}" bindchange="onRetention">
+        <view class="row row--clickable">
+          <view class="row-main"><text class="row-title">{{copy.trash}}</text></view>
+          <text class="row-value">{{retentionLabels[retentionIndex]}}</text>
+          <view class="chevron"></view>
+        </view>
+      </picker>
+      <view class="divider"></view>
+      <picker class="picker" mode="selector" range="{{generationLabels}}" value="{{generationIndex}}" bindchange="onGeneration">
+        <view class="row row--clickable">
+          <view class="row-main"><text class="row-title">{{copy.history}}</text></view>
+          <text class="row-value">{{generationLabels[generationIndex]}}</text>
+          <view class="chevron"></view>
+        </view>
+      </picker>
+      <view class="divider"></view>
+      <view class="row">
+        <view class="row-main">
+          <text class="row-title">{{copy.biometric}}</text>
+          <text class="row-sub">{{copy.biometricHint}}</text>
+        </view>
+        <switch checked="{{settings.biometricLock}}" color="#4A90D9" bindchange="onBiometric" />
+      </view>
+      <view class="divider"></view>
+      <view class="row">
+        <view class="row-main">
+          <text class="row-title">{{copy.clipboard}}</text>
+          <text class="row-sub">{{copy.clipboardHint}}</text>
+        </view>
+        <switch checked="{{settings.clipboardHint}}" color="#4A90D9" bindchange="onClipboardHint" />
+      </view>
+      <view class="divider"></view>
+      <view class="row row--clickable" bindtap="onStorageInfo">
+        <view class="row-main"><text class="row-title">{{copy.storage}}</text></view>
+        <text class="row-value">{{storageText}}</text>
+        <view class="chevron"></view>
+      </view>
+    </view>
+
+    <text class="sec">{{copy.privacy}}</text>
+    <view class="card">
+      <view class="row row--clickable" bindtap="onPrivacyPolicy">
+        <view class="row-main">
+          <text class="row-title">{{copy.policy}}</text>
+          <text class="row-sub">{{copy.policyHint}}</text>
+        </view>
+        <view class="chevron"></view>
+      </view>
+      <view class="divider"></view>
+      <view class="row row--clickable" bindtap="onPermissionManagement">
+        <view class="row-main">
+          <text class="row-title">{{copy.permissions}}</text>
+          <text class="row-sub">{{copy.permissionsHint}}</text>
+        </view>
+        <view class="chevron"></view>
+      </view>
+    </view>
+
+    <view class="danger-zone">
+      <view class="danger-btn" bindtap="onClearAll"><text>{{copy.clear}}</text></view>
+      <text class="danger-note">{{copy.clearHint}}</text>
+    </view>
+
+    <view class="tail"></view>
+  </scroll-view>
+</view>

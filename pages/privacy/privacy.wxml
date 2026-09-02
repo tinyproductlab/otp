@@ -1,0 +1,15 @@
+<view class="page privacy-page {{appThemeClass}}">
+  <scroll-view scroll-y class="body">
+    <text class="section-title">隐私协议</text>
+    <view class="card--flat privacy-card">
+      <text class="privacy-card__text">小产品实验室 OTP 以本地安全管理为主要目的。验证码、静态密码账本、二维码生成记录和密码生成历史默认保存在微信本地存储中。</text>
+      <text class="privacy-card__text">导出、恢复和 WebDAV 同步均由用户主动操作。备份文件会先使用备份密码加密，再由用户保存或上传到自己的 WebDAV 服务。</text>
+      <text class="privacy-card__text">仅在你点击“复制”时，才会将验证码、密码或二维码文字写入系统剪贴板；小程序不会读取剪贴板内容。</text>
+      <text class="privacy-card__text">仅在你点击保存二维码时，才会将当前生成的二维码图片写入系统相册；小程序不会读取你的相册。</text>
+      <text class="privacy-card__text">仅在你主动从微信聊天中选择加密备份文件时，才会读取你选择的文件用于恢复；不会自动访问聊天记录或其他文件。</text>
+      <text class="privacy-card__text">本小程序不会主动出售、公开或将用户保存的验证码、密码和备份内容用于广告分析。</text>
+      <text class="privacy-card__text">如果更换设备、清理微信缓存或卸载微信，原设备本地数据可能无法恢复。请及时创建本地或云端加密备份。</text>
+    </view>
+    <view style="height: 100rpx"></view>
+  </scroll-view>
+</view>

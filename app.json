@@ -1,0 +1,32 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/security-plan/security-plan",
+    "pages/otp/otp",
+    "pages/otp-edit/otp-edit",
+    "pages/otp-transfer/otp-transfer",
+    "pages/otp-bundle-transfer/otp-bundle-transfer",
+    "pages/password/password",
+    "pages/password-edit/password-edit",
+    "pages/generator/generator",
+    "pages/qrcode/qrcode",
+    "pages/backup/backup",
+    "pages/trash/trash",
+    "pages/settings/settings",
+    "pages/about/about",
+    "pages/privacy/privacy",
+    "pages/permissions/permissions"
+  ],
+  "window": {
+    "navigationBarTitleText": "小产品实验室 OTP",
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#F4F7FC",
+    "backgroundColor": "#F4F7FC",
+    "backgroundTextStyle": "light"
+  },
+  "darkmode": true,
+  "themeLocation": "theme.json",
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

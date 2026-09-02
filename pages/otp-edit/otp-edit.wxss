@@ -1,0 +1,96 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--settings-page-background);
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  padding: 0 28rpx;
+}
+
+/* ---- 实时预览 ---- */
+
+.preview {
+  margin-top: 24rpx;
+  padding: 40rpx 0 32rpx;
+  background: var(--card-background);
+  border-radius: 28rpx;
+  text-align: center;
+}
+
+.preview__code {
+  display: block;
+  font-size: 64rpx;
+  font-weight: bold;
+  color: var(--primary);
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  letter-spacing: 4rpx;
+}
+
+.preview.is-invalid .preview__code {
+  color: var(--text-hint);
+  font-size: 44rpx;
+  letter-spacing: 0;
+}
+
+.preview__hint {
+  display: block;
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  margin-top: 12rpx;
+}
+
+.preview.is-invalid .preview__hint {
+  color: var(--warning);
+}
+
+/* ---- 表单 ---- */
+
+.field__note {
+  display: block;
+  font-size: 22rpx;
+  color: var(--text-hint);
+  margin-top: 10rpx;
+  line-height: 1.5;
+}
+
+/* ---- 分段选择 ---- */
+
+.segment {
+  display: flex;
+  background: var(--dialog-input-bg);
+  border-radius: 12rpx;
+  padding: 4rpx;
+  flex-shrink: 0;
+}
+
+.segment__item {
+  padding: 10rpx 22rpx;
+  font-size: 25rpx;
+  color: var(--text-secondary);
+  border-radius: 9rpx;
+}
+
+.segment__item.is-active {
+  background: var(--card-background);
+  color: var(--primary);
+  font-weight: bold;
+}
+
+/* ---- 危险操作 ---- */
+
+.danger-zone {
+  margin-top: 48rpx;
+}
+
+/* ---- 底部 ---- */
+
+.footer {
+  padding: 20rpx 28rpx;
+  flex-shrink: 0;
+  background: var(--settings-page-background);
+  border-top: 1rpx solid var(--card-stroke);
+}

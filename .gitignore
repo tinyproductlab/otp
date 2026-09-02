@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+
+# 微信开发者工具的本地私有配置(每台机器不同,不该进版本库)
+project.private.config.json
+
+# 依赖
+node_modules/
+miniprogram_npm/
+
+# 临时产物
+*.log
+*.tmp
+
+# 本地密钥与部署配置
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p8

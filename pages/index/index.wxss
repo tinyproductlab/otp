@@ -1,0 +1,754 @@
+/**
+ * 首页样式 —— 对齐「线框图-首页重设计-v1」
+ *
+ * 规则：
+ *   1. 字号只用 6 档：52(品牌) / 40(页标题) / 30(卡标题) / 26/24(正文·副文案) / 20(角注)，
+ *      验证码数字 38 是唯一的数字展示例外。
+ *   2. 图标只有一套语言：线性 SVG 走 -webkit-mask 上色（背景色即图标色），
+ *      深色模式由 colors.wxss 的变量自动翻转，此处零硬编码颜色。
+ *   3. 不留旧版样式：本文件没有历史层叠，每个类只定义一次。
+ */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--primary-page-background);
+}
+
+/* ============ 图标系统（mask 上色） ============ */
+
+.glyph {
+  display: block;
+  background-color: var(--text-secondary);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+.glyph-grid {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Crect x='3' y='3' width='6' height='6' rx='1.5' stroke='black' stroke-width='1.6'/%3E%3Crect x='11' y='3' width='6' height='6' rx='1.5' stroke='black' stroke-width='1.6'/%3E%3Crect x='3' y='11' width='6' height='6' rx='1.5' stroke='black' stroke-width='1.6'/%3E%3Crect x='11' y='11' width='6' height='6' rx='1.5' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Crect x='3' y='3' width='6' height='6' rx='1.5' stroke='black' stroke-width='1.6'/%3E%3Crect x='11' y='3' width='6' height='6' rx='1.5' stroke='black' stroke-width='1.6'/%3E%3Crect x='3' y='11' width='6' height='6' rx='1.5' stroke='black' stroke-width='1.6'/%3E%3Crect x='11' y='11' width='6' height='6' rx='1.5' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E");
+}
+
+.glyph-shield {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M10 2l6 2.4v4.1c0 3.9-2.5 7.3-6 8.5-3.5-1.2-6-4.6-6-8.5V4.4L10 2z' stroke='black' stroke-width='1.6' stroke-linejoin='round'/%3E%3Ccircle cx='10' cy='9.5' r='2.6' stroke='black' stroke-width='1.4'/%3E%3Cpath d='M10 8.3v1.2l.9.9' stroke='black' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M10 2l6 2.4v4.1c0 3.9-2.5 7.3-6 8.5-3.5-1.2-6-4.6-6-8.5V4.4L10 2z' stroke='black' stroke-width='1.6' stroke-linejoin='round'/%3E%3Ccircle cx='10' cy='9.5' r='2.6' stroke='black' stroke-width='1.4'/%3E%3Cpath d='M10 8.3v1.2l.9.9' stroke='black' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.glyph-db {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cellipse cx='10' cy='4.5' rx='6.5' ry='2.5' stroke='black' stroke-width='1.6'/%3E%3Cpath d='M3.5 4.5v11c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5v-11' stroke='black' stroke-width='1.6'/%3E%3Cpath d='M3.5 10c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cellipse cx='10' cy='4.5' rx='6.5' ry='2.5' stroke='black' stroke-width='1.6'/%3E%3Cpath d='M3.5 4.5v11c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5v-11' stroke='black' stroke-width='1.6'/%3E%3Cpath d='M3.5 10c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E");
+}
+
+.glyph-doc {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Crect x='4' y='2.5' width='12' height='15' rx='2.5' stroke='black' stroke-width='1.6'/%3E%3Cpath d='M7.5 7h5M7.5 10h5M7.5 13h3' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Crect x='4' y='2.5' width='12' height='15' rx='2.5' stroke='black' stroke-width='1.6'/%3E%3Cpath d='M7.5 7h5M7.5 10h5M7.5 13h3' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.glyph-qrcode {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Crect x='2.5' y='2.5' width='6' height='6' rx='1.2' stroke='black' stroke-width='1.6'/%3E%3Crect x='11.5' y='2.5' width='6' height='6' rx='1.2' stroke='black' stroke-width='1.6'/%3E%3Crect x='2.5' y='11.5' width='6' height='6' rx='1.2' stroke='black' stroke-width='1.6'/%3E%3Cpath d='M11.5 14.5h6M14.5 11.5v6' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Crect x='2.5' y='2.5' width='6' height='6' rx='1.2' stroke='black' stroke-width='1.6'/%3E%3Crect x='11.5' y='2.5' width='6' height='6' rx='1.2' stroke='black' stroke-width='1.6'/%3E%3Crect x='2.5' y='11.5' width='6' height='6' rx='1.2' stroke='black' stroke-width='1.6'/%3E%3Cpath d='M11.5 14.5h6M14.5 11.5v6' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.glyph-dice {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Crect x='3' y='3' width='14' height='14' rx='3' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='7' cy='7' r='1.4' fill='black'/%3E%3Ccircle cx='13' cy='7' r='1.4' fill='black'/%3E%3Ccircle cx='7' cy='13' r='1.4' fill='black'/%3E%3Ccircle cx='13' cy='13' r='1.4' fill='black'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Crect x='3' y='3' width='14' height='14' rx='3' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='7' cy='7' r='1.4' fill='black'/%3E%3Ccircle cx='13' cy='7' r='1.4' fill='black'/%3E%3Ccircle cx='7' cy='13' r='1.4' fill='black'/%3E%3Ccircle cx='13' cy='13' r='1.4' fill='black'/%3E%3C/svg%3E");
+}
+
+.glyph-cloud {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M6.5 15.5h7.5a3 3 0 00.6-5.9 4.5 4.5 0 00-8.8-1A3.5 3.5 0 006.5 15.5z' stroke='black' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M6.5 15.5h7.5a3 3 0 00.6-5.9 4.5 4.5 0 00-8.8-1A3.5 3.5 0 006.5 15.5z' stroke='black' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.glyph-upload {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M10 12.5v-9M10 3.5L6.5 7M10 3.5L13.5 7' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M3.5 12.5V15a2 2 0 002 2h9a2 2 0 002-2v-2.5' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M10 12.5v-9M10 3.5L6.5 7M10 3.5L13.5 7' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M3.5 12.5V15a2 2 0 002 2h9a2 2 0 002-2v-2.5' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.glyph-archive {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Crect x='4' y='6' width='12' height='11' rx='2' stroke='black' stroke-width='1.6'/%3E%3Cpath d='M7 6V4.5A1.5 1.5 0 018.5 3h3A1.5 1.5 0 0113 4.5V6' stroke='black' stroke-width='1.6'/%3E%3Cpath d='M8 10v3.5M12 10v3.5' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Crect x='4' y='6' width='12' height='11' rx='2' stroke='black' stroke-width='1.6'/%3E%3Cpath d='M7 6V4.5A1.5 1.5 0 018.5 3h3A1.5 1.5 0 0113 4.5V6' stroke='black' stroke-width='1.6'/%3E%3Cpath d='M8 10v3.5M12 10v3.5' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.glyph-trash {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M4.5 6.5h11L14.6 16a1.8 1.8 0 01-1.8 1.5H7.2A1.8 1.8 0 015.4 16L4.5 6.5z' stroke='black' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M3 6.5h14M7.5 6.5V5a1.5 1.5 0 011.5-1.5h2A1.5 1.5 0 0112.5 5v1.5' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M4.5 6.5h11L14.6 16a1.8 1.8 0 01-1.8 1.5H7.2A1.8 1.8 0 015.4 16L4.5 6.5z' stroke='black' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M3 6.5h14M7.5 6.5V5a1.5 1.5 0 011.5-1.5h2A1.5 1.5 0 0112.5 5v1.5' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.glyph-scan {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none'%3E%3Cpath d='M2.5 6V4.5a2 2 0 012-2H6M12 2.5h1.5a2 2 0 012 2V6M15.5 12v1.5a2 2 0 01-2 2H12M6 15.5H4.5a2 2 0 01-2-2V12' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3Cpath d='M2.5 9h13' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none'%3E%3Cpath d='M2.5 6V4.5a2 2 0 012-2H6M12 2.5h1.5a2 2 0 012 2V6M15.5 12v1.5a2 2 0 01-2 2H12M6 15.5H4.5a2 2 0 01-2-2V12' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3Cpath d='M2.5 9h13' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.glyph-plus {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none'%3E%3Cpath d='M9 2.5v13M2.5 9h13' stroke='black' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none'%3E%3Cpath d='M9 2.5v13M2.5 9h13' stroke='black' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.glyph-batch {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none'%3E%3Cpath d='M3 6h9M9.5 3L12 6l-2.5 3' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M15 12H6M8.5 9L6 12l2.5 3' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none'%3E%3Cpath d='M3 6h9M9.5 3L12 6l-2.5 3' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M15 12H6M8.5 9L6 12l2.5 3' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.glyph-export {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none'%3E%3Cpath d='M9 12.5v-9M9 3.5L5.5 7M9 3.5L12.5 7' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M3.5 11.5V14a1.8 1.8 0 001.8 1.8h7.4A1.8 1.8 0 0014.5 14v-2.5' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none'%3E%3Cpath d='M9 12.5v-9M9 3.5L5.5 7M9 3.5L12.5 7' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M3.5 11.5V14a1.8 1.8 0 001.8 1.8h7.4A1.8 1.8 0 0014.5 14v-2.5' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.glyph-search {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none'%3E%3Ccircle cx='6' cy='6' r='4.4' stroke='black' stroke-width='1.5'/%3E%3Cpath d='M9.5 9.5L13 13' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none'%3E%3Ccircle cx='6' cy='6' r='4.4' stroke='black' stroke-width='1.5'/%3E%3Cpath d='M9.5 9.5L13 13' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.glyph-filter {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none'%3E%3Cpath d='M2 3.5h10M4 7h6M5.5 10.5h3' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none'%3E%3Cpath d='M2 3.5h10M4 7h6M5.5 10.5h3' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.glyph-clock {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Ccircle cx='10' cy='10' r='7' stroke='black' stroke-width='1.8'/%3E%3Cpath d='M10 6v4l2.5 2' stroke='black' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Ccircle cx='10' cy='10' r='7' stroke='black' stroke-width='1.8'/%3E%3Cpath d='M10 6v4l2.5 2' stroke='black' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* 图标软色底 */
+.tint-blue { background: var(--settings-blue-soft); }
+.tint-purple { background: var(--settings-purple-soft); }
+.tint-green { background: var(--settings-green-soft); }
+.tint-orange { background: var(--settings-orange-soft); }
+.tint-teal { background: var(--settings-teal-soft); }
+.tint-blue .glyph { background-color: var(--settings-blue); }
+.tint-purple .glyph { background-color: var(--settings-purple); }
+.tint-green .glyph { background-color: var(--settings-green); }
+.tint-orange .glyph { background-color: var(--settings-orange); }
+.tint-teal .glyph { background-color: var(--settings-teal); }
+
+/* 细箭头 */
+.chevron {
+  width: 16rpx;
+  height: 16rpx;
+  border-right: 3rpx solid var(--text-hint);
+  border-bottom: 3rpx solid var(--text-hint);
+  transform: rotate(-45deg);
+  opacity: 0.55;
+  margin-left: 16rpx;
+  flex-shrink: 0;
+}
+
+/* ============ 顶部品牌栏 ============ */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 36rpx 16rpx;
+  flex-shrink: 0;
+}
+
+.topbar__logo {
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 22rpx;
+  flex-shrink: 0;
+  background: #eef4ff;
+  box-shadow: 0 4rpx 12rpx rgba(36, 92, 190, 0.16);
+}
+
+.topbar__copy {
+  min-width: 0;
+  margin-left: 22rpx;
+}
+
+.topbar__name {
+  display: block;
+  font-size: 52rpx;
+  line-height: 1;
+  font-weight: bold;
+  letter-spacing: 2rpx;
+  color: var(--primary-reference-title);
+}
+
+.topbar__sub {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  letter-spacing: 4rpx;
+  color: var(--text-secondary);
+}
+
+.topbar__spacer {
+  flex: 1;
+}
+
+.more-action {
+  width: 56rpx;
+  height: 76rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7rpx;
+  flex-shrink: 0;
+}
+
+.more-action__dot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background: var(--primary-reference-title);
+}
+
+/* ============ ⋮ 菜单 ============ */
+
+.more-menu-layer {
+  position: fixed;
+  z-index: 1100;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: transparent;
+}
+
+.more-menu-panel {
+  position: absolute;
+  top: 108rpx;
+  right: 28rpx;
+  width: 300rpx;
+  padding: 10rpx 0;
+  border-radius: 18rpx;
+  background: var(--card-background);
+  box-shadow: 0 8rpx 28rpx rgba(20, 42, 74, 0.16);
+}
+
+.more-menu-option {
+  display: block;
+  padding: 22rpx 28rpx;
+  font-size: 28rpx;
+  color: var(--text-main);
+  text-align: left;
+  line-height: 1.4;
+}
+
+.more-menu-option:active {
+  background: var(--settings-blue-soft);
+}
+
+.more-menu-option + .more-menu-option {
+  border-top: 1rpx solid var(--card-stroke);
+}
+
+/* button 形态的菜单项（feedback / share）重置原生样式 */
+.more-menu-option--plain {
+  width: 100%;
+  min-height: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.more-menu-option--plain::after { border: 0; }
+
+/* ============ 滑动区 ============ */
+
+.pager {
+  flex: 1;
+  min-height: 0;
+}
+
+.pane {
+  height: 100%;
+  /* 顶部留白原来由屏内的 page-head 撑出来；标题移到顶栏后由 pane 自己给 */
+  padding: 24rpx 36rpx 40rpx;
+}
+
+.pane--otp {
+  position: relative;
+  padding-top: 18rpx;
+}
+
+/* ============ 入口卡（实用工具 / 数据管理通用） ============ */
+
+.entry {
+  display: flex;
+  align-items: center;
+  background: var(--card-background);
+  border-radius: 24rpx;
+  padding: 28rpx;
+  margin-top: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(20, 42, 74, 0.06);
+}
+
+.entry__icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.entry__icon .glyph {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.entry__main {
+  flex: 1;
+  min-width: 0;
+  margin-left: 24rpx;
+}
+
+.entry__title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: var(--data-management-title);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.entry__sub {
+  display: block;
+  margin-top: 6rpx;
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============ OTP 首页 · 搜索 ============ */
+
+.home-search {
+  display: flex;
+  align-items: center;
+  height: 76rpx;
+  margin-bottom: 22rpx;
+  padding: 0 22rpx;
+  border-radius: 38rpx;
+  background: var(--password-ledger-search);
+}
+
+.home-search__icon {
+  width: 28rpx;
+  height: 28rpx;
+  flex-shrink: 0;
+  background-color: var(--text-hint);
+}
+
+.home-search__input {
+  flex: 1;
+  min-width: 0;
+  height: 76rpx;
+  margin-left: 16rpx;
+  font-size: 26rpx;
+  color: var(--text-main);
+}
+
+.home-search__clear {
+  width: 30rpx;
+  height: 30rpx;
+  position: relative;
+  border-radius: 50%;
+  background: var(--border-soft);
+  flex-shrink: 0;
+}
+
+.home-search__clear::before,
+.home-search__clear::after {
+  content: "";
+  position: absolute;
+  left: 8rpx;
+  top: 14rpx;
+  width: 14rpx;
+  height: 2rpx;
+  background: var(--text-secondary);
+  transform: rotate(45deg);
+}
+
+.home-search__clear::after {
+  transform: rotate(-45deg);
+}
+
+.home-search__filter {
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 12rpx;
+  flex-shrink: 0;
+  border-radius: 12rpx;
+}
+
+.home-search__filter.is-active {
+  background: var(--settings-blue-soft);
+}
+
+.home-search__filter-glyph {
+  width: 28rpx;
+  height: 28rpx;
+  background-color: var(--text-secondary);
+}
+
+.home-filter-menu {
+  position: absolute;
+  right: 36rpx;
+  z-index: 8;
+  margin-top: -12rpx;
+  width: 220rpx;
+  padding: 10rpx 0;
+  border-radius: 24rpx;
+  background: var(--card-background);
+  box-shadow: 0 8rpx 28rpx rgba(20, 42, 74, 0.16);
+}
+
+.home-filter-menu__item {
+  padding: 22rpx 28rpx;
+  font-size: 26rpx;
+  color: var(--text-secondary);
+}
+
+.home-filter-menu__item.is-active {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+/* ============ OTP 首页 · 验证码卡片 ============ */
+
+.home-token-list {
+  padding-bottom: 20rpx;
+}
+
+.home-token {
+  display: flex;
+  align-items: center;
+  min-height: 124rpx;
+  box-sizing: border-box;
+  padding: 24rpx 28rpx;
+  margin-bottom: 20rpx;
+  border-radius: 24rpx;
+  background: var(--card-background);
+  box-shadow: 0 4rpx 20rpx rgba(20, 42, 74, 0.06);
+}
+
+.home-token.is-expiring {
+  box-shadow: 0 4rpx 24rpx rgba(217, 48, 37, 0.14);
+}
+
+/* 被抓起来的那张卡片:抬高、略微放大、半透明,让"它在手上"这件事看得出来。
+   不能加 transition —— translateY 是跟手逐帧改的,加了过渡就会拖泥带水。 */
+.home-token.is-dragging {
+  position: relative;
+  z-index: 10;
+  opacity: 0.94;
+  transform-origin: center;
+  box-shadow: 0 12rpx 36rpx rgba(20, 42, 74, 0.22);
+}
+
+/* 手动排序模式下的操作提示 */
+.sort-hint {
+  margin: 0 4rpx 16rpx;
+  padding: 14rpx 24rpx;
+  border-radius: 16rpx;
+  background: var(--primary-soft, rgba(47, 124, 246, 0.08));
+  color: var(--primary);
+  font-size: 24rpx;
+  letter-spacing: 1rpx;
+}
+
+.home-token__identity {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  margin-right: 8rpx;
+}
+
+.home-token__brand {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: #fff;
+}
+
+.home-token__brand text {
+  font-size: 26rpx;
+  font-weight: bold;
+}
+
+.home-token__names {
+  min-width: 0;
+  flex: 1;
+  margin-left: 20rpx;
+}
+
+.home-token__issuer,
+.home-token__account {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-token__issuer {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.home-token__account {
+  margin-top: 4rpx;
+  font-size: 22rpx;
+  color: var(--text-secondary);
+}
+
+.home-token__code-area {
+  width: 184rpx;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.home-token__code {
+  display: block;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 38rpx;
+  line-height: 1;
+  letter-spacing: 3rpx;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.home-token.is-expiring .home-token__code {
+  color: var(--danger);
+}
+
+.home-token__hint {
+  display: block;
+  margin-top: 6rpx;
+  font-size: 18rpx;
+  color: var(--text-hint);
+}
+
+.home-token__status {
+  width: 84rpx;
+  margin-left: 20rpx;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-token__remaining {
+  width: 76rpx;
+  padding: 6rpx 0;
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 18rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--settings-blue-soft);
+}
+
+.home-token.is-expiring .home-token__remaining {
+  color: var(--danger);
+  background: var(--danger-surface);
+}
+
+.home-token__progress {
+  width: 76rpx;
+  height: 6rpx;
+  margin-top: 10rpx;
+  overflow: hidden;
+  border-radius: 6rpx;
+  background: var(--border-soft);
+}
+
+.home-token__progress-fill {
+  height: 100%;
+  border-radius: 6rpx;
+  background: var(--primary);
+}
+
+.home-token.is-expiring .home-token__progress-fill {
+  background: var(--danger);
+}
+
+.home-token-list__tail {
+  height: 40rpx;
+}
+
+.home-gesture-hint {
+  display: block;
+  padding: 12rpx 0 28rpx;
+  text-align: center;
+  font-size: 23rpx;
+  color: var(--text-hint);
+}
+
+/* ============ OTP 空态 ============ */
+
+.otp-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 58vh;
+  box-sizing: border-box;
+  padding: 40rpx 40rpx 20vh;
+  text-align: center;
+}
+
+.otp-empty__glyph {
+  width: 128rpx;
+  height: 128rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40rpx;
+  background: var(--settings-blue-soft);
+}
+
+.otp-empty__clock {
+  width: 60rpx;
+  height: 60rpx;
+  background-color: var(--primary);
+}
+
+.otp-empty__title {
+  margin-top: 32rpx;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.otp-empty__hint {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: var(--text-hint);
+}
+
+/* ============ 添加验证码面板 ============ */
+
+.add-menu-layer {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 3% calc(18rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.add-menu-panel {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20rpx 24rpx 16rpx;
+  border-radius: 28rpx;
+  background: var(--card-background);
+}
+
+.add-menu-handle {
+  width: 56rpx;
+  height: 6rpx;
+  margin: 0 auto 16rpx;
+  border-radius: 6rpx;
+  background: var(--border-soft);
+}
+
+.add-menu-title {
+  display: block;
+  margin-bottom: 8rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: var(--text-hint);
+}
+
+.add-menu-option {
+  display: flex;
+  align-items: center;
+  min-height: 104rpx;
+  padding: 8rpx;
+  border-radius: 20rpx;
+}
+
+.add-menu-option:active {
+  background: var(--settings-blue-soft);
+}
+
+.add-menu-icon {
+  width: 72rpx;
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 20rpx;
+}
+
+.add-menu-icon .glyph {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.add-menu-option__title {
+  flex: 1;
+  margin-left: 24rpx;
+  font-size: 30rpx;
+  color: var(--text-main);
+}
+
+/* ============ 底部三栏 ============ */
+
+.tabbar {
+  display: flex;
+  flex-shrink: 0;
+  border-top: 1rpx solid var(--card-stroke);
+  background: var(--primary-page-background);
+  padding-top: 16rpx;
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6rpx;
+  padding: 6rpx 0;
+}
+
+.tab__icon {
+  width: 44rpx;
+  height: 44rpx;
+  background-color: var(--text-hint);
+}
+
+.tab__label {
+  font-size: 20rpx;
+  color: var(--text-hint);
+}
+
+.tab.is-active .tab__icon {
+  background-color: var(--primary);
+}
+
+.tab.is-active .tab__label {
+  color: var(--primary);
+  font-weight: 600;
+}

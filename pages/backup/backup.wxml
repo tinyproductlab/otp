@@ -1,0 +1,106 @@
+<view class="page backup-page {{appThemeClass}}">
+  <scroll-view scroll-y class="body">
+    <block wx:if="{{viewMode === 'home'}}">
+      <view class="data-card data-card--wire" bindtap="openWebdavConfig">
+        <view class="data-card__main data-card__main--no-icon"><text class="data-card__title">WebDAV 配置</text><text class="data-card__meta">配置地址、用户名和应用密码</text></view>
+      </view>
+      <view class="data-card data-card--wire" bindtap="openCloudBackup">
+        <view class="data-card__main data-card__main--no-icon"><text class="data-card__title">云端备份与恢复</text><text class="data-card__meta">WebDAV 1 · 最近备份：{{uploadSummary || '暂无备份'}}</text></view>
+      </view>
+      <view class="data-card data-card--wire" bindtap="openWechatTransfer">
+        <view class="data-card__main data-card__main--no-icon"><text class="data-card__title">微信导入导出</text><text class="data-card__meta">批量数据用加密文件；单条验证码可在条目长按中生成迁移二维码</text></view>
+      </view>
+      <view class="data-card data-card--wire" bindtap="openTrash">
+        <view class="data-card__main data-card__main--no-icon"><text class="data-card__title">回收站</text><text class="data-card__meta">{{trashCount}} 项记录 · 保留 30 天</text></view>
+      </view>
+    </block>
+    <block wx:if="{{viewMode !== 'home'}}">
+    <block wx:if="{{viewMode === 'config'}}">
+    <view class="backup-warning">
+      <text class="backup-warning__title">换手机或卸载微信前，请先备份</text>
+      <text class="backup-warning__text">OTP 和密码默认保存在当前设备的微信本地存储中，不会自动迁移到新手机。可以使用下方 WebDAV 配置上传到你自己的云存储，也可以通过“微信导入导出”发送和恢复加密备份文件。</text>
+    </view>
+
+    <text class="section-title">WebDAV 配置</text>
+    <view class="webdav-provider-note">
+      <text class="webdav-provider-note__title">当前支持坚果云 WebDAV</text>
+      <text class="webdav-provider-note__text">请填写坚果云 WebDAV 地址、账号和应用密码。应用密码请在坚果云“账户信息 → 安全选项 → 添加应用”中创建，不要填写坚果云登录密码。如果你发现其他好用且合规的 WebDAV 服务，欢迎通过“意见反馈”分享。</text>
+    </view>
+    <view class="card--flat">
+      <view class="field">
+        <text class="field__label">WebDAV 地址</text>
+        <input class="field__input" value="{{config.url}}" placeholder="https://dav.jianguoyun.com/dav"
+               placeholder-class="text-hint" bindinput="onInput" data-key="url" />
+      </view>
+      <view class="row__divider"></view>
+      <view class="field">
+        <text class="field__label">用户名</text>
+        <input class="field__input" value="{{config.account}}" placeholder="邮箱或用户名"
+               placeholder-class="text-hint" bindinput="onInput" data-key="account" />
+      </view>
+      <view class="row__divider"></view>
+      <view class="field">
+        <text class="field__label">WebDAV 密码</text>
+        <input class="field__input" value="{{config.appPassword}}" password
+               placeholder="WebDAV 应用密码" placeholder-class="text-hint"
+               bindinput="onInput" data-key="appPassword" />
+      </view>
+    </view>
+
+    <view class="actions">
+      <view class="btn btn--ghost actions__btn" bindtap="onTest">测试连接</view>
+      <view class="btn btn--primary actions__btn" bindtap="onSaveConfig">保存</view>
+    </view>
+    </block>
+
+    <block wx:if="{{viewMode === 'cloud'}}">
+      <view class="android-backup-card">
+        <text class="android-backup-card__title">WebDAV 1</text>
+        <block wx:if="{{remoteBackups.length}}">
+          <view wx:for="{{remoteBackups}}" wx:key="name" class="android-backup-item">
+            <view class="android-backup-item__main">
+              <text class="android-backup-item__name">{{item.name}}</text>
+              <text class="android-backup-item__meta">{{item.timeText}}</text>
+            </view>
+            <text class="android-backup-item__delete" bindtap="onDeleteRemote" data-name="{{item.name}}">−</text>
+            <text class="android-backup-item__download" bindtap="onRestoreRemote" data-name="{{item.name}}">⌄</text>
+          </view>
+        </block>
+        <view wx:if="{{!remoteBackups.length}}" class="android-empty">暂无备份</view>
+      </view>
+      <view class="android-primary-btn" bindtap="onUpload">立即备份</view>
+    </block>
+    <block wx:if="{{viewMode === 'wechat'}}">
+      <view class="wechat-transfer-card">
+        <text class="wechat-transfer-card__eyebrow">加密文件传递</text>
+        <text class="wechat-transfer-card__title">微信导入导出</text>
+        <text class="wechat-transfer-card__text">导出的 .bak 文件会先在本地加密，再通过微信发送。换机后可从微信选择该文件并使用相同备份口令恢复。单条验证码可从条目长按生成迁移二维码；全部 OTP 也可生成一组加密二维码。</text>
+        <view class="wechat-transfer-card__notice">不会选择或管理手机文件夹；本页不提供本地自动备份。</view>
+      </view>
+      <view class="wechat-transfer-action wechat-transfer-action--primary" bindtap="onExportToWechat">
+        <view><text class="wechat-transfer-action__title">导出至微信</text><text class="wechat-transfer-action__text">创建加密 .bak 文件并发送给自己或可信联系人</text></view><text class="wechat-transfer-action__arrow">›</text>
+      </view>
+      <view class="wechat-transfer-action" bindtap="onExportAllOtpQr">
+        <view><text class="wechat-transfer-action__title">导出全部 OTP 为二维码</text><text class="wechat-transfer-action__text">自动拆分为多张加密二维码，适合近距离迁移</text></view><text class="wechat-transfer-action__arrow">›</text>
+      </view>
+      <view class="wechat-transfer-action" bindtap="onImportFromWechat">
+        <view><text class="wechat-transfer-action__title">从微信导入</text><text class="wechat-transfer-action__text">选择此前导出的 .bak 文件，解密后合并到当前数据</text></view><text class="wechat-transfer-action__arrow">›</text>
+      </view>
+      <view class="wechat-transfer-tip"><text>恢复规则</text><text>同一条记录会保留较新的版本；导入不会让较旧备份覆盖当前更新。</text></view>
+    </block>
+
+    <view style="height: 80rpx"></view>
+    </block>
+  </scroll-view>
+
+  <!-- 进度遮罩:PBKDF2 要跑十万次迭代,必须给反馈 -->
+  <view wx:if="{{busy}}" class="mask">
+    <view class="mask__box">
+      <text class="mask__title">{{busyTitle}}</text>
+      <view class="mask__track">
+        <view class="mask__fill" style="width: {{busyPercent}}%"></view>
+      </view>
+      <text class="mask__percent">{{busyPercent}}%</text>
+    </view>
+  </view>
+</view>

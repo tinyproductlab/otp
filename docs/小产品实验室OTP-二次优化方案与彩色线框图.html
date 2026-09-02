@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>小产品实验室 OTP｜二次优化方案与彩色线框图</title>
+  <style>
+    :root {
+      --navy: #17356a;
+      --blue: #3b82f6;
+      --blue-soft: #e9f2ff;
+      --indigo: #5965d8;
+      --purple: #8b5cf6;
+      --purple-soft: #f2ebff;
+      --teal: #0f9b8e;
+      --teal-soft: #e1f7f3;
+      --orange: #e9822d;
+      --orange-soft: #fff1e6;
+      --green: #23a16a;
+      --green-soft: #e5f7ee;
+      --red: #df5f66;
+      --red-soft: #fff0f1;
+      --amber: #d68a14;
+      --amber-soft: #fff6df;
+      --ink: #1f2f46;
+      --muted: #65748b;
+      --line: #dfe6ef;
+      --paper: #ffffff;
+      --canvas: #f3f7fc;
+      --shadow: 0 18px 48px rgba(31, 57, 97, .12);
+      --phone-shadow: 0 22px 48px rgba(22, 48, 89, .20);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--canvas); color: var(--ink); line-height: 1.6; }
+    a { color: var(--blue); }
+    .hero { background: radial-gradient(circle at 10% 10%, rgba(83, 118, 242, .25), transparent 32%), radial-gradient(circle at 88% 22%, rgba(21, 168, 150, .20), transparent 30%), linear-gradient(135deg, #102d60, #234f9c); color: white; padding: 64px 24px 72px; }
+    .hero-inner, main, footer { max-width: 1220px; margin: auto; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.18); font-size: 13px; letter-spacing: .08em; }
+    .hero h1 { max-width: 840px; margin: 18px 0 12px; font-size: clamp(34px, 5vw, 58px); line-height: 1.12; letter-spacing: -.03em; }
+    .hero p { max-width: 760px; margin: 0; color: #dae8ff; font-size: 17px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+    .meta span { background: rgba(7, 22, 51, .24); border: 1px solid rgba(255,255,255,.15); border-radius: 8px; padding: 6px 10px; color: #e7f0ff; font-size: 13px; }
+    main { padding: 32px 24px 56px; }
+    section { margin: 28px 0; scroll-margin-top: 20px; }
+    .section-title { display: flex; align-items: center; gap: 12px; margin: 0 0 14px; font-size: 26px; line-height: 1.25; }
+    .section-title .num { display: inline-grid; place-items: center; width: 31px; height: 31px; border-radius: 9px; color: white; background: linear-gradient(135deg, var(--blue), var(--purple)); font-size: 15px; }
+    .card { background: var(--paper); border: 1px solid #e5ebf2; border-radius: 20px; box-shadow: 0 7px 24px rgba(23, 53, 106, .05); padding: 24px; }
+    .principle { display: grid; grid-template-columns: 1.2fr .8fr; gap: 22px; background: linear-gradient(135deg, #f0f7ff, #f8f5ff); border: 1px solid #dce8fb; }
+    .principle h2 { margin: 0 0 10px; font-size: 28px; letter-spacing: -.02em; }
+    .principle p { margin: 0; color: #455a76; }
+    .rule { padding: 18px; border-radius: 16px; background: white; border: 1px solid #e3e9f3; }
+    .rule b { display: block; color: var(--navy); margin-bottom: 6px; }
+    .rule span { font-size: 14px; color: var(--muted); }
+    .grid { display: grid; gap: 16px; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .mini-card { border: 1px solid #e1e8f0; border-radius: 16px; padding: 18px; background: white; }
+    .mini-card h3 { margin: 0 0 7px; font-size: 17px; }
+    .mini-card p { color: var(--muted); font-size: 14px; margin: 0; }
+    .pill { display: inline-flex; align-items: center; padding: 3px 8px; margin-bottom: 10px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: .03em; }
+    .p0 { color: #9d2930; background: var(--red-soft); }
+    .p1 { color: #855309; background: var(--amber-soft); }
+    .p2 { color: #087567; background: var(--teal-soft); }
+    table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 14px; border-style: hidden; box-shadow: 0 0 0 1px #e3e8f0; font-size: 14px; }
+    th, td { padding: 13px 14px; text-align: left; vertical-align: top; border: 1px solid #e3e8f0; }
+    th { color: #425570; background: #f7f9fc; font-weight: 700; }
+    td { color: #51647d; }
+    td strong { color: var(--ink); }
+    .callout { border-left: 4px solid var(--blue); padding: 13px 15px; background: #f2f7ff; border-radius: 0 12px 12px 0; color: #405978; font-size: 14px; }
+    .boundary { overflow: hidden; padding: 0; }
+    .boundary-head { padding: 18px 22px; background: linear-gradient(90deg, #eef5ff, #f7f3ff); border-bottom: 1px solid #e2e9f4; }
+    .boundary-head h3 { margin: 0; font-size: 18px; }
+    .boundary-row { display: grid; grid-template-columns: 1.15fr .65fr 1.6fr; gap: 0; }
+    .boundary-row > div { padding: 14px 20px; border-bottom: 1px solid #edf0f5; font-size: 14px; }
+    .boundary-row:last-child > div { border-bottom: 0; }
+    .allow { color: #0b7b53; font-weight: 750; }
+    .deny { color: #bd3645; font-weight: 750; }
+    .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; align-items: stretch; }
+    .flow-step { position: relative; background: white; border: 1px solid #e0e7f1; border-radius: 15px; padding: 16px; min-height: 120px; }
+    .flow-step:not(:last-child)::after { content: "→"; position: absolute; right: -19px; top: 43%; width: 26px; height: 26px; display: grid; place-items: center; color: var(--blue); background: var(--canvas); font-weight: 800; z-index: 2; }
+    .flow-step b { display: block; margin-bottom: 6px; font-size: 15px; }
+    .flow-step span { color: var(--muted); font-size: 13px; }
+    .wireframe-stage { margin-top: 14px; padding: 26px; border-radius: 22px; background: linear-gradient(135deg, #eaf2ff, #f6f1ff 55%, #e7faf4); border: 1px solid #d9e5f3; }
+    .screen-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0 auto 24px; }
+    .screen-tab { cursor: pointer; border: 1px solid #cbd9eb; color: #4c617f; background: white; padding: 9px 13px; border-radius: 999px; font: inherit; font-size: 13px; transition: .2s; }
+    .screen-tab:hover { transform: translateY(-1px); border-color: #92afe0; }
+    .screen-tab.active { background: var(--navy); border-color: var(--navy); color: white; box-shadow: 0 6px 14px rgba(23,53,106,.2); }
+    .screen-description { max-width: 740px; margin: 0 auto 24px; text-align: center; color: #526683; font-size: 14px; }
+    .phone { width: min(100%, 372px); min-height: 733px; margin: auto; padding: 10px; border-radius: 40px; background: #152238; box-shadow: var(--phone-shadow); }
+    .phone-inner { position: relative; min-height: 713px; overflow: hidden; border-radius: 31px; background: #f7f9fc; }
+    .status { display: flex; justify-content: space-between; align-items: center; padding: 14px 21px 6px; color: #334862; font-weight: 700; font-size: 12px; }
+    .status-icons { letter-spacing: 2px; font-size: 11px; }
+    .app-top { display: flex; align-items: center; padding: 13px 18px 14px; }
+    .brand-mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; color: white; font-size: 18px; background: linear-gradient(135deg, #3c86ff, #6856d9); box-shadow: 0 5px 13px rgba(59,130,246,.26); }
+    .brand-copy { margin-left: 10px; line-height: 1.1; }
+    .brand-copy b { display: block; color: var(--navy); font-size: 20px; letter-spacing: .04em; }
+    .brand-copy span { display: block; margin-top: 5px; color: #7a899d; font-size: 9px; letter-spacing: .17em; }
+    .more { margin-left: auto; color: #4d5d76; letter-spacing: 3px; font-weight: 900; }
+    .screen { display: none; padding: 0 14px 80px; }
+    .screen.active { display: block; }
+    .welcome { padding: 14px 8px 12px; }
+    .welcome h3 { margin: 0; color: #253d63; font-size: 21px; letter-spacing: -.02em; }
+    .welcome p { margin: 4px 0 0; color: #7a899d; font-size: 12px; }
+    .security-card { position: relative; overflow: hidden; border-radius: 20px; padding: 17px; color: white; background: linear-gradient(135deg, #265bbe, #507be3 54%, #8069db); box-shadow: 0 10px 20px rgba(57,96,191,.23); }
+    .security-card::after { content: "✦"; position: absolute; right: 12px; top: -14px; color: rgba(255,255,255,.16); font-size: 108px; transform: rotate(-18deg); }
+    .card-label { position: relative; z-index: 1; display: flex; align-items: center; gap: 6px; font-size: 12px; color: #e6efff; }
+    .security-card h4 { position: relative; z-index: 1; margin: 7px 0 4px; font-size: 20px; line-height: 1.2; }
+    .security-card p { position: relative; z-index: 1; max-width: 245px; margin: 0; color: #e0ebff; font-size: 12px; line-height: 1.5; }
+    .security-cta { position: relative; z-index: 1; display: inline-block; margin-top: 14px; padding: 7px 11px; border-radius: 9px; background: white; color: #2854ad; font-size: 12px; font-weight: 800; }
+    .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0 14px; }
+    .summary { padding: 10px 8px; border: 1px solid #e4eaf3; border-radius: 13px; background: white; text-align: center; }
+    .summary b { display: block; color: #2f4161; font-size: 19px; line-height: 1.1; }
+    .summary span { display: block; margin-top: 4px; color: #7a899d; font-size: 10px; }
+    .summary.warn b { color: var(--red); }
+    .section-label { display: flex; justify-content: space-between; align-items: center; margin: 16px 4px 8px; color: #4d607a; font-size: 13px; font-weight: 800; }
+    .section-label em { color: var(--blue); font-style: normal; font-size: 11px; font-weight: 700; }
+    .action-row { display: flex; align-items: center; gap: 11px; padding: 12px; margin-bottom: 8px; background: white; border: 1px solid #e4eaf3; border-radius: 15px; }
+    .action-icon { display: grid; flex: 0 0 35px; place-items: center; width: 35px; height: 35px; border-radius: 11px; font-size: 17px; }
+    .action-icon.blue { color: #266fe7; background: var(--blue-soft); }
+    .action-icon.red { color: #d44e5a; background: var(--red-soft); }
+    .action-icon.orange { color: #c47111; background: var(--orange-soft); }
+    .action-main { min-width: 0; flex: 1; }
+    .action-main b { display: block; color: #354a67; font-size: 13px; }
+    .action-main span { display: block; overflow: hidden; margin-top: 1px; color: #8190a4; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+    .go { color: #7d8da4; font-size: 17px; }
+    .tabbar { position: absolute; right: 0; bottom: 0; left: 0; display: grid; grid-template-columns: repeat(3, 1fr); height: 65px; padding: 7px 12px 9px; background: rgba(255,255,255,.96); border-top: 1px solid #e6ebf2; text-align: center; }
+    .tabitem { color: #8996a8; font-size: 10px; }
+    .tabitem b { display: block; font-size: 17px; line-height: 22px; }
+    .tabitem.active { color: #386ee0; font-weight: 800; }
+    .back { display: inline-flex; align-items: center; gap: 6px; color: #4b6180; font-size: 13px; }
+    .screen-title { margin: 16px 4px 3px; color: #294263; font-size: 24px; line-height: 1.25; }
+    .screen-subtitle { margin: 0 4px 15px; color: #8290a4; font-size: 12px; }
+    .privacy-note { display: flex; align-items: flex-start; gap: 7px; padding: 10px 11px; margin: 0 2px 13px; border: 1px solid #cce7de; border-radius: 11px; background: #effbf6; color: #28745d; font-size: 11px; line-height: 1.5; }
+    .plan-hero { margin: 0 2px 12px; border-radius: 18px; padding: 16px; color: white; background: linear-gradient(135deg, #226d9f, #2ea888); }
+    .plan-hero span { display: block; color: #dffaf3; font-size: 11px; }
+    .plan-hero b { display: block; margin: 4px 0; font-size: 21px; }
+    .plan-hero small { display: block; color: #d9f8ef; font-size: 11px; }
+    .task { display: flex; gap: 10px; padding: 12px 10px; margin-bottom: 8px; border: 1px solid #e3e9f1; border-radius: 14px; background: white; }
+    .task-no { display: grid; place-items: center; flex: 0 0 25px; height: 25px; border-radius: 9px; background: #e8f2ff; color: #2c72d9; font-size: 12px; font-weight: 800; }
+    .task-main { flex: 1; }
+    .task-main b { display: block; color: #304965; font-size: 13px; }
+    .task-main p { margin: 2px 0 5px; color: #76879e; font-size: 10px; line-height: 1.45; }
+    .tag { display: inline-block; padding: 2px 6px; border-radius: 5px; background: #f2f6fb; color: #5c6f88; font-size: 9px; }
+    .task .arrow { align-self: center; color: #7990af; font-size: 18px; }
+    .progress { height: 5px; overflow: hidden; margin: 13px 3px 4px; border-radius: 5px; background: #e4ebe8; }
+    .progress i { display: block; width: 33%; height: 100%; border-radius: 5px; background: #21a27a; }
+    .progress-copy { margin: 0 3px; color: #708398; font-size: 10px; }
+    .panel { margin: 0 2px 12px; padding: 14px; border: 1px solid #e2e9f2; border-radius: 16px; background: white; }
+    .panel-title { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+    .panel-title b { color: #354d69; font-size: 14px; }
+    .panel-title span { color: #8391a4; font-size: 10px; }
+    .segmented { display: flex; padding: 3px; border-radius: 11px; background: #f1f5fa; }
+    .segmented span { flex: 1; padding: 6px 2px; border-radius: 8px; color: #738499; font-size: 10px; text-align: center; }
+    .segmented span.active { color: #2e64ce; background: white; box-shadow: 0 2px 5px rgba(31,59,102,.10); font-weight: 800; }
+    .slider-line { display: flex; align-items: center; gap: 10px; margin: 14px 0 7px; }
+    .slider-line b { color: #34506d; font-size: 27px; line-height: 1; }
+    .slider { position: relative; flex: 1; height: 5px; border-radius: 5px; background: #dfe7f2; }
+    .slider::before { content: ""; position: absolute; width: 68%; height: 100%; border-radius: 5px; background: #4a86f3; }
+    .slider::after { content: ""; position: absolute; top: -5px; left: calc(68% - 7px); width: 14px; height: 14px; border: 3px solid #4a86f3; border-radius: 50%; background: white; }
+    .options { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+    .option { padding: 6px 8px; border: 1px solid #dfe7f0; border-radius: 8px; color: #71849d; font-size: 10px; }
+    .option.on { color: #396dcf; border-color: #aac9fb; background: #edf5ff; font-weight: 800; }
+    .ai-tip { display: flex; gap: 9px; margin: 0 2px; padding: 12px; border: 1px solid #e6dafa; border-radius: 14px; background: #faf7ff; }
+    .ai-tip .spark { display: grid; place-items: center; flex: 0 0 28px; height: 28px; border-radius: 10px; color: #7b57d6; background: #eee6ff; }
+    .ai-tip b { display: block; color: #5d4797; font-size: 11px; }
+    .ai-tip p { margin: 2px 0 0; color: #7b728f; font-size: 10px; line-height: 1.45; }
+    .primary-btn { display: block; margin: 14px 2px 0; padding: 12px; border-radius: 13px; color: white; background: linear-gradient(90deg, #407df1, #655be0); font-size: 13px; font-weight: 800; text-align: center; }
+    .input-mock { display: flex; align-items: center; min-height: 84px; padding: 11px; border: 1.5px dashed #b8c8dc; border-radius: 15px; background: #fbfcfe; color: #9aa8b9; font-size: 11px; }
+    .check-list { margin-top: 12px; }
+    .check { display: flex; gap: 8px; align-items: flex-start; margin: 8px 0; color: #667a94; font-size: 11px; }
+    .check b { display: grid; place-items: center; flex: 0 0 17px; height: 17px; border-radius: 50%; background: #e9f7ef; color: #31946a; font-size: 10px; }
+    .risk-box { display: flex; align-items: center; gap: 11px; margin: 14px 2px 0; padding: 13px; border-radius: 15px; border: 1px solid #f3d7ab; background: #fff8e9; }
+    .risk-box .warn { display: grid; place-items: center; flex: 0 0 31px; height: 31px; border-radius: 10px; background: #fff0c8; color: #c17a12; }
+    .risk-box b { display: block; color: #9a6517; font-size: 12px; }
+    .risk-box span { display: block; color: #aa884f; font-size: 10px; line-height: 1.4; }
+    .backup-banner { border-radius: 18px; padding: 16px; color: white; background: linear-gradient(135deg, #2470a8, #329b83); }
+    .backup-banner span { color: #e0f8f1; font-size: 11px; }
+    .backup-banner b { display: block; margin: 3px 0 7px; font-size: 20px; }
+    .backup-banner small { color: #d7f5ed; font-size: 10px; }
+    .backup-status { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 12px 0; }
+    .status-cell { padding: 11px; border-radius: 14px; border: 1px solid #e2e9f1; background: white; }
+    .status-cell span { display: block; color: #8291a3; font-size: 10px; }
+    .status-cell b { display: block; margin-top: 4px; color: #354e6c; font-size: 14px; }
+    .status-cell.warn b { color: #c98018; }
+    .note { font-size: 11px; color: #73859a; text-align: center; margin: 20px 0 0; }
+    .implementation { margin-top: 18px; }
+    .implementation .mini-card { min-height: 172px; }
+    .implementation .mini-card ul { margin: 9px 0 0; padding-left: 18px; color: var(--muted); font-size: 13px; }
+    .implementation .mini-card li { margin: 4px 0; }
+    footer { padding: 0 24px 40px; color: #718198; font-size: 12px; }
+    footer p { border-top: 1px solid #dfe6ee; padding-top: 18px; }
+    @media (max-width: 850px) {
+      .principle, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: 1fr 1fr; }
+      .flow-step:nth-child(2)::after { display: none; }
+      .boundary-row { grid-template-columns: 1.1fr .65fr 1.3fr; }
+    }
+    @media (max-width: 540px) {
+      .hero { padding: 48px 20px 52px; }
+      main { padding: 24px 14px 42px; }
+      .card { padding: 18px; }
+      .section-title { font-size: 23px; }
+      .flow { grid-template-columns: 1fr; }
+      .flow-step:not(:last-child)::after { display: none; }
+      .boundary-row { display: block; padding: 10px 16px; border-bottom: 1px solid #edf0f5; }
+      .boundary-row > div { padding: 3px 0; border: 0; }
+      .boundary-row > div:first-child { color: #314865; font-weight: 700; }
+      .phone { width: 100%; max-width: 372px; }
+      .wireframe-stage { padding: 16px 10px; }
+    }
+    @media print { .hero { padding: 28px; } .wireframe-stage { break-inside: avoid; } .screen-tabs { display: none; } .screen { display: none !important; } .screen.active { display: block !important; } }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">2026 微信小程序开发大赛 · 「与 AI 共生」</div>
+      <h1>小产品实验室 OTP<br>二次优化方案与彩色线框图</h1>
+      <p>本方案以现有小程序为唯一产品主体。目标不是让 AI 接触密码和验证码，而是用 AI 将本地安全状态转化为可理解、可执行、由用户确认完成的行动计划。</p>
+      <div class="meta"><span>产品：小产品实验室 OTP</span><span>版本：二次优化提案 v1.2</span><span>状态：本地安全优化已实现并通过回归测试</span><span>日期：2026-08-25</span></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="card principle">
+      <div>
+        <div class="eyebrow" style="color:#3d69bb;background:#e7f0ff;border-color:#cbdcf8">产品原则</div>
+        <h2>秘密留在本机，AI 帮用户完成安全行动。</h2>
+        <p>当前 OTP 已具备本地 TOTP、密码账本、弱密码与重复密码检查、密码生成器及加密备份能力。二次优化只补足“看懂风险、排出先后、完成改进”的一层体验，不改变本地优先的产品根基。</p>
+      </div>
+      <div class="rule"><b>对外定位建议</b><span>小产品实验室 OTP 是本地优先的两步验证码与密码管理小程序。验证码、密码和备份口令只在用户设备上处理；AI 仅根据脱敏后的风险信号，帮助用户完成备份、修复复用密码并避开可疑登录。</span></div>
+    </section>
+
+    <section>
+      <h2 class="section-title"><span class="num">1</span>本轮优化范围</h2>
+      <div class="grid grid-3">
+        <article class="mini-card"><span class="pill p0">P0 · 已实现</span><h3>本地安全建议卡</h3><p>OTP 首页已新增本地生成的安全摘要，并提供明确的“查看安全行动计划”入口。</p></article>
+        <article class="mini-card"><span class="pill p0">P0 · 已实现</span><h3>安全共生计划</h3><p>已将弱密码、密码复用、TOTP 未备份等风险转化为按优先级排列的任务卡，并跳转到已有功能页。</p></article>
+        <article class="mini-card"><span class="pill p1">P1 · 已实现</span><h3>本地密码策略助手</h3><p>已提供日常账号、重要账号、需要手抄与临时一次性四种策略；密码仍使用现有本地随机逻辑生成。</p></article>
+        <article class="mini-card"><span class="pill p1">P1 · 离线可用</span><h3>可疑登录检查</h3><p>新增完全离线的检查页；仅在设备内解析用户主动粘贴的链接或文本，按可解释规则提示风险与核验步骤，不发起网络请求。</p></article>
+        <article class="mini-card"><span class="pill p2">P2 · 已实现</span><h3>微信导入导出</h3><p>数据管理页仅保留“导出至微信”与“从微信导入”两个操作；备份文件在发送前本地加密。</p></article>
+        <article class="mini-card"><span class="pill p2">P2 · 收口</span><h3>参赛展示闭环</h3><p>用“发现—解释—处理—备份验证”串起 90 秒演示；强调 AI 不读取秘密、无自动执行权限。</p></article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title"><span class="num">2</span>现有能力如何被优化</h2>
+      <div class="card" style="padding:0;overflow:auto">
+        <table>
+          <thead><tr><th>现有页面 / 能力</th><th>现状</th><th>二次优化</th><th>用户获得的结果</th></tr></thead>
+          <tbody>
+            <tr><td><strong>OTP 首页</strong></td><td>展示 TOTP 列表，支持搜索、添加、复制。</td><td>增加“AI 安全建议”卡及安全摘要。</td><td>无需先理解安全术语，也能看到今天最应处理的事。</td></tr>
+            <tr><td><strong>密码账本</strong></td><td>已经标识弱密码、重复密码。</td><td>按任务卡跳转并自动带入“弱密码 / 重复密码”筛选。</td><td>从“知道有问题”变成“立即定位问题”。</td></tr>
+            <tr><td><strong>密码生成器</strong></td><td>长度、大小写、数字、符号等可配置。</td><td>增加场景策略预设与简短解释。</td><td>用户不用自己猜参数，仍能获得本地生成的随机密码。</td></tr>
+            <tr><td><strong>本地 / 云端备份</strong></td><td>已有加密导出、恢复、WebDAV 相关入口。</td><td>增加备份健康度、未备份 TOTP 提醒与恢复前检查。</td><td>把备份从“数据管理选项”提升为验证码安全保障。</td></tr>
+            <tr><td><strong>实用工具</strong></td><td>密码账本、二维码转换、密码生成器。</td><td>新增完全离线的“可疑登录检查”。</td><td>在输入验证码之前，先识别仿冒链接、紧急催促和索要凭据等本地可判断的风险。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title"><span class="num">3</span>AI 的数据边界</h2>
+      <div class="card boundary">
+        <div class="boundary-head"><h3>AI 只读取脱敏安全画像，绝不触碰原始秘密</h3></div>
+        <div class="boundary-row"><div>弱密码数量、复用组数量、TOTP 条目数量、距上次备份天数</div><div class="allow">可发送</div><div>仅在用户主动点击“生成建议”后发送；不含任何账号名称、密码或密钥。</div></div>
+        <div class="boundary-row"><div>密码、密码备注、账号、邮箱、手机号</div><div class="deny">禁止发送</div><div>只在本地做规则检测与筛选；AI 仅接收计数和风险标签。</div></div>
+        <div class="boundary-row"><div>TOTP 密钥、二维码原文、<code>otpauth://</code> 字符串</div><div class="deny">禁止发送</div><div>这类信息可直接用于生成验证码，必须在客户端拦截。</div></div>
+        <div class="boundary-row"><div>WebDAV 凭据、备份口令、备份文件</div><div class="deny">禁止发送</div><div>AI 仅接收“已备份 / 未备份 / 距上次备份 N 天”等状态。</div></div>
+        <div class="boundary-row"><div>用户主动粘贴的登录链接 / 短信文本</div><div class="deny">默认不发送</div><div>离线版只在设备内分析，不存储、不上传、不自动打开链接。未来联网情报查询仅能作为用户主动开启的可选增强。</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title"><span class="num">4</span>用户行动闭环</h2>
+      <div class="flow">
+        <div class="flow-step"><b>① 本地检查</b><span>复用既有密码强度、重复密码、TOTP 与备份状态数据。</span></div>
+        <div class="flow-step"><b>② 脱敏摘要</b><span>客户端生成只含数量、标签和状态的 <code>SecuritySnapshot</code>。</span></div>
+        <div class="flow-step"><b>③ 本地规则解释</b><span>根据可解释规则输出风险原因、等级与官方渠道核验步骤；不访问网络。</span></div>
+        <div class="flow-step"><b>④ 用户确认执行</b><span>跳转备份、账本或生成器页面；敏感操作仍由用户手动确认。</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title"><span class="num">5</span>彩色线框图</h2>
+      <div class="wireframe-stage">
+        <div class="screen-tabs" role="tablist" aria-label="线框图页面选择">
+          <button class="screen-tab active" data-screen="home">01 · OTP 首页</button>
+          <button class="screen-tab" data-screen="plan">02 · 安全共生计划</button>
+          <button class="screen-tab" data-screen="generator">03 · 密码策略助手</button>
+          <button class="screen-tab" data-screen="check">04 · 可疑登录检查</button>
+          <button class="screen-tab" data-screen="backup">05 · 备份恢复向导</button>
+        </div>
+        <p class="screen-description" id="screenDesc">首页保留原有 OTP 列表与底部三栏，只在验证码列表之前新增一张可折叠的“AI 安全建议”卡。</p>
+
+        <div class="phone" aria-label="小程序彩色线框图">
+          <div class="phone-inner">
+            <div class="status"><span>9:41</span><span class="status-icons">▮▮▮ ᯤ ▰</span></div>
+            <div class="app-top"><div class="brand-mark">⌁</div><div class="brand-copy"><b>OTP</b><span>小产品实验室</span></div><div class="more">•••</div></div>
+
+            <div id="home" class="screen active">
+              <div class="welcome"><h3>你的验证码</h3><p>本地计算 · 不上传服务器</p></div>
+              <div class="security-card"><div class="card-label">✦ AI 安全建议 <span style="opacity:.75">· 仅分析脱敏状态</span></div><h4>先完成一次加密备份</h4><p>你保存了 8 个验证码。先备份，可降低换机或清缓存后的登录风险。</p><span class="security-cta">查看安全行动计划 →</span></div>
+              <div class="summary-grid"><div class="summary"><b>8</b><span>验证码</span></div><div class="summary warn"><b>3</b><span>较弱密码</span></div><div class="summary warn"><b>2</b><span>重复密码</span></div></div>
+              <div class="section-label"><span>验证码</span><em>⌕ 搜索</em></div>
+              <div class="action-row"><div class="action-icon blue">G</div><div class="action-main"><b>Google</b><span>eve@example.com · 436 812</span></div><div class="go">›</div></div>
+              <div class="action-row"><div class="action-icon orange">M</div><div class="action-main"><b>Microsoft</b><span>eve@example.com · 184 360</span></div><div class="go">›</div></div>
+            </div>
+
+            <div id="plan" class="screen">
+              <div class="back">‹ 返回 OTP</div><h2 class="screen-title">安全共生计划</h2><p class="screen-subtitle">AI 只使用脱敏状态，所有操作仍由你确认。</p>
+              <div class="privacy-note"><span>◉</span><span>本次分析不含密码、验证码密钥、账号名或备份口令。</span></div>
+              <div class="plan-hero"><span>本周安全进度</span><b>已完成 1 / 3 项</b><small>先保护无法轻易找回的验证码，再处理可替换的密码。</small><div class="progress"><i></i></div><p class="progress-copy">还差 2 项，就能完成本周基础防护。</p></div>
+              <div class="task"><div class="task-no">1</div><div class="task-main"><b>备份 8 个验证码</b><p>换机、清缓存或掉登录态时，备份是恢复验证码的重要保障。</p><span class="tag">打开微信导入导出</span></div><div class="arrow">›</div></div>
+              <div class="task"><div class="task-no">2</div><div class="task-main"><b>处理 2 组重复密码</b><p>同一密码被多个账号使用时，一个站点泄露可能影响其他账号。</p><span class="tag">查看重复密码</span></div><div class="arrow">›</div></div>
+              <div class="task"><div class="task-no">3</div><div class="task-main"><b>升级 3 个较弱密码</b><p>使用本地密码生成器创建更长、更多样的随机密码。</p><span class="tag">打开密码生成器</span></div><div class="arrow">›</div></div>
+            </div>
+
+            <div id="generator" class="screen">
+              <div class="back">‹ 返回安全计划</div><h2 class="screen-title">密码策略助手</h2><p class="screen-subtitle">AI 推荐参数；密码只在本地随机生成。</p>
+              <div class="panel"><div class="panel-title"><b>使用场景</b><span>可随时调整</span></div><div class="segmented"><span>普通账号</span><span class="active">重要账号</span><span>仅临时用</span></div></div>
+              <div class="panel"><div class="panel-title"><b>推荐长度</b><span>16 位</span></div><div class="slider-line"><b>16</b><div class="slider"></div></div><div class="options"><span class="option on">✓ 小写</span><span class="option on">✓ 大写</span><span class="option on">✓ 数字</span><span class="option on">✓ 符号</span><span class="option">排除 0O</span></div></div>
+              <div class="ai-tip"><div class="spark">✦</div><div><b>为什么这样推荐？</b><p>重要账号建议使用 16 位以上、包含多种字符的随机密码。请保存在密码账本，不要手动复用。</p></div></div>
+              <div class="primary-btn">本地生成随机密码</div>
+            </div>
+
+            <div id="check" class="screen">
+              <div class="back">‹ 返回实用工具</div><h2 class="screen-title">可疑登录检查</h2><p class="screen-subtitle">离线检查链接或短信话术，不需要输入密码或验证码。</p>
+              <div class="privacy-note"><span>◉</span><span>不联网、不上传、不保存；所有检查均在当前设备内完成。</span></div>
+              <div class="panel"><div class="panel-title"><b>粘贴登录链接或消息</b><span>离线规则检查</span></div><div class="input-mock">例如：收到“账号异常，请在 10 分钟内验证”的短信，或一个要求登录的链接。</div><div class="primary-btn" style="margin:12px 0 0;background:linear-gradient(90deg,#277aa2,#2fa385)">开始本地检查</div></div>
+              <div class="risk-box"><div class="warn">!</div><div><b>高风险示例：不要输入验证码</b><span>发现仿冒域名、网址混淆、紧急催促、索要验证码或备份口令时，请改走官方 App 或自行输入已知官网地址核验。</span></div></div>
+              <div class="check-list"><div class="check"><b>✓</b><span>规则会说明触发原因与下一步核验方式，绝不自动打开链接。</span></div><div class="check"><b>✓</b><span>如含 TOTP 密钥、密码或验证码，客户端会拒绝检查并提示删除敏感内容。</span></div></div>
+            </div>
+
+            <div id="backup" class="screen">
+              <div class="back">‹ 返回数据管理</div><h2 class="screen-title">备份恢复向导</h2><p class="screen-subtitle">先检查，再导出；备份口令只由你保管。</p>
+              <div class="backup-banner"><span>数据安全状态</span><b>建议今天完成一次备份</b><small>你有 8 个验证码条目。导出的备份加密后由你自行保存。</small></div>
+              <div class="backup-status"><div class="status-cell"><span>微信文件备份</span><b>导出后可从微信导入</b></div><div class="status-cell warn"><span>待保护验证码</span><b>8 个</b></div></div>
+              <div class="section-label"><span>备份前检查</span><em>2 / 3</em></div>
+              <div class="action-row"><div class="action-icon blue">✓</div><div class="action-main"><b>确认备用验证方式</b><span>短信或恢复码可作为账号兜底。</span></div></div>
+              <div class="action-row"><div class="action-icon blue">✓</div><div class="action-main"><b>设置并记住备份口令</b><span>小程序无法帮你找回此口令。</span></div></div>
+              <div class="action-row"><div class="action-icon orange">3</div><div class="action-main"><b>导出加密备份</b><span>保存到微信收藏、文件或自己的网盘。</span></div><div class="go">›</div></div>
+              <div class="primary-btn" style="background:linear-gradient(90deg,#2071a8,#22a16f)">开始创建加密备份</div>
+            </div>
+
+            <div class="tabbar"><div class="tabitem"><b>▦</b>实用工具</div><div class="tabitem active"><b>⌁</b>OTP</div><div class="tabitem"><b>▤</b>数据管理</div></div>
+          </div>
+        </div>
+        <p class="note">线框图为方案预览：使用虚构账号与示例数字，不包含任何真实密码、验证码或密钥。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title"><span class="num">6</span>实现状态与下一步</h2>
+      <div class="grid grid-3 implementation">
+        <article class="mini-card"><span class="pill p0">第一阶段 · 已完成</span><h3>本地安全画像</h3><ul><li>已新增只含统计与标签的 <code>SecuritySnapshot</code>。</li><li>已完成密码、TOTP、备份口令与 WebDAV 凭据的本地边界控制。</li><li>已补充强度、复用与备份状态的单元测试。</li></ul></article>
+        <article class="mini-card"><span class="pill p0">第二阶段 · 已完成</span><h3>首页与行动计划</h3><ul><li>已在 OTP 首页添加本地安全建议卡。</li><li>已新建“安全共生计划”页及任务卡。</li><li>已复用账本、生成器、备份页面完成任务跳转。</li></ul></article>
+        <article class="mini-card"><span class="pill p1">第三阶段 · 可选联网增强</span><h3>受控 AI 解释层</h3><ul><li>默认不启用；只在用户主动开启时可用。</li><li>仅接受 Schema 化的脱敏摘要，返回结构化解释。</li><li>不赋予 AI 导出、删除、同步、打开外链等执行权限。</li></ul></article>
+        <article class="mini-card"><span class="pill p1">第四阶段 · 已完成</span><h3>可疑登录检查</h3><ul><li>已新增工具页与本地文本 / URL 规则检测，不联网。</li><li>已识别仿冒域名、IP 地址登录、网址混淆、紧急催促和索要凭据等信号。</li><li>已提供风险等级、触发依据与官方渠道核验步骤，并加入敏感输入负向测试。</li></ul></article>
+        <article class="mini-card"><span class="pill p2">第五阶段 · 已完成</span><h3>微信导入导出</h3><ul><li>仅提供“导出至微信”和“从微信导入”两个文件操作。</li><li>导出前在本地加密，导入后按较新记录合并。</li><li>不选择或管理手机文件夹，不提供本地自动备份。</li></ul></article>
+        <article class="mini-card"><span class="pill p2">第六阶段 · 参赛收口</span><h3>演示与说明</h3><ul><li>录制“发现—解释—处理—验证”闭环。</li><li>准备隐私边界与 AI 设计说明。</li><li>进行真机体验、异常输入与审核文案检查。</li></ul></article>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title"><span class="num">7</span>确认点</h2>
+      <p style="margin:0;color:#526783">核心本地优化已完成：本地安全建议与行动计划、场景化密码策略助手、离线可疑登录检查及备份恢复向导均已接入小程序。下一步重点是用真机完成 90 秒参赛演示录制，并进行异常输入与审核文案复核。</p>
+      <div class="callout" style="margin-top:16px">对外产品名固定为 <strong>“小产品实验室 OTP”</strong>。KeyScan 仅作为既有 App 的历史参考，不用于小程序名称、参赛定位或对外文案。</div>
+    </section>
+
+    <section class="card" style="font-size:13px;color:#61738a">
+      <h2 class="section-title"><span class="num">R</span>参考依据</h2>
+      <p>本方案遵循赛事强调的“利用 AI 能力创造优质小程序、紧扣真实场景需求完成产品上线”的方向，并将 AI 功能限制在不触碰高敏感认证数据的范围内。微信小程序 AI 开发模式当前仍处于内测且暂未开放相关代码提审，因此正式参赛版本不应以该 beta 模式作为上线依赖。</p>
+      <p style="margin-bottom:0">[1] <a href="https://contest.weixin.qq.com/eventDetails?id=4598379302114656257">2026 微信小程序开发大赛｜微信赛事平台</a>　[2] <a href="https://developers.weixin.qq.com/miniprogram/dev/ai/guide.html">小程序 AI 开发模式（beta）接入指南｜微信开放社区</a>　[3] <a href="https://developers.weixin.qq.com/miniprogram/dev/framework/security.html">安全指引｜微信开放社区</a></p>
+    </section>
+  </main>
+
+  <footer><p>作者：Manus AI。本文已同步当前本地安全优化的实现状态；完整演示与提审说明见项目 docs 目录。</p></footer>
+  <script>
+    const descriptions = {
+      home: '首页保留原有 OTP 列表与底部三栏，只在验证码列表之前新增一张可折叠的“AI 安全建议”卡。',
+      plan: '安全共生计划把已有的弱密码、重复密码与备份状态转化为三个可点击的行动任务，AI 不接触原始数据。',
+      generator: '密码策略助手只推荐生成器参数并解释原因；点击生成后仍由小程序本地随机逻辑产生密码。',
+      check: '可疑登录检查面向用户主动粘贴的链接或消息文本；由本地规则解释风险，不联网、不上传，也绝不自动访问外链。',
+      backup: '备份恢复向导把“数据管理”变成面向 TOTP 场景的保护流程，明确提示备份口令无法找回。'
+    };
+    const tabs = document.querySelectorAll('.screen-tab');
+    const screens = document.querySelectorAll('.screen');
+    const desc = document.getElementById('screenDesc');
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      const id = tab.dataset.screen;
+      tabs.forEach(x => x.classList.toggle('active', x === tab));
+      screens.forEach(x => x.classList.toggle('active', x.id === id));
+      desc.textContent = descriptions[id];
+    }));
+  </script>
+</body>
+</html>

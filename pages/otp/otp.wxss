@@ -1,0 +1,279 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--password-ledger-background);
+}
+
+.header {
+  padding: 24rpx 32rpx 8rpx;
+  flex-shrink: 0;
+}
+
+.header__title {
+  display: block;
+  font-size: 38rpx;
+  font-weight: bold;
+  color: var(--primary-reference-title);
+}
+
+.header__sub {
+  display: block;
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  margin-top: 6rpx;
+}
+
+.search-wrap {
+  position: relative;
+  z-index: 5;
+  padding: 16rpx 32rpx 20rpx;
+  flex-shrink: 0;
+}
+
+.search__input {
+  min-width: 0;
+}
+
+.search__filter {
+  width: 68rpx;
+  height: 64rpx;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10rpx;
+  border-left: 1rpx solid var(--card-stroke);
+  position: relative;
+}
+
+.search__filter.is-active {
+  background: var(--settings-blue-soft);
+  border-radius: 12rpx;
+}
+
+.search__filter-glyph {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 40rpx;
+  line-height: 1;
+  font-weight: 700;
+  transform: translateY(-2rpx);
+}
+
+.filter-menu {
+  position: absolute;
+  right: 32rpx;
+  top: 86rpx;
+  width: 220rpx;
+  padding: 10rpx 0;
+  border-radius: 24rpx;
+  background: var(--card-background);
+  box-shadow: 0 8rpx 28rpx rgba(20, 42, 74, 0.16);
+}
+
+.filter-menu__item {
+  padding: 22rpx 28rpx;
+  font-size: 27rpx;
+  color: var(--text-secondary);
+}
+
+.filter-menu__item.is-active {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.search__clear {
+  width: 32rpx;
+  height: 32rpx;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.search__clear::before,
+.search__clear::after {
+  content: "";
+  position: absolute;
+  left: 4rpx;
+  top: 15rpx;
+  width: 24rpx;
+  height: 3rpx;
+  background: var(--text-hint);
+}
+
+.search__clear::before { transform: rotate(45deg); }
+.search__clear::after { transform: rotate(-45deg); }
+
+.list {
+  flex: 1;
+  min-height: 0;
+  padding: 0 32rpx;
+}
+
+/* ---- 条目:安卓行高 64dp = 128rpx ---- */
+
+.token {
+  display: flex;
+  align-items: center;
+  height: 128rpx;
+  margin-bottom: 16rpx;
+  padding: 0 16rpx 0 20rpx;
+  background: var(--password-ledger-card);
+  border-radius: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(20, 42, 74, 0.05);
+}
+
+.token.is-pinned {
+  border-left: 6rpx solid var(--primary);
+}
+
+/* 品牌位:安卓 38dp = 76rpx */
+.token__brand {
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 20rpx;
+  background: var(--brand-icon-surface-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+
+/* 安卓 fallback 是 18sp 粗体 + 主色 */
+.token__brand-letter {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: var(--action-icon-tint);
+}
+
+.token__main {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 安卓:发行商 12sp 次要色 */
+.token__issuer {
+  display: block;
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 安卓:账号 16sp 粗体 主色文字 */
+.token__account {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--text-main);
+  margin-top: 4rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 验证码区:安卓宽 86dp = 172rpx */
+.token__code-area {
+  width: 172rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* 安卓:21sp 粗体,色 #4A90D9 */
+.token__code {
+  font-size: 42rpx;
+  font-weight: bold;
+  color: var(--primary);
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  letter-spacing: 2rpx;
+}
+
+/* 快过期时变红,给用户"来不及了"的信号 */
+.token__code.is-expiring {
+  color: var(--danger);
+}
+
+.token__hint {
+  font-size: 20rpx;
+  color: var(--text-secondary);
+  margin-top: 2rpx;
+}
+
+/* 倒计时:安卓 chip 40×26dp,进度条 38×4dp */
+.token__timer {
+  width: 84rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.token__chip {
+  width: 80rpx;
+  height: 52rpx;
+  line-height: 52rpx;
+  text-align: center;
+  border-radius: 12rpx;
+  background: var(--dialog-input-bg);
+  font-size: 22rpx;
+  font-weight: bold;
+  color: var(--text-main);
+}
+
+.token__progress {
+  width: 76rpx;
+  height: 8rpx;
+  border-radius: 4rpx;
+  background: var(--border-soft);
+  margin-top: 8rpx;
+  overflow: hidden;
+}
+
+.token__progress-fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 4rpx;
+  transition: width 0.9s linear;
+}
+
+/* ---- 底部操作 ---- */
+
+.footer {
+  display: flex;
+  padding: 20rpx 32rpx;
+  gap: 20rpx;
+  flex-shrink: 0;
+  background: var(--password-ledger-background);
+  border-top: 1rpx solid var(--card-stroke);
+}
+
+.footer__btn {
+  flex: 1;
+}
+
+/* ============ 长按拖动排序 ============ */
+
+/* 被抓起来的那条:抬高、半透明,让"它在手上"看得出来。
+   不能加 transition —— translateY 是跟手逐帧改的,加过渡会拖泥带水。 */
+.token.is-dragging {
+  position: relative;
+  z-index: 10;
+  opacity: 0.94;
+  box-shadow: 0 12rpx 36rpx rgba(20, 42, 74, 0.22);
+}
+
+/* 手动排序模式下的操作提示 */
+.sort-hint {
+  margin: 0 32rpx 16rpx;
+  padding: 14rpx 24rpx;
+  border-radius: 16rpx;
+  background: var(--primary-soft, rgba(47, 124, 246, 0.08));
+  color: var(--primary);
+  font-size: 24rpx;
+  letter-spacing: 1rpx;
+}

@@ -1,0 +1,102 @@
+<view class="page {{appThemeClass}}">
+  <scroll-view scroll-y class="body">
+
+    <!-- 结果 -->
+    <view class="result">
+      <view class="result__password-row">
+        <text class="result__value mono" selectable bindtap="onCopy">{{password || '—'}}</text>
+      </view>
+      <view class="result__meter">
+        <view class="result__track">
+          <view class="result__fill result__fill--{{strength.level}}" style="width: {{strength.score}}%"></view>
+        </view>
+        <text class="result__label result__label--{{strength.level}}">{{strength.label}}</text>
+        <picker class="result__length-picker" mode="selector" range="{{lengthLabels}}" value="{{lengthIndex}}" bindchange="onLengthPickerChange"><view class="result__length-badge">{{options.length}}</view></picker>
+        <view class="result__icon-btn result__icon-btn--regenerate" bindtap="onRegenerate" aria-label="换一个">↻</view>
+      </view>
+      <view wx:if="{{pickMode}}" class="result__use" bindtap="onUse">使用此密码</view>
+    </view>
+
+    <text class="section-title">本地密码策略助手</text>
+    <view class="strategy-card">
+      <view class="strategy-card__top"><text class="strategy-card__label">仅按你选择的场景推荐参数</text><text class="strategy-card__privacy">不读取账号数据</text></view>
+      <scroll-view scroll-x class="strategy-tabs" enable-flex>
+        <view wx:for="{{strategies}}" wx:key="id" class="strategy-tab {{activeStrategy === item.id ? 'is-active' : ''}}" bindtap="onSelectStrategy" data-id="{{item.id}}">{{item.shortLabel}}</view>
+      </scroll-view>
+      <text class="strategy-card__title">{{strategy.title}}</text>
+      <text class="strategy-card__reason">{{strategy.reason}}</text>
+      <view class="strategy-card__tip"><text>提示</text><text>{{strategy.tip}}</text></view>
+    </view>
+
+    <text class="section-title">包含字符</text>
+    <view class="card--flat">
+      <view class="row">
+        <view class="row__main"><text class="row__title">小写字母</text><text class="row__subtitle">a-z</text></view>
+        <switch checked="{{options.includeLower}}" color="#4A90D9" bindchange="onToggle" data-key="includeLower" />
+      </view>
+      <view class="row__divider"></view>
+      <view class="row">
+        <view class="row__main"><text class="row__title">大写字母</text><text class="row__subtitle">A-Z</text></view>
+        <switch checked="{{options.includeUpper}}" color="#4A90D9" bindchange="onToggle" data-key="includeUpper" />
+      </view>
+      <view class="row__divider"></view>
+      <view class="row">
+        <view class="row__main"><text class="row__title">数字</text><text class="row__subtitle">0-9</text></view>
+        <switch checked="{{options.includeDigits}}" color="#4A90D9" bindchange="onToggle" data-key="includeDigits" />
+      </view>
+      <view class="row__divider"></view>
+      <view class="row">
+        <view class="row__main"><text class="row__title">特殊符号</text><text class="row__subtitle">!@#$%^&*</text></view>
+        <switch checked="{{options.includeSymbols}}" color="#4A90D9" bindchange="onToggle" data-key="includeSymbols" />
+      </view>
+    </view>
+
+    <text class="section-title">排除形近字符</text>
+    <view class="card--flat">
+      <view class="row">
+        <view class="row__main">
+          <text class="row__title">排除 0 和 O</text>
+          <text class="row__subtitle">需要手抄密码时有用</text>
+        </view>
+        <switch checked="{{options.excludeZeroO}}" color="#4A90D9" bindchange="onToggle" data-key="excludeZeroO" />
+      </view>
+      <view class="row__divider"></view>
+      <view class="row">
+        <view class="row__main"><text class="row__title">排除 1 和 I</text></view>
+        <switch checked="{{options.excludeOneI}}" color="#4A90D9" bindchange="onToggle" data-key="excludeOneI" />
+      </view>
+      <view class="row__divider"></view>
+      <view class="row">
+        <view class="row__main"><text class="row__title">排除小写 l 和 o</text></view>
+        <switch checked="{{options.excludeLowerL}}" color="#4A90D9" bindchange="onToggleBoth" />
+      </view>
+    </view>
+
+    <!-- 生成历史 -->
+    <view class="history-head" bindtap="onToggleHistory">
+      <text class="section-title" style="margin:0">生成历史({{history.length}})</text>
+      <view class="history-head__actions">
+        <text wx:if="{{history.length}}" class="btn--text" catchtap="onClearHistory">清空</text>
+        <text class="history-head__toggle">{{historyExpanded ? '收起' : '展开'}}</text>
+      </view>
+    </view>
+    <view wx:if="{{history.length && historyExpanded}}" class="card--flat">
+      <block wx:for="{{history}}" wx:key="id">
+        <view class="hist" data-id="{{item.id}}" bindtap="onToggleHistoryItem" bindlongpress="onHistoryLongPress">
+          <view class="hist__main">
+            <text class="hist__pw mono ellipsis">{{item.displayPassword}}</text>
+            <text class="hist__meta">{{item.timeText}} · {{item.configSummary}}</text>
+          </view>
+          <text class="hist__copy" catchtap="onCopyHistory" data-id="{{item.id}}">复制</text>
+        </view>
+        <view wx:if="{{index < history.length - 1}}" class="row__divider"></view>
+      </block>
+    </view>
+    <view wx:else class="hist-empty">
+      <text class="text-hint">生成过的密码会记在这里,方便临时找回</text>
+    </view>
+
+    <view style="height: 60rpx"></view>
+  </scroll-view>
+
+</view>

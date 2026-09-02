@@ -1,0 +1,18 @@
+<view class="page permissions-page {{appThemeClass}}">
+  <scroll-view scroll-y class="body">
+    <text class="section-title">权限管理</text>
+    <view class="card--flat permissions-card">
+      <view class="permission-row"><text class="permission-title">本地存储</text><text class="permission-desc">用于保存加密后的验证码、静态密码账本、设置和生成记录。微信小程序需要使用本地存储才能保留数据。</text></view>
+      <view class="permission-divider"></view>
+      <view class="permission-row"><text class="permission-title">相机</text><text class="permission-desc">仅在使用扫码添加验证码或扫描二维码时调用。</text></view>
+      <view class="permission-divider"></view>
+      <view class="permission-row"><text class="permission-title">文件</text><text class="permission-desc">仅在用户主动导入或导出本地加密备份时使用。</text></view>
+      <view class="permission-divider"></view>
+      <view class="permission-row"><text class="permission-title">剪贴板</text><text class="permission-desc">仅在复制验证码、密码或二维码文本时使用；复制后提醒由用户在设置中控制。</text></view>
+      <view class="permission-divider"></view>
+      <view class="permission-row"><text class="permission-title">网络访问</text><text class="permission-desc">仅在用户主动配置并执行 WebDAV 备份或恢复时访问用户填写的服务地址。</text></view>
+    </view>
+    <text class="permission-note">未使用相关功能时，不会主动调用对应能力。用户可以通过微信设置管理系统权限。</text>
+    <view style="height: 100rpx"></view>
+  </scroll-view>
+</view>

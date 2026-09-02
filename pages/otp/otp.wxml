@@ -1,0 +1,79 @@
+<!-- 对齐安卓 fragment_otp_auth.xml + item_otp_token.xml(尺寸按 1dp≈2rpx 换算) -->
+<view class="page {{appThemeClass}}">
+
+  <view class="header">
+    <text class="header__title">{{copy.title}} ({{tokens.length}})</text>
+    <text class="header__sub">{{copy.subtitle}}</text>
+  </view>
+
+  <view class="search-wrap">
+    <view class="search">
+      <view class="search__icon"></view>
+      <input
+        class="search__input"
+        value="{{keyword}}"
+        placeholder="{{copy.search}}"
+        placeholder-class="text-hint"
+        bindinput="onSearch"
+        confirm-type="search" />
+      <view wx:if="{{keyword}}" class="search__clear" bindtap="onClearSearch"></view>
+      <view class="search__filter {{filterVisible ? 'is-active' : ''}}" bindtap="onToggleFilter" aria-label="{{copy.filter}}" style="display:flex;flex-shrink:0;width:68rpx;height:64rpx;align-items:center;justify-content:center;">
+        <text class="search__filter-glyph" style="display:block;color:#4A90D9;font-size:28rpx;font-weight:700;line-height:1;letter-spacing:-5rpx;">↑↓</text>
+      </view>
+    </view>
+    <view wx:if="{{filterVisible}}" class="filter-menu" catchtap="noop">
+      <view class="filter-menu__item {{sort === 'time' ? 'is-active' : ''}}" bindtap="onSelectSort" data-sort="time">{{copy.time}}</view>
+      <view class="filter-menu__item {{sort === 'name' ? 'is-active' : ''}}" bindtap="onSelectSort" data-sort="name">{{copy.name}}</view>
+      <view class="filter-menu__item {{sort === 'manual' ? 'is-active' : ''}}" bindtap="onSelectSort" data-sort="manual">{{copy.manual}}</view>
+    </view>
+  </view>
+
+  <view wx:if="{{sort === 'manual' && tokens.length > 1}}" class="sort-hint">{{copy.drag}}</view>
+
+  <scroll-view scroll-y class="list" wx:if="{{tokens.length}}">
+    <view
+      wx:for="{{tokens}}"
+      wx:key="id"
+      class="token {{item.pinned ? 'is-pinned' : ''}} {{dragId === item.id ? 'is-dragging' : ''}}"
+      style="{{dragId === item.id ? 'transform: translateY(' + dragOffset + 'px);' : ''}}"
+      bindlongpress="onLongPress"
+      bindtouchmove="onDragMove"
+      bindtouchend="onDragEnd"
+      bindtouchcancel="onDragEnd"
+      data-id="{{item.id}}">
+
+      <!-- 品牌图标:没有图就用首字母兜底(对齐安卓 tv_otp_brand_fallback) -->
+      <view class="token__brand">
+        <text class="token__brand-letter">{{item.initial}}</text>
+      </view>
+
+      <view class="token__main" bindtap="onEdit" data-id="{{item.id}}">
+        <text class="token__issuer">{{item.issuer || copy.unnamed}}</text>
+        <text class="token__account">{{item.accountName || '—'}}</text>
+      </view>
+
+      <view class="token__code-area" bindtap="onCopy" data-id="{{item.id}}">
+        <text class="token__code {{item.remaining <= 5 ? 'is-expiring' : ''}}">{{item.display}}</text>
+        <text class="token__hint">{{copy.copy}}</text>
+      </view>
+
+      <view class="token__timer">
+        <text class="token__chip">{{item.remaining}}</text>
+        <view class="token__progress">
+          <view class="token__progress-fill" style="width: {{item.percent}}%"></view>
+        </view>
+      </view>
+    </view>
+    <view style="height: 180rpx"></view>
+  </scroll-view>
+
+  <view wx:else class="empty">
+    <text class="empty__title">{{keyword ? copy.emptySearch : copy.empty}}</text>
+    <text class="empty__detail">{{keyword ? copy.retry : copy.emptyHint}}</text>
+  </view>
+
+  <view class="footer safe-bottom">
+    <view class="btn btn--ghost footer__btn" bindtap="onManual">{{copy.manualInput}}</view>
+  </view>
+
+</view>
