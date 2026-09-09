@@ -74,6 +74,8 @@ async function encrypt() {
     salt: b64(salt),
     iv: b64(iv),
     ciphertext: b64(new Uint8Array(cipher)),
+    itemCount:
+      vault.tokens.length + vault.passwords.length + vault.trash.length,
     updatedAt: Date.now(),
   };
 }
@@ -285,7 +287,8 @@ async function unlock() {
     note("#unlock-message", "主密码错误，或保险箱文件已损坏");
   }
 }
-if (bundle()) {
+const initialBundle = bundle();
+if (initialBundle && initialBundle.itemCount !== 0) {
   $("#unlock-title").textContent = "解锁本地保险箱";
   $("#unlock-help").textContent = "输入主密码。解密只发生在当前浏览器。";
   $("#confirm-wrap").classList.add("hidden");
@@ -353,12 +356,18 @@ $("#setup-save").onclick = async (event) => {
     return note("#setup-message", "两次输入的密码不一致");
   vaultSalt = crypto.getRandomValues(new Uint8Array(16));
   key = await derive(password, vaultSalt);
-  await save();
   $("#lock-button").classList.remove("hidden");
   $("#setup-dialog").close();
   const action = pendingVaultAction;
   pendingVaultAction = null;
   action?.();
+};
+$("#empty-reset").onclick = () => {
+  if (!confirm("仅在确定本机没有需要保留的数据时继续。要重新开始吗？")) return;
+  localStorage.removeItem(STORE);
+  localStorage.removeItem(OLD_STORE);
+  localStorage.removeItem(REMOTE);
+  location.reload();
 };
 $("#main-add").onclick = () => requireVault(() => openOtp());
 $("#add-otp").onclick = () => requireVault(() => openOtp());
