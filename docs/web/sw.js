@@ -1,9 +1,10 @@
-const CACHE = "tinyotp-web-v6";
+const CACHE = "tinyotp-web-v7";
 const ASSETS = [
   "./",
   "./index.html",
   "./styles.css",
   "./app.js",
+  "./qr-lib.js",
   "./manifest.webmanifest",
   "./icon-192.png",
   "./icon-512.png",

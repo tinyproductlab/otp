@@ -90,10 +90,40 @@
             <section class="pane hidden" data-pane="passwords">
               <div class="section-head">
                 <div>
+                  <h2>实用工具</h2>
+                  <p>与小程序一致的三个本地工具</p>
+                </div>
+              </div>
+              <button class="tool-entry" data-open="password-ledger">
+                <span class="tool-icon purple">▤</span
+                ><span
+                  ><b>密码账本</b
+                  ><small>加密保存网站、账号、密码和备注</small></span
+                ><i>›</i>
+              </button>
+              <button class="tool-entry" data-open="qrcode">
+                <span class="tool-icon blue">▦</span
+                ><span
+                  ><b>二维码转换</b
+                  ><small>把文字或链接转换成二维码并下载</small></span
+                ><i>›</i>
+              </button>
+              <button class="tool-entry" data-open="generator">
+                <span class="tool-icon">✦</span
+                ><span><b>密码生成器</b><small>生成安全的随机密码</small></span
+                ><i>›</i>
+              </button>
+            </section>
+            <section class="pane hidden" data-pane="password-ledger">
+              <div class="section-head">
+                <div>
                   <h2>密码账本</h2>
                   <p>所有密码仍保存在加密保险箱</p>
                 </div>
-                <button id="add-password" class="round-add">＋</button>
+                <div class="section-actions">
+                  <button class="back-tools">返回</button
+                  ><button id="add-password" class="round-add">＋</button>
+                </div>
               </div>
               <div class="toolbar">
                 <input
@@ -108,11 +138,55 @@
                 <h2>密码账本还是空的</h2>
                 <p>点击右上角添加密码</p>
               </div>
-              <button class="tool-entry" data-open="generator">
-                <span class="tool-icon">✦</span
-                ><span><b>密码生成器</b><small>生成安全的随机密码</small></span
-                ><i>›</i>
-              </button>
+            </section>
+            <section class="pane hidden" data-pane="qrcode">
+              <div class="section-head">
+                <div>
+                  <h2>二维码转换</h2>
+                  <p>把文字或链接转换成二维码并保存</p>
+                </div>
+                <button class="back-tools">返回</button>
+              </div>
+              <div class="qr-tool-card">
+                <label
+                  >文字或链接<textarea
+                    id="qr-content"
+                    maxlength="2048"
+                    placeholder="输入文字或粘贴链接"
+                  ></textarea>
+                </label>
+                <div class="qr-count">
+                  <span id="qr-count">0 / 2048</span
+                  ><button id="qr-clear" class="text-action">清空</button>
+                </div>
+                <button id="qr-generate" class="primary wide">生成二维码</button
+                ><label class="scan-label"
+                  >识别二维码图片<input
+                    id="qr-read-file"
+                    type="file"
+                    accept="image/*"
+                /></label>
+                <p id="qr-message" class="message"></p>
+              </div>
+              <div id="qr-result" class="qr-result hidden">
+                <canvas id="qr-canvas" width="960" height="1120"></canvas>
+                <p id="qr-display"></p>
+                <button id="qr-download" class="primary wide">
+                  下载二维码
+                </button>
+              </div>
+              <div id="qr-history-wrap" class="qr-history hidden">
+                <div class="section-head">
+                  <div>
+                    <h2>最近生成</h2>
+                    <p id="qr-history-count"></p>
+                  </div>
+                  <button id="qr-history-clear" class="text-action">
+                    全部删除
+                  </button>
+                </div>
+                <div id="qr-history"></div>
+              </div>
             </section>
             <section class="pane otp-pane" data-pane="otp">
               <div class="otp-toolbar">
@@ -465,6 +539,7 @@
         <p id="account-message" class="message"></p>
       </form>
     </dialog>
+    <script src="qr-lib.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

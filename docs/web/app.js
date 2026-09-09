@@ -223,7 +223,7 @@ function renderPasswords() {
         `<article class="password-row" data-id="${p.id}"><div><h3>${safe(p.name || "未命名")}</h3><p>${safe(p.account || p.url || "无账号")}</p></div><div class="row-actions"><button class="ghost copy-account">复制账号</button><button class="ghost copy-password">复制密码</button><button class="ghost edit-password">编辑</button><button class="delete-password danger">删除</button></div></article>`,
     )
     .join("");
-  $$(".password-row").forEach((el) => {
+  $$("#password-list .password-row").forEach((el) => {
     const p = vault.passwords.find((x) => x.id === el.dataset.id);
     el.querySelector(".copy-account").onclick = () =>
       copy(p.account, "账号已复制");
@@ -308,7 +308,8 @@ function showTab(name) {
     b.classList.toggle(
       "active",
       b.dataset.tab === name ||
-        (name === "generator" && b.dataset.tab === "passwords") ||
+        (["generator", "qrcode", "password-ledger"].includes(name) &&
+          b.dataset.tab === "passwords") ||
         (name === "trash" && b.dataset.tab === "settings"),
     ),
   );
@@ -325,8 +326,12 @@ $$("[data-tab]").forEach(
     }),
 );
 $("#more-button").onclick = () => $("#more-menu").classList.toggle("hidden");
-$("[data-open='generator']").onclick = () => showTab("generator");
-$(".back-tools").onclick = () => showTab("passwords");
+$$("[data-open]").forEach(
+  (button) => (button.onclick = () => showTab(button.dataset.open)),
+);
+$$(".back-tools").forEach(
+  (button) => (button.onclick = () => showTab("passwords")),
+);
 function openOtp(t = null) {
   $("#otp-dialog-title").textContent = t ? "编辑验证码" : "添加验证码";
   $("#otp-id").value = t?.id || "";
@@ -546,6 +551,127 @@ $("#import-file").onchange = async (e) => {
     note("#app-message", err.message);
   }
 };
+
+const QR_HISTORY = "tinyotp.qr.history.v1";
+let currentQr = null;
+function qrHistory() {
+  try {
+    return JSON.parse(localStorage.getItem(QR_HISTORY) || "[]");
+  } catch {
+    return [];
+  }
+}
+function renderQrHistory() {
+  const rows = qrHistory();
+  $("#qr-history-wrap").classList.toggle("hidden", rows.length === 0);
+  $("#qr-history-count").textContent = `${rows.length} 条`;
+  $("#qr-history").innerHTML = rows
+    .map(
+      (row) =>
+        `<button class="qr-history-item" data-qr-id="${row.id}"><span>QR</span><div><b>${safe(row.content)}</b><small>${new Date(row.createdAt).toLocaleString()}</small></div><i>›</i></button>`,
+    )
+    .join("");
+  $$("[data-qr-id]").forEach((button) => {
+    button.onclick = () => {
+      const row = rows.find((item) => item.id === button.dataset.qrId);
+      $("#qr-content").value = row.content;
+      $("#qr-count").textContent = `${row.content.length} / 2048`;
+      drawQr(row.content);
+    };
+  });
+}
+function drawQr(content, remark = "") {
+  qrcode.stringToBytes = qrcode.stringToBytesFuncs["UTF-8"];
+  const qr = qrcode(0, "M");
+  qr.addData(content, "Byte");
+  qr.make();
+  const canvas = $("#qr-canvas"),
+    ctx = canvas.getContext("2d"),
+    count = qr.getModuleCount(),
+    margin = 64,
+    size = 832,
+    cell = size / count;
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#111827";
+  for (let row = 0; row < count; row++) {
+    for (let col = 0; col < count; col++) {
+      if (qr.isDark(row, col))
+        ctx.fillRect(
+          Math.floor(margin + col * cell),
+          Math.floor(margin + row * cell),
+          Math.ceil(cell),
+          Math.ceil(cell),
+        );
+    }
+  }
+  if (remark) {
+    ctx.font = "bold 42px -apple-system, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(remark.slice(0, 30), canvas.width / 2, 1030, 820);
+  }
+  currentQr = { content, remark };
+  $("#qr-result").classList.remove("hidden");
+  $("#qr-display").textContent = remark ? `${remark}：${content}` : content;
+}
+$("#qr-content").oninput = (event) => {
+  $("#qr-count").textContent = `${event.target.value.length} / 2048`;
+};
+$("#qr-clear").onclick = () => {
+  $("#qr-content").value = "";
+  $("#qr-count").textContent = "0 / 2048";
+  $("#qr-result").classList.add("hidden");
+  currentQr = null;
+};
+$("#qr-generate").onclick = () => {
+  const content = $("#qr-content").value.trim();
+  if (!content) return note("#qr-message", "请输入文字或链接");
+  try {
+    drawQr(content);
+    const rows = qrHistory().filter((row) => row.content !== content);
+    rows.unshift({ id: crypto.randomUUID(), content, createdAt: Date.now() });
+    localStorage.setItem(QR_HISTORY, JSON.stringify(rows.slice(0, 20)));
+    renderQrHistory();
+    note("#qr-message", "二维码已生成", "success");
+  } catch (error) {
+    note("#qr-message", error.message || "内容过长，无法生成");
+  }
+};
+$("#qr-download").onclick = () => {
+  if (!currentQr) return;
+  const remark = prompt("填写二维码备注（例如：家庭 Wi-Fi、会议签到）");
+  if (remark === null) return;
+  if (!remark.trim()) return note("#qr-message", "请填写备注");
+  drawQr(currentQr.content, remark.trim());
+  const link = document.createElement("a");
+  link.download = `qrcode-${Date.now()}.png`;
+  link.href = $("#qr-canvas").toDataURL("image/png");
+  link.click();
+};
+$("#qr-read-file").onchange = async (event) => {
+  try {
+    if (!window.BarcodeDetector)
+      throw Error("当前浏览器不支持图片识别，请使用最新版 Chrome 或 Edge");
+    const bitmap = await createImageBitmap(event.target.files[0]);
+    const codes = await new BarcodeDetector({ formats: ["qr_code"] }).detect(
+      bitmap,
+    );
+    if (!codes[0]?.rawValue) throw Error("没有识别到二维码");
+    $("#qr-content").value = codes[0].rawValue;
+    $("#qr-count").textContent = `${codes[0].rawValue.length} / 2048`;
+    drawQr(codes[0].rawValue);
+    note("#qr-message", "二维码内容已识别", "success");
+  } catch (error) {
+    note("#qr-message", error.message);
+  }
+};
+$("#qr-history-clear").onclick = () => {
+  if (!confirm("确定删除全部二维码生成记录吗？")) return;
+  localStorage.removeItem(QR_HISTORY);
+  renderQrHistory();
+};
+renderQrHistory();
+
 async function account(path, options = {}) {
   const r = await fetch(`https://account.tinylabpro.com${path}`, {
       credentials: "include",
