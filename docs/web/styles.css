@@ -31,6 +31,14 @@ textarea {
 button {
   cursor: pointer;
 }
+.desktop-layout {
+  width: min(1160px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 480px minmax(0, 1fr);
+  gap: 54px;
+  align-items: center;
+}
 .hidden {
   display: none !important;
 }
@@ -41,6 +49,105 @@ button {
   background: var(--bg);
   position: relative;
   box-shadow: 0 0 80px #0008;
+}
+.product-intro {
+  max-width: 560px;
+  padding: 42px 8px;
+}
+.intro-brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+.intro-brand img {
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+}
+.intro-brand span,
+.intro-brand strong {
+  display: block;
+}
+.intro-brand span {
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+}
+.intro-brand strong {
+  margin-top: 2px;
+  font-size: 20px;
+  letter-spacing: 0.08em;
+}
+.intro-kicker {
+  margin: 38px 0 10px;
+  color: var(--blue);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+}
+.product-intro > h1 {
+  margin: 0;
+  font-size: clamp(38px, 4.2vw, 58px);
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+}
+.intro-lead {
+  max-width: 510px;
+  margin: 22px 0 28px;
+  color: #a4b2c8;
+  font-size: 16px;
+  line-height: 1.75;
+}
+.intro-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.intro-features article {
+  display: flex;
+  gap: 12px;
+  min-height: 126px;
+  padding: 17px;
+  border: 1px solid #273750;
+  border-radius: 17px;
+  background: #101a2b;
+}
+.intro-features article > span {
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 700;
+}
+.intro-features h2 {
+  margin: 0 0 7px;
+  font-size: 15px;
+}
+.intro-features p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.intro-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-top: 24px;
+}
+.intro-actions .install-action {
+  margin: 0;
+}
+.intro-actions a {
+  color: #9db7dc;
+  font-size: 13px;
+  text-decoration: none;
+}
+.intro-actions a:hover {
+  color: white;
+}
+.intro-foot {
+  margin: 24px 0 0;
+  color: #617089;
+  font-size: 12px;
 }
 .mini-nav {
   height: 64px;
@@ -725,6 +832,38 @@ dialog::backdrop {
   }
   .phone-shell {
     box-shadow: none;
+  }
+}
+@media (max-width: 900px) {
+  .desktop-layout {
+    display: block;
+  }
+  .product-intro {
+    width: min(100% - 36px, 560px);
+    margin: 0 auto;
+    padding: 54px 0 70px;
+  }
+  .product-intro > h1 {
+    font-size: 38px;
+  }
+}
+@media (max-width: 520px) {
+  .intro-features {
+    grid-template-columns: 1fr;
+  }
+  .intro-features article {
+    min-height: 0;
+  }
+}
+@media (display-mode: standalone) {
+  body {
+    padding: 0;
+  }
+  .desktop-layout {
+    display: block;
+  }
+  .product-intro {
+    display: none;
   }
 }
 @media (min-width: 700px) {
