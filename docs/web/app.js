@@ -565,3 +565,31 @@ checkAccount();
 setInterval(() => {
   if (key && activeTab === "otp") renderOtp();
 }, 1000);
+
+let installPrompt = null;
+const installButtons = $$(".install-action");
+function setInstallAvailable(available) {
+  installButtons.forEach((button) => button.classList.toggle("hidden", !available));
+}
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  installPrompt = event;
+  setInstallAvailable(true);
+});
+installButtons.forEach((button) => {
+  button.onclick = async () => {
+    if (!installPrompt) return;
+    await installPrompt.prompt();
+    await installPrompt.userChoice;
+    installPrompt = null;
+    setInstallAvailable(false);
+    $("#more-menu")?.classList.add("hidden");
+  };
+});
+window.addEventListener("appinstalled", () => {
+  installPrompt = null;
+  setInstallAvailable(false);
+});
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js"));
+}

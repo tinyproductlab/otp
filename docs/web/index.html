@@ -1,20 +1,350 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="小产品实验室 OTP Web：本地加密的动态验证码和密码工具。"><title>OTP Web · 小产品实验室</title><link rel="icon" href="../assets/otp-miniprogram-code.jpg"><link rel="stylesheet" href="styles.css"></head>
-<body><div class="phone-shell">
-<header class="mini-nav"><a class="mini-title" href="../">小产品实验室 OTP</a><div class="head-actions"><span id="account-state">未登录</span><button id="account-button" class="capsule">登录同步</button><button id="lock-button" class="capsule hidden">锁定</button></div></header>
-<main>
-<section id="locked" class="unlock-card"><img src="../assets/otp-logo.jpg" alt="OTP" class="unlock-logo"><p class="eyebrow">本地加密保险箱</p><h1 id="unlock-title">建立本地保险箱</h1><p id="unlock-help">设置主密码后进入。密钥只在此设备解密，主密码不会上传。</p><label>主密码<input id="master-password" type="password" autocomplete="current-password" minlength="8" placeholder="至少 8 位"></label><label id="confirm-wrap">确认主密码<input id="master-confirm" type="password" autocomplete="new-password" minlength="8" placeholder="再次输入"></label><button id="unlock-button" class="primary wide">建立并进入</button><p id="unlock-message" class="message"></p></section>
-<section id="app" class="app-view hidden">
-<div class="brandbar"><img src="../assets/otp-logo.jpg" alt="OTP 图标"><div><h1>OTP</h1><p>小产品实验室</p></div><button id="more-button" class="more" aria-label="更多">•••</button><div id="more-menu" class="more-menu hidden"><button data-tab="settings">设置与同步</button><button data-tab="trash">回收站</button><a href="../" target="_blank">关于 OTP</a></div></div>
-<p id="app-message" class="message floating-message"></p>
-<section class="pane hidden" data-pane="passwords"><div class="section-head"><div><h2>密码账本</h2><p>所有密码仍保存在加密保险箱</p></div><button id="add-password" class="round-add">＋</button></div><div class="toolbar"><input id="password-search" type="search" placeholder="搜索名称、账号或网址"></div><div id="password-list" class="list"></div><div id="password-empty" class="empty"><div>⌁</div><h2>密码账本还是空的</h2><p>点击右上角添加密码</p></div><button class="tool-entry" data-open="generator"><span class="tool-icon">✦</span><span><b>密码生成器</b><small>生成安全的随机密码</small></span><i>›</i></button></section>
-<section class="pane otp-pane" data-pane="otp"><div class="otp-toolbar"><input id="otp-search" type="search" placeholder="搜索平台或账号"><select id="otp-sort"><option value="time">最近更新</option><option value="name">按名称</option><option value="manual">手动顺序</option></select></div><div id="tokens" class="token-grid"></div><div id="otp-empty" class="empty otp-empty"><div class="clock-icon">◷</div><h2>还没有保存验证码</h2><p>上滑新增 · 下滑搜索</p></div><button id="main-add" class="fab" aria-label="添加验证码">＋</button><button id="add-otp" class="hidden">添加验证码</button><p class="gesture-tip">上滑新增 · 下滑搜索</p></section>
-<section class="pane hidden" data-pane="generator"><div class="section-head"><div><h2>密码生成器</h2><p>快速生成安全密码</p></div><button class="back-tools">返回</button></div><div class="generator-card"><div class="generated"><code id="generated-password"></code><button id="copy-generated" class="ghost">复制</button></div><label>长度 <span id="length-value">20</span><input id="password-length" type="range" min="8" max="64" value="20"></label><div class="checks"><label><input id="use-upper" type="checkbox" checked> 大写字母</label><label><input id="use-lower" type="checkbox" checked> 小写字母</label><label><input id="use-number" type="checkbox" checked> 数字</label><label><input id="use-symbol" type="checkbox" checked> 符号</label></div><button id="generate-password" class="primary wide">重新生成</button></div></section>
-<section class="pane hidden" data-pane="trash"><div class="section-head"><div><h2>回收站</h2><p>删除的数据可在保留期内恢复</p></div><button id="empty-trash" class="danger">清空</button></div><div id="trash-list" class="list"></div><div id="trash-empty" class="empty"><div>♲</div><h2>回收站是空的</h2></div></section>
-<section class="pane hidden" data-pane="settings"><div class="section-head"><div><h2>资料管理</h2><p>同步、备份与安全设置</p></div></div><div class="settings-list"><article><span class="tool-icon blue">☁</span><div><h3>账号同步</h3><p>服务器只保存加密保险箱</p></div><button id="sync-button" class="ghost">立即同步</button></article><article><span class="tool-icon orange">⇧</span><div><h3>本地备份</h3><p>导出的文件仍由主密码保护</p></div><div class="button-row"><button id="export-button" class="ghost">导出</button><label class="ghost file-label">导入<input id="import-file" type="file" accept="application/json"></label></div></article><article><span class="tool-icon teal">♲</span><div><h3>回收站保留</h3><p>到期后自动清理</p></div><select id="retention"><option value="7">7 天</option><option value="30">30 天</option><option value="90">90 天</option><option value="0">永久</option></select></article><article><span class="tool-icon purple">✓</span><div><h3>隐私保护</h3><p>明文密钥、密码和主密码不会上传</p></div></article></div></section>
-<nav class="tabbar"><button data-tab="passwords"><span>▦</span><b>实用工具</b></button><button data-tab="otp" class="active"><span>◉</span><b>OTP</b></button><button data-tab="settings"><span>▱</span><b>资料管理</b></button></nav>
-</section></main></div>
-<dialog id="otp-dialog"><form method="dialog"><div class="dialog-head"><h2 id="otp-dialog-title">添加验证码</h2><button value="cancel" class="icon">×</button></div><label>粘贴二维码内容（可选）<textarea id="uri" placeholder="otpauth://totp/..."></textarea></label><div class="or">或手动填写</div><input id="otp-id" type="hidden"><label>平台名称<input id="issuer" placeholder="例如 GitHub"></label><label>账号<input id="otp-account" placeholder="name@example.com"></label><label>Base32 密钥<input id="secret" autocomplete="off" spellcheck="false" placeholder="JBSWY3DPEHPK3PXP"></label><div class="form-row"><label>位数<select id="digits"><option>6</option><option>7</option><option>8</option></select></label><label>周期<select id="period"><option value="30">30 秒</option><option value="60">60 秒</option></select></label><label>算法<select id="algorithm"><option value="SHA-1">SHA-1</option><option value="SHA-256">SHA-256</option></select></label></div><label class="scan-label">从二维码图片读取<input id="qr-file" type="file" accept="image/*"></label><p id="otp-message" class="message"></p><button id="save-otp" value="cancel" class="primary wide">保存</button></form></dialog>
-<dialog id="password-dialog"><form method="dialog"><div class="dialog-head"><h2 id="password-dialog-title">添加密码</h2><button value="cancel" class="icon">×</button></div><input id="password-id" type="hidden"><label>名称<input id="password-name" placeholder="例如 Oracle Cloud"></label><label>账号<input id="password-account" autocomplete="off"></label><label>密码<div class="inline"><input id="password-value" type="password" autocomplete="new-password"><button id="fill-generated" value="cancel" class="ghost">生成</button></div></label><label>网址<input id="password-url" type="url" placeholder="https://"></label><label>备注<textarea id="password-note"></textarea></label><p id="password-message" class="message"></p><button id="save-password" value="cancel" class="primary wide">保存</button></form></dialog>
-<dialog id="account-dialog"><form method="dialog"><div class="dialog-head"><h2>可选账号同步</h2><button value="cancel" class="icon">×</button></div><p>先在账号中心使用邮箱验证码登录，再回来检查状态。服务器只保存加密保险箱。</p><a class="primary link-button" href="https://account.tinylabpro.com/" target="_blank" rel="noopener">打开账号中心</a><button id="check-account" value="cancel" class="ghost wide">我已登录，检查状态</button><p id="account-message" class="message"></p></form></dialog>
-<script src="app.js"></script></body></html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta
+      name="description"
+      content="小产品实验室 OTP Web：本地加密的动态验证码和密码工具。"
+    />
+    <title>OTP Web · 小产品实验室</title>
+    <meta name="theme-color" content="#0c162c" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="icon" href="icon-192.png" />
+    <link rel="apple-touch-icon" href="icon-192.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="phone-shell">
+      <header class="mini-nav">
+        <a class="mini-title" href="../">小产品实验室 OTP</a>
+        <div class="head-actions">
+          <span id="account-state">未登录</span
+          ><button id="account-button" class="capsule">登录同步</button
+          ><button id="lock-button" class="capsule hidden">锁定</button>
+        </div>
+      </header>
+      <main>
+        <section id="locked" class="unlock-card">
+          <img src="icon-192.png" alt="OTP" class="unlock-logo" />
+          <p class="eyebrow">本地加密保险箱</p>
+          <h1 id="unlock-title">建立本地保险箱</h1>
+          <p id="unlock-help">
+            设置主密码后进入。密钥只在此设备解密，主密码不会上传。
+          </p>
+          <label
+            >主密码<input
+              id="master-password"
+              type="password"
+              autocomplete="current-password"
+              minlength="8"
+              placeholder="至少 8 位" /></label
+          ><label id="confirm-wrap"
+            >确认主密码<input
+              id="master-confirm"
+              type="password"
+              autocomplete="new-password"
+              minlength="8"
+              placeholder="再次输入" /></label
+          ><button id="unlock-button" class="primary wide">建立并进入</button>
+          <p class="local-note">无需登录账号，本地功能可直接使用。</p>
+          <button id="install-button-locked" class="ghost wide install-action hidden">安装到电脑</button>
+          <p id="unlock-message" class="message"></p>
+        </section>
+        <section id="app" class="app-view hidden">
+          <div class="brandbar">
+            <img src="icon-192.png" alt="OTP 图标" />
+            <div>
+              <h1>OTP</h1>
+              <p>小产品实验室</p>
+            </div>
+            <button id="more-button" class="more" aria-label="更多">•••</button>
+            <div id="more-menu" class="more-menu hidden">
+              <button data-tab="settings">设置与同步</button
+              ><button data-tab="trash">回收站</button
+              ><button id="install-button" class="install-action hidden">安装到电脑</button
+              ><a href="../" target="_blank">关于 OTP</a>
+            </div>
+          </div>
+          <p id="app-message" class="message floating-message"></p>
+          <section class="pane hidden" data-pane="passwords">
+            <div class="section-head">
+              <div>
+                <h2>密码账本</h2>
+                <p>所有密码仍保存在加密保险箱</p>
+              </div>
+              <button id="add-password" class="round-add">＋</button>
+            </div>
+            <div class="toolbar">
+              <input
+                id="password-search"
+                type="search"
+                placeholder="搜索名称、账号或网址"
+              />
+            </div>
+            <div id="password-list" class="list"></div>
+            <div id="password-empty" class="empty">
+              <div>⌁</div>
+              <h2>密码账本还是空的</h2>
+              <p>点击右上角添加密码</p>
+            </div>
+            <button class="tool-entry" data-open="generator">
+              <span class="tool-icon">✦</span
+              ><span><b>密码生成器</b><small>生成安全的随机密码</small></span
+              ><i>›</i>
+            </button>
+          </section>
+          <section class="pane otp-pane" data-pane="otp">
+            <div class="otp-toolbar">
+              <input
+                id="otp-search"
+                type="search"
+                placeholder="搜索平台或账号"
+              /><select id="otp-sort">
+                <option value="time">最近更新</option>
+                <option value="name">按名称</option>
+                <option value="manual">手动顺序</option>
+              </select>
+            </div>
+            <div id="tokens" class="token-grid"></div>
+            <div id="otp-empty" class="empty otp-empty">
+              <div class="clock-icon">◷</div>
+              <h2>还没有保存验证码</h2>
+              <p>上滑新增 · 下滑搜索</p>
+            </div>
+            <button id="main-add" class="fab" aria-label="添加验证码">＋</button
+            ><button id="add-otp" class="hidden">添加验证码</button>
+            <p class="gesture-tip">上滑新增 · 下滑搜索</p>
+          </section>
+          <section class="pane hidden" data-pane="generator">
+            <div class="section-head">
+              <div>
+                <h2>密码生成器</h2>
+                <p>快速生成安全密码</p>
+              </div>
+              <button class="back-tools">返回</button>
+            </div>
+            <div class="generator-card">
+              <div class="generated">
+                <code id="generated-password"></code
+                ><button id="copy-generated" class="ghost">复制</button>
+              </div>
+              <label
+                >长度 <span id="length-value">20</span
+                ><input
+                  id="password-length"
+                  type="range"
+                  min="8"
+                  max="64"
+                  value="20"
+              /></label>
+              <div class="checks">
+                <label
+                  ><input id="use-upper" type="checkbox" checked />
+                  大写字母</label
+                ><label
+                  ><input id="use-lower" type="checkbox" checked />
+                  小写字母</label
+                ><label
+                  ><input id="use-number" type="checkbox" checked /> 数字</label
+                ><label
+                  ><input id="use-symbol" type="checkbox" checked /> 符号</label
+                >
+              </div>
+              <button id="generate-password" class="primary wide">
+                重新生成
+              </button>
+            </div>
+          </section>
+          <section class="pane hidden" data-pane="trash">
+            <div class="section-head">
+              <div>
+                <h2>回收站</h2>
+                <p>删除的数据可在保留期内恢复</p>
+              </div>
+              <button id="empty-trash" class="danger">清空</button>
+            </div>
+            <div id="trash-list" class="list"></div>
+            <div id="trash-empty" class="empty">
+              <div>♲</div>
+              <h2>回收站是空的</h2>
+            </div>
+          </section>
+          <section class="pane hidden" data-pane="settings">
+            <div class="section-head">
+              <div>
+                <h2>资料管理</h2>
+                <p>同步、备份与安全设置</p>
+              </div>
+            </div>
+            <div class="settings-list">
+              <article>
+                <span class="tool-icon blue">☁</span>
+                <div>
+                  <h3>账号同步</h3>
+                  <p>服务器只保存加密保险箱</p>
+                </div>
+                <button id="sync-button" class="ghost">立即同步</button>
+              </article>
+              <article>
+                <span class="tool-icon orange">⇧</span>
+                <div>
+                  <h3>本地备份</h3>
+                  <p>导出的文件仍由主密码保护</p>
+                </div>
+                <div class="button-row">
+                  <button id="export-button" class="ghost">导出</button
+                  ><label class="ghost file-label"
+                    >导入<input
+                      id="import-file"
+                      type="file"
+                      accept="application/json"
+                  /></label>
+                </div>
+              </article>
+              <article>
+                <span class="tool-icon teal">♲</span>
+                <div>
+                  <h3>回收站保留</h3>
+                  <p>到期后自动清理</p>
+                </div>
+                <select id="retention">
+                  <option value="7">7 天</option>
+                  <option value="30">30 天</option>
+                  <option value="90">90 天</option>
+                  <option value="0">永久</option>
+                </select>
+              </article>
+              <article>
+                <span class="tool-icon purple">✓</span>
+                <div>
+                  <h3>隐私保护</h3>
+                  <p>明文密钥、密码和主密码不会上传</p>
+                </div>
+              </article>
+            </div>
+          </section>
+          <nav class="tabbar">
+            <button data-tab="passwords"><span>▦</span><b>实用工具</b></button
+            ><button data-tab="otp" class="active">
+              <span>◉</span><b>OTP</b></button
+            ><button data-tab="settings"><span>▱</span><b>资料管理</b></button>
+          </nav>
+        </section>
+      </main>
+    </div>
+    <dialog id="otp-dialog">
+      <form method="dialog">
+        <div class="dialog-head">
+          <h2 id="otp-dialog-title">添加验证码</h2>
+          <button value="cancel" class="icon">×</button>
+        </div>
+        <label
+          >粘贴二维码内容（可选）<textarea
+            id="uri"
+            placeholder="otpauth://totp/..."
+          ></textarea>
+        </label>
+        <div class="or">或手动填写</div>
+        <input id="otp-id" type="hidden" /><label
+          >平台名称<input id="issuer" placeholder="例如 GitHub" /></label
+        ><label
+          >账号<input id="otp-account" placeholder="name@example.com" /></label
+        ><label
+          >Base32 密钥<input
+            id="secret"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="JBSWY3DPEHPK3PXP"
+        /></label>
+        <div class="form-row">
+          <label
+            >位数<select id="digits">
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+            </select></label
+          ><label
+            >周期<select id="period">
+              <option value="30">30 秒</option>
+              <option value="60">60 秒</option>
+            </select></label
+          ><label
+            >算法<select id="algorithm">
+              <option value="SHA-1">SHA-1</option>
+              <option value="SHA-256">SHA-256</option>
+            </select></label
+          >
+        </div>
+        <label class="scan-label"
+          >从二维码图片读取<input id="qr-file" type="file" accept="image/*"
+        /></label>
+        <p id="otp-message" class="message"></p>
+        <button id="save-otp" value="cancel" class="primary wide">保存</button>
+      </form>
+    </dialog>
+    <dialog id="password-dialog">
+      <form method="dialog">
+        <div class="dialog-head">
+          <h2 id="password-dialog-title">添加密码</h2>
+          <button value="cancel" class="icon">×</button>
+        </div>
+        <input id="password-id" type="hidden" /><label
+          >名称<input
+            id="password-name"
+            placeholder="例如 Oracle Cloud" /></label
+        ><label>账号<input id="password-account" autocomplete="off" /></label
+        ><label
+          >密码
+          <div class="inline">
+            <input
+              id="password-value"
+              type="password"
+              autocomplete="new-password"
+            /><button id="fill-generated" value="cancel" class="ghost">
+              生成
+            </button>
+          </div></label
+        ><label
+          >网址<input
+            id="password-url"
+            type="url"
+            placeholder="https://" /></label
+        ><label>备注<textarea id="password-note"></textarea></label>
+        <p id="password-message" class="message"></p>
+        <button id="save-password" value="cancel" class="primary wide">
+          保存
+        </button>
+      </form>
+    </dialog>
+    <dialog id="account-dialog">
+      <form method="dialog">
+        <div class="dialog-head">
+          <h2>登录同步（可选）</h2>
+          <button value="cancel" class="icon">×</button>
+        </div>
+        <div class="optional-login-note">
+          <strong>不登录也可以正常使用</strong>
+          <p>OTP、密码账本、生成器和本地备份都能直接使用。只有需要跨设备同步时才需要登录。</p>
+        </div>
+        <p>登录后，服务器只保存加密后的保险箱，无法读取其中的 OTP 密钥和密码。</p>
+        <a
+          class="primary link-button"
+          href="https://account.tinylabpro.com/"
+          target="_blank"
+          rel="noopener"
+          >打开账号中心</a
+        ><button id="check-account" value="cancel" class="ghost wide">
+          我已登录，检查状态
+        </button>
+        <p id="account-message" class="message"></p>
+      </form>
+    </dialog>
+    <script src="app.js"></script>
+  </body>
+</html>

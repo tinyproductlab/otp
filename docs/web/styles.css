@@ -105,6 +105,15 @@ button {
   color: var(--muted);
   line-height: 1.65;
 }
+.unlock-card .local-note {
+  margin: 12px 0 0;
+  text-align: center;
+  color: #9fb0c8;
+  font-size: 12px;
+}
+.install-action {
+  margin-top: 10px;
+}
 .unlock-card label,
 dialog label,
 .generator-card > label {
@@ -613,6 +622,22 @@ dialog {
 }
 dialog::backdrop {
   background: #030712bb;
+}
+.optional-login-note {
+  margin: 16px 0;
+  padding: 14px;
+  border-radius: 14px;
+  background: #173354;
+  border: 1px solid #285481;
+}
+.optional-login-note strong {
+  color: #b9d6ff;
+}
+.optional-login-note p {
+  margin: 7px 0 0;
+  color: #9fb0c8;
+  font-size: 13px;
+  line-height: 1.55;
 }
 .dialog-head {
   display: flex;
