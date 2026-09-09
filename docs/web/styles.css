@@ -1037,3 +1037,152 @@ dialog::backdrop {
     padding: 26px 23px;
   }
 }
+
+/* 明亮主题：保留蓝色品牌与原有层级，只调整表面和文字对比。 */
+html[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f3f6fb;
+  --card: #ffffff;
+  --card2: #f8faff;
+  --line: #d8e1ee;
+  --text: #172033;
+  --muted: #697990;
+  --blue: #2767cf;
+  --pink: #b94856;
+  --danger: #c43f4e;
+}
+html[data-theme="light"],
+html[data-theme="light"] body {
+  background: #e9eef6;
+}
+html[data-theme="light"] .phone-shell {
+  box-shadow: 0 20px 70px #64748b26;
+}
+html[data-theme="light"] .intro-lead {
+  color: #52647e;
+}
+html[data-theme="light"] .intro-features article {
+  border-color: #d7e0ed;
+  background: #f8faff;
+}
+html[data-theme="light"] .intro-actions a {
+  color: #42618c;
+}
+html[data-theme="light"] .intro-actions a:hover,
+html[data-theme="light"] .more {
+  color: #172033;
+}
+html[data-theme="light"] .intro-foot,
+html[data-theme="light"] .gesture-tip {
+  color: #6d7c92;
+}
+html[data-theme="light"] .capsule,
+html[data-theme="light"] input,
+html[data-theme="light"] select,
+html[data-theme="light"] textarea,
+html[data-theme="light"] .generated {
+  background: #ffffff;
+}
+html[data-theme="light"] .capsule {
+  border-color: #c6d2e2;
+}
+html[data-theme="light"] .unlock-card,
+html[data-theme="light"] .token {
+  box-shadow: 0 12px 34px #64748b1c;
+}
+html[data-theme="light"] .unlock-card label,
+html[data-theme="light"] dialog label,
+html[data-theme="light"] .generator-card > label,
+html[data-theme="light"] .qr-tool-card label,
+html[data-theme="light"] .unlock-card .local-note {
+  color: #5f7089;
+}
+html[data-theme="light"] .ghost {
+  border-color: #ccd7e5;
+  background: #eef3f9;
+  color: #263750;
+}
+html[data-theme="light"] .danger {
+  background: #fff0f1;
+  color: #b72f40;
+}
+html[data-theme="light"] .more-menu {
+  border-color: #d6dfeb;
+  background: #ffffff;
+  box-shadow: 0 16px 38px #52647e2b;
+}
+html[data-theme="light"] .more-menu button:hover,
+html[data-theme="light"] .more-menu a:hover {
+  background: #edf3fb;
+}
+html[data-theme="light"] .token-top small,
+html[data-theme="light"] .icon-small,
+html[data-theme="light"] .icon {
+  color: #65758b;
+}
+html[data-theme="light"] .progress {
+  background: #dbe4ef;
+}
+html[data-theme="light"] .empty h2 {
+  color: #53647c;
+}
+html[data-theme="light"] .clock-icon {
+  background: #e2edfc;
+}
+html[data-theme="light"] .tool-icon {
+  background: #ececfc;
+  color: #5759be;
+}
+html[data-theme="light"] .tool-icon.blue,
+html[data-theme="light"] .qr-history-item > span {
+  background: #e3efff;
+  color: #2465c4;
+}
+html[data-theme="light"] .tool-icon.orange {
+  background: #fff0dc;
+  color: #b76415;
+}
+html[data-theme="light"] .tool-icon.teal {
+  background: #def4f2;
+  color: #167b78;
+}
+html[data-theme="light"] .tool-icon.purple {
+  background: #eee8fb;
+  color: #7554b3;
+}
+html[data-theme="light"] .tabbar {
+  background: #f3f6fbf2;
+}
+html[data-theme="light"] .tabbar button {
+  color: #74839a;
+}
+html[data-theme="light"] .floating-message {
+  background: #ffffff;
+  box-shadow: 0 8px 24px #64748b2b;
+}
+html[data-theme="light"] dialog {
+  border-color: #d4deeb;
+  background: #ffffff;
+  box-shadow: 0 28px 80px #33415538;
+}
+html[data-theme="light"] dialog::backdrop {
+  background: #33415566;
+}
+html[data-theme="light"] .optional-login-note {
+  border-color: #bed8fa;
+  background: #eaf3ff;
+}
+html[data-theme="light"] .optional-login-note strong {
+  color: #1d55a4;
+}
+html[data-theme="light"] .optional-login-note p {
+  color: #526681;
+}
+html[data-theme="light"] .scan-label {
+  border-color: #aebed2;
+}
+@media (min-width: 700px) {
+  html[data-theme="light"] .phone-shell {
+    border-color: #d6dfeb;
+  }
+}

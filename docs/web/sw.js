@@ -1,4 +1,4 @@
-const CACHE = "tinyotp-web-v7";
+const CACHE = "tinyotp-web-v8";
 const ASSETS = [
   "./",
   "./index.html",

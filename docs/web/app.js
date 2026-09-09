@@ -4,7 +4,8 @@ const $ = (s) => document.querySelector(s),
   decoder = new TextDecoder();
 const STORE = "tinyotp.web.v2",
   OLD_STORE = "tinyotp.web.v1",
-  REMOTE = "tinyotp.remote.version";
+  REMOTE = "tinyotp.remote.version",
+  THEME = "tinyotp.web.theme";
 let key = null,
   vaultSalt = null,
   vault = { tokens: [], passwords: [], trash: [], settings: { retention: 30 } },
@@ -326,6 +327,22 @@ $$("[data-tab]").forEach(
     }),
 );
 $("#more-button").onclick = () => $("#more-menu").classList.toggle("hidden");
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  localStorage.setItem(THEME, theme);
+  const light = theme === "light";
+  $("#theme-toggle").textContent = light ? "深色主题" : "明亮主题";
+  document
+    .querySelector('meta[name="theme-color"]')
+    ?.setAttribute("content", light ? "#f3f6fb" : "#0c162c");
+}
+applyTheme(document.documentElement.dataset.theme || "dark");
+$("#theme-toggle").onclick = () => {
+  applyTheme(
+    document.documentElement.dataset.theme === "light" ? "dark" : "light",
+  );
+  $("#more-menu").classList.add("hidden");
+};
 $$("[data-open]").forEach(
   (button) => (button.onclick = () => showTab(button.dataset.open)),
 );

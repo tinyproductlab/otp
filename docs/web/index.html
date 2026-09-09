@@ -12,6 +12,20 @@
     />
     <title>OTP Web · 小产品实验室</title>
     <meta name="theme-color" content="#0c162c" />
+    <script>
+      (() => {
+        const saved = localStorage.getItem("tinyotp.web.theme");
+        const theme =
+          saved ||
+          (matchMedia("(prefers-color-scheme: light)").matches
+            ? "light"
+            : "dark");
+        document.documentElement.dataset.theme = theme;
+        document
+          .querySelector('meta[name="theme-color"]')
+          .setAttribute("content", theme === "light" ? "#f3f6fb" : "#0c162c");
+      })();
+    </script>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta
       name="apple-mobile-web-app-status-bar-style"
@@ -79,7 +93,8 @@
                 •••
               </button>
               <div id="more-menu" class="more-menu hidden">
-                <button data-tab="settings">设置与同步</button
+                <button id="theme-toggle">明亮主题</button
+                ><button data-tab="settings">设置与同步</button
                 ><button data-tab="trash">回收站</button
                 ><button id="install-button" class="install-action">
                   安装应用</button
