@@ -13,7 +13,10 @@
     <title>OTP Web · 小产品实验室</title>
     <meta name="theme-color" content="#0c162c" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <link rel="icon" href="icon-192.png" />
     <link rel="apple-touch-icon" href="icon-192.png" />
     <link rel="manifest" href="manifest.webmanifest" />
@@ -53,7 +56,9 @@
               placeholder="再次输入" /></label
           ><button id="unlock-button" class="primary wide">建立并进入</button>
           <p class="local-note">无需登录账号，本地功能可直接使用。</p>
-          <button id="install-button-locked" class="ghost wide install-action hidden">安装到电脑</button>
+          <button id="install-button-locked" class="ghost wide install-action">
+            安装应用
+          </button>
           <p id="unlock-message" class="message"></p>
         </section>
         <section id="app" class="app-view hidden">
@@ -67,7 +72,8 @@
             <div id="more-menu" class="more-menu hidden">
               <button data-tab="settings">设置与同步</button
               ><button data-tab="trash">回收站</button
-              ><button id="install-button" class="install-action hidden">安装到电脑</button
+              ><button id="install-button" class="install-action">
+                安装应用</button
               ><a href="../" target="_blank">关于 OTP</a>
             </div>
           </div>
@@ -322,6 +328,52 @@
         </button>
       </form>
     </dialog>
+    <dialog id="setup-dialog">
+      <form method="dialog">
+        <div class="dialog-head">
+          <h2>先保护你的数据</h2>
+          <button value="cancel" class="icon">×</button>
+        </div>
+        <p>
+          你即将保存第一条数据。请设置一个本地主密码，用于加密 OTP
+          密钥和密码账本。
+        </p>
+        <div class="optional-login-note">
+          <strong>仍然不需要登录账号</strong>
+          <p>主密码只用于此设备的本地加密，请妥善记住；我们无法替你找回。</p>
+        </div>
+        <label
+          >主密码<input
+            id="setup-password"
+            type="password"
+            minlength="8"
+            autocomplete="new-password"
+            placeholder="至少 8 位"
+        /></label>
+        <label
+          >确认主密码<input
+            id="setup-confirm"
+            type="password"
+            minlength="8"
+            autocomplete="new-password"
+            placeholder="再次输入"
+        /></label>
+        <p id="setup-message" class="message"></p>
+        <button id="setup-save" value="cancel" class="primary wide">
+          加密并继续
+        </button>
+      </form>
+    </dialog>
+    <dialog id="install-dialog">
+      <form method="dialog">
+        <div class="dialog-head">
+          <h2>安装 OTP</h2>
+          <button value="cancel" class="icon">×</button>
+        </div>
+        <div id="install-help"></div>
+        <button value="cancel" class="primary wide">知道了</button>
+      </form>
+    </dialog>
     <dialog id="account-dialog">
       <form method="dialog">
         <div class="dialog-head">
@@ -330,9 +382,13 @@
         </div>
         <div class="optional-login-note">
           <strong>不登录也可以正常使用</strong>
-          <p>OTP、密码账本、生成器和本地备份都能直接使用。只有需要跨设备同步时才需要登录。</p>
+          <p>
+            OTP、密码账本、生成器和本地备份都能直接使用。只有需要跨设备同步时才需要登录。
+          </p>
         </div>
-        <p>登录后，服务器只保存加密后的保险箱，无法读取其中的 OTP 密钥和密码。</p>
+        <p>
+          登录后，服务器只保存加密后的保险箱，无法读取其中的 OTP 密钥和密码。
+        </p>
         <a
           class="primary link-button"
           href="https://account.tinylabpro.com/"

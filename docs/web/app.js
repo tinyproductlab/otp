@@ -56,7 +56,9 @@ async function encrypt() {
   const old = bundle(),
     salt =
       vaultSalt ||
-      (old?.salt ? unb64(old.salt) : crypto.getRandomValues(new Uint8Array(16))),
+      (old?.salt
+        ? unb64(old.salt)
+        : crypto.getRandomValues(new Uint8Array(16))),
     iv = crypto.getRandomValues(new Uint8Array(12)),
     cipher = await crypto.subtle.encrypt(
       { name: "AES-GCM", iv },
@@ -288,6 +290,9 @@ if (bundle()) {
   $("#unlock-help").textContent = "输入主密码。解密只发生在当前浏览器。";
   $("#confirm-wrap").classList.add("hidden");
   $("#unlock-button").textContent = "解锁";
+} else {
+  $("#locked").classList.add("hidden");
+  $("#app").classList.remove("hidden");
 }
 $("#unlock-button").onclick = unlock;
 $("#master-password").onkeydown = (e) => {
@@ -331,8 +336,32 @@ function openOtp(t = null) {
   $("#uri").value = "";
   $("#otp-dialog").showModal();
 }
-$("#main-add").onclick = () => openOtp();
-$("#add-otp").onclick = () => openOtp();
+let pendingVaultAction = null;
+function requireVault(action) {
+  if (key) return action();
+  pendingVaultAction = action;
+  $("#setup-password").value = "";
+  $("#setup-confirm").value = "";
+  note("#setup-message", "");
+  $("#setup-dialog").showModal();
+}
+$("#setup-save").onclick = async (event) => {
+  event.preventDefault();
+  const password = $("#setup-password").value;
+  if (password.length < 8) return note("#setup-message", "主密码至少 8 位");
+  if (password !== $("#setup-confirm").value)
+    return note("#setup-message", "两次输入的密码不一致");
+  vaultSalt = crypto.getRandomValues(new Uint8Array(16));
+  key = await derive(password, vaultSalt);
+  await save();
+  $("#lock-button").classList.remove("hidden");
+  $("#setup-dialog").close();
+  const action = pendingVaultAction;
+  pendingVaultAction = null;
+  action?.();
+};
+$("#main-add").onclick = () => requireVault(() => openOtp());
+$("#add-otp").onclick = () => requireVault(() => openOtp());
 $("#otp-search").oninput = renderOtp;
 $("#otp-sort").onchange = renderOtp;
 $("#uri").onchange = () => {
@@ -397,7 +426,7 @@ function openPassword(p = null) {
   $("#password-note").value = p?.note || "";
   $("#password-dialog").showModal();
 }
-$("#add-password").onclick = () => openPassword();
+$("#add-password").onclick = () => requireVault(() => openPassword());
 $("#password-search").oninput = renderPasswords;
 $("#save-password").onclick = async (e) => {
   e.preventDefault();
@@ -479,10 +508,15 @@ $("#empty-trash").onclick = async () => {
   }
 };
 $("#retention").onchange = async (e) => {
+  if (!key)
+    return requireVault(() =>
+      $("#retention").dispatchEvent(new Event("change")),
+    );
   vault.settings.retention = +e.target.value;
   await save();
 };
 $("#export-button").onclick = () => {
+  if (!bundle()) return note("#app-message", "还没有可导出的数据");
   const blob = new Blob([localStorage.getItem(STORE)], {
       type: "application/json",
     }),
@@ -534,6 +568,7 @@ $("#check-account").onclick = async (e) => {
   if (await checkAccount()) setTimeout(() => $("#account-dialog").close(), 500);
 };
 $("#sync-button").onclick = async () => {
+  if (!key) return requireVault(() => $("#sync-button").click());
   try {
     if (!(await checkAccount())) return $("#account-dialog").showModal();
     note("#app-message", "正在同步…");
@@ -562,6 +597,7 @@ $("#sync-button").onclick = async () => {
   }
 };
 checkAccount();
+if (!bundle()) renderAll();
 setInterval(() => {
   if (key && activeTab === "otp") renderOtp();
 }, 1000);
@@ -569,7 +605,9 @@ setInterval(() => {
 let installPrompt = null;
 const installButtons = $$(".install-action");
 function setInstallAvailable(available) {
-  installButtons.forEach((button) => button.classList.toggle("hidden", !available));
+  installButtons.forEach((button) =>
+    button.classList.toggle("hidden", !available),
+  );
 }
 window.addEventListener("beforeinstallprompt", (event) => {
   event.preventDefault();
@@ -578,11 +616,18 @@ window.addEventListener("beforeinstallprompt", (event) => {
 });
 installButtons.forEach((button) => {
   button.onclick = async () => {
-    if (!installPrompt) return;
-    await installPrompt.prompt();
-    await installPrompt.userChoice;
-    installPrompt = null;
-    setInstallAvailable(false);
+    if (installPrompt) {
+      await installPrompt.prompt();
+      await installPrompt.userChoice;
+      installPrompt = null;
+      setInstallAvailable(false);
+    } else {
+      const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+      $("#install-help").innerHTML = ios
+        ? "<p><strong>iPhone / iPad</strong></p><p>请使用 Safari 打开本页，点击底部的“分享”按钮，再选择“添加到主屏幕”。</p>"
+        : "<p><strong>安装到手机或电脑</strong></p><p>请打开浏览器菜单，选择“安装应用”或“添加到主屏幕”。Chrome、Edge 和 Android 浏览器均支持。</p>";
+      $("#install-dialog").showModal();
+    }
     $("#more-menu")?.classList.add("hidden");
   };
 });
@@ -591,5 +636,7 @@ window.addEventListener("appinstalled", () => {
   setInstallAvailable(false);
 });
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js"));
+  window.addEventListener("load", () =>
+    navigator.serviceWorker.register("./sw.js"),
+  );
 }
