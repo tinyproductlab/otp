@@ -296,15 +296,29 @@ $("#master-password").onkeydown = (e) => {
 $("#lock-button").onclick = () => location.reload();
 function showTab(name) {
   activeTab = name;
-  $$(".tabs button").forEach((b) =>
-    b.classList.toggle("active", b.dataset.tab === name),
+  $$(".tabbar button").forEach((b) =>
+    b.classList.toggle(
+      "active",
+      b.dataset.tab === name ||
+        (name === "generator" && b.dataset.tab === "passwords") ||
+        (name === "trash" && b.dataset.tab === "settings"),
+    ),
   );
   $$(".pane").forEach((p) =>
     p.classList.toggle("hidden", p.dataset.pane !== name),
   );
   $("#main-add").classList.toggle("hidden", name !== "otp");
 }
-$$(".tabs button").forEach((b) => (b.onclick = () => showTab(b.dataset.tab)));
+$$("[data-tab]").forEach(
+  (b) =>
+    (b.onclick = () => {
+      showTab(b.dataset.tab);
+      $("#more-menu")?.classList.add("hidden");
+    }),
+);
+$("#more-button").onclick = () => $("#more-menu").classList.toggle("hidden");
+$("[data-open='generator']").onclick = () => showTab("generator");
+$(".back-tools").onclick = () => showTab("passwords");
 function openOtp(t = null) {
   $("#otp-dialog-title").textContent = t ? "编辑验证码" : "添加验证码";
   $("#otp-id").value = t?.id || "";
